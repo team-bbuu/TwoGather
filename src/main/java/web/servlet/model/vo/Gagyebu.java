@@ -32,20 +32,25 @@ public class Gagyebu {
 
 
 	// 입금
-	public Gagyebu(int id, boolean isDeposit, String userId, int price, String title, String etc, String transactionDate) {
-		super();
-		this.id = id;
-		this.isDeposit = isDeposit;
-		this.userId = userId;
-		this.price = price;
-		this.title = title;
-		this.etc = etc;
-		this.transactionDate = transactionDate;
-	}
+	
 
 	public int getId() {
 		return id;
 	}
+
+	public Gagyebu(int id, String userId, String transactionDate, boolean isDeposit, int price, String title,
+			String etc) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.transactionDate = transactionDate;
+		this.isDeposit = isDeposit;
+		this.price = price;
+		this.title = title;
+		this.etc = etc;
+	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -78,7 +83,7 @@ public class Gagyebu {
 	public int getPrice() {
 		return price;
 	}
-
+	
 	public void setPrice(int price) {
 		this.price = price;
 	}

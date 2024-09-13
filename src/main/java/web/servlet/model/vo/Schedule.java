@@ -99,6 +99,11 @@ public class Schedule {
 	public String getUserId() {
 		return userId;
 	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "Schedule [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", title=" + title

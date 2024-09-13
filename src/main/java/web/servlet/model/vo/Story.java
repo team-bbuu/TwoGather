@@ -31,6 +31,18 @@ public class Story {
 	public String getImgSrc() {
 		return imgSrc;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+
 
 	public String getTitle() {
 		return title;
