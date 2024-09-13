@@ -10,7 +10,6 @@ public class Schedule {
 	private String description;
 	
 	public Schedule() {}
-	
 	public Schedule(int id, String userId, boolean isPersonal, String startDate, String endDate, String title,
 			String description) {
 		super();
