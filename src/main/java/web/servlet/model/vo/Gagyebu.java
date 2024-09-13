@@ -2,36 +2,40 @@ package web.servlet.model.vo;
 
 public class Gagyebu {
 	private int id;
-	private boolean isDeposite;
-	private String category;
 	private String userId; // 입금시 입금자명, 지출시 결제자 아이디
+	private String transactionDate;
+	private boolean isDeposit;
+	private String category;
 	private int price;
 	private String title;
 	private String paymentType;
 	private String etc;
-	private String transactionDate;
 	
 	public Gagyebu() {}
+	
+	
 
-	public Gagyebu(int id, boolean isDeposite, String category, String userId, int price, String title, String paymentType, String etc,
-			String transactionDate) {
+	public Gagyebu(int id, String userId, String transactionDate, boolean isDeposit, String category, int price,
+			String title, String paymentType, String etc) {
 		super();
 		this.id = id;
-		this.isDeposite = isDeposite;
-		this.category = category;
 		this.userId = userId;
+		this.transactionDate = transactionDate;
+		this.isDeposit = isDeposit;
+		this.category = category;
 		this.price = price;
 		this.title = title;
 		this.paymentType = paymentType;
 		this.etc = etc;
-		this.transactionDate = transactionDate;
 	}
 
+
+
 	// 입금
-	public Gagyebu(int id, boolean isDeposite, String userId, int price, String title, String etc, String transactionDate) {
+	public Gagyebu(int id, boolean isDeposit, String userId, int price, String title, String etc, String transactionDate) {
 		super();
 		this.id = id;
-		this.isDeposite = isDeposite;
+		this.isDeposit = isDeposit;
 		this.userId = userId;
 		this.price = price;
 		this.title = title;
@@ -47,12 +51,12 @@ public class Gagyebu {
 		this.id = id;
 	}
 
-	public boolean isDeposite() {
-		return isDeposite;
+	public boolean isDeposit() {
+		return isDeposit;
 	}
 
-	public void setDeposite(boolean isDeposite) {
-		this.isDeposite = isDeposite;
+	public void setDeposite(boolean isDeposit) {
+		this.isDeposit = isDeposit;
 	}
 
 	public String getCategory() {
@@ -113,7 +117,7 @@ public class Gagyebu {
 
 	@Override
 	public String toString() {
-		return "Gagyebu [id=" + id + ", isDeposite=" + isDeposite + ", category=" + category + ", userId=" + userId
+		return "Gagyebu [id=" + id + ", isDeposit=" + isDeposit + ", category=" + category + ", userId=" + userId
 				+ ", price=" + price + ", title=" + title + ", paymentType=" + paymentType + ", etc=" + etc
 				+ ", transactionDate=" + transactionDate + "]";
 	}	

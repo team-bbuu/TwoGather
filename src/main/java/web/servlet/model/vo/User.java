@@ -1,8 +1,12 @@
 package web.servlet.model.vo;
 
+import java.util.Arrays;
+
 public class User {
 	private String id;
-	private String pass;
+	private String partnerId;
+	private String imgSrc;
+	private String password;
 	private String nickname;
 	private String mobile;
 	private String birthdate;
@@ -12,25 +16,49 @@ public class User {
 	private String matching;
 	private String startDate;
 	private String breakDate;
-	private String imgsrc;
-	private String partnerId;
 	private String[] category;
-	public User(String id, String pass, String nickname, String mobile, String birthdate, String email, String gender,
-			String address) {
+	public User() {}
+	
+	public User(String id, String partnerId, String imgSrc, String password, String nickname, String mobile,
+			String birthdate, String email, String gender, String address, String matching, String startDate,
+			String breakDate, String[] category) {
+		super();
 		this.id = id;
-		this.pass = pass;
+		this.partnerId = partnerId;
+		this.imgSrc = imgSrc;
+		this.password = password;
 		this.nickname = nickname;
 		this.mobile = mobile;
 		this.birthdate = birthdate;
 		this.email = email;
 		this.gender = gender;
 		this.address = address;
+		this.matching = matching;
+		this.startDate = startDate;
+		this.breakDate = breakDate;
+		this.category = category;
 	}
-	public String getPass() {
-		return pass;
+	
+
+	public User(String id, String password, String nickname, String mobile, String birthdate, String email,
+			String gender, String address, String matching) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.mobile = mobile;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.gender = gender;
+		this.address = address;
+		this.matching = matching;
 	}
-	public void setPass(String pass) {
-		this.pass = pass;
+
+	public String getpassword() {
+		return password;
+	}
+	public void setpassword(String password) {
+		this.password = password;
 	}
 	public String getNickname() {
 		return nickname;
@@ -80,11 +108,11 @@ public class User {
 	public void setBreakDate(String breakDate) {
 		this.breakDate = breakDate;
 	}
-	public String getImgsrc() {
-		return imgsrc;
+	public String getimgSrc() {
+		return imgSrc;
 	}
-	public void setImgsrc(String imgsrc) {
-		this.imgsrc = imgsrc;
+	public void setimgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
 	}
 	public String getPartnerId() {
 		return partnerId;
@@ -103,6 +131,13 @@ public class User {
 	}
 	public String getGender() {
 		return gender;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", partnerId=" + partnerId + ", imgSrc=" + imgSrc + ", password=" + password
+				+ ", nickname=" + nickname + ", mobile=" + mobile + ", birthdate=" + birthdate + ", email=" + email
+				+ ", gender=" + gender + ", address=" + address + ", matching=" + matching + ", startDate=" + startDate
+				+ ", breakDate=" + breakDate + ", category=" + Arrays.toString(category) + "]";
 	}
 	
 	

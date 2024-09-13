@@ -2,28 +2,27 @@ package web.servlet.model.vo;
 
 public class Story {
 	private int id;
+	private String userId;
+	private String uploadDate;
 	private String imgSrc;
 	private String title;
 	private String content;
-	private String uploadDate;
 	
 	public Story() { }
 	
-	public Story(String imgSrc, String title, String uploadDate) {
+	
+
+	public Story(int id, String userId, String uploadDate, String imgSrc, String title, String content) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.uploadDate = uploadDate;
 		this.imgSrc = imgSrc;
 		this.title = title;
-		this.uploadDate = uploadDate;
-	}
-
-	public Story(String imgSrc, String title, String content, String uploadDate) {
-		this(imgSrc, title, uploadDate);
 		this.content = content;
 	}
 
-	public Story(int id, String imgSrc, String title, String content, String uploadDate) {
-		this(imgSrc, title, content, uploadDate);
-		this.id = id;
-	}
+
 
 	public int getId() {
 		return id;
