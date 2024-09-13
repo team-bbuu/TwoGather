@@ -12,25 +12,32 @@ import javax.sql.DataSource;
 import web.servlet.model.vo.User;
 
 public class UserDAOImpl implements UserDAO {
-	private DataSource ds;
-	
+	DataSource ds;
 	private UserDAOImpl() {
+		
 		try {
 			InitialContext ic = new InitialContext();
-			ds = (DataSource)ic.lookup("java:comp/env/jdbc/mysql");
-			System.out.println("DataSource lookup...Success~~!!");
-		} catch (NamingException e) {
-			System.out.println("DataSource lookup...Fail~~!!");
+			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
+		}catch (NamingException e) {
+			System.out.println(e);
 		}
+		
+		/*
+		try {
+			Class.forName(ServerInfo.DRIVER_NAME);
+		}catch (ClassNotFoundException e) {
+			System.out.println(e);
+		}
+		*/
 	}
 	private static UserDAOImpl dao = new UserDAOImpl();
 	public static UserDAOImpl getInstance() {
 		return dao;
 	}
 	
-	public Connection gerConnect() throws SQLException {
-		System.out.println("DB 연결 성공...");
-		return ds.getConnection();//Pool 에서 하나씩 꺼내오는 방식..
+	public Connection getConnection() throws SQLException{
+		return ds.getConnection();
+		//return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
