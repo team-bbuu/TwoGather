@@ -2,22 +2,27 @@ package web.servlet.model.vo;
 
 public class Schedule {
 	private int id;
+	private String userId;
+	private boolean isPersonal;
 	private String startDate;
 	private String endDate;
 	private String title;
 	private String description;
-	private boolean isPersonal;
 	
-	private Schedule() {}
-	public Schedule(int id, String startDate, String endDate, String title, String description, boolean isPersonal) {
+	public Schedule() {}
+	
+	public Schedule(int id, String userId, boolean isPersonal, String startDate, String endDate, String title,
+			String description) {
 		super();
 		this.id = id;
+		this.userId = userId;
+		this.isPersonal = isPersonal;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.title = title;
 		this.description = description;
-		this.isPersonal = isPersonal;
 	}
+
 	/**
 	 * @return the id
 	 */
@@ -90,6 +95,15 @@ public class Schedule {
 	public void setPersonal(boolean isPersonal) {
 		this.isPersonal = isPersonal;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "Schedule [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", title=" + title
