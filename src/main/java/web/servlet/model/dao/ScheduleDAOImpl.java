@@ -1,6 +1,8 @@
-package web.servlet.model;
+package web.servlet.model.dao;
 
 import java.util.ArrayList;
+
+import web.servlet.model.vo.Schedule;
 
 public class ScheduleDAOImpl implements ScheduleDAO {
 	private ScheduleDAOImpl() {}

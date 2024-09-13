@@ -1,7 +1,9 @@
-package web.servlet.model;
+package web.servlet.model.dao;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import web.servlet.model.vo.Gagyebu;
 
 public interface GagyebuDAO {
 	Map<Integer,int[]> getYearTransaction (String year) ;// 해당년도 입금, 지출액 가져오는 메소드

@@ -1,6 +1,8 @@
-package web.servlet.model;
+package web.servlet.model.dao;
 
 import java.util.ArrayList;
+
+import web.servlet.model.vo.Schedule;
 
 public interface ScheduleDAO {
 	Schedule getLatestSchedule (String userId);  // 가장 가까운 일정 불러오는 메소드     

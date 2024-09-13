@@ -1,7 +1,9 @@
-package web.servlet.model;
+package web.servlet.model.dao;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import web.servlet.model.vo.Gagyebu;
 
 public class GagyebuDAOImpl implements GagyebuDAO {
 	private GagyebuDAOImpl() {}

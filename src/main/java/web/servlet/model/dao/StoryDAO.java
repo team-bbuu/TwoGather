@@ -1,6 +1,8 @@
-package web.servlet.model;
+package web.servlet.model.dao;
 
 import java.util.ArrayList;
+
+import web.servlet.model.vo.Story;
 
 public interface StoryDAO {
 	Story getLatestStory (String userId);// 최근 스토리 불러오는 기능

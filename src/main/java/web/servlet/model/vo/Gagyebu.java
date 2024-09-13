@@ -1,4 +1,4 @@
-package web.servlet.model;
+package web.servlet.model.vo;
 
 public class Gagyebu {
 	private int id;

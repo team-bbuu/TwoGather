@@ -1,4 +1,6 @@
-package web.servlet.model;
+package web.servlet.model.dao;
+
+import web.servlet.model.vo.User;
 
 public class UserDAOImpl implements UserDAO {
 	private UserDAOImpl() {}
