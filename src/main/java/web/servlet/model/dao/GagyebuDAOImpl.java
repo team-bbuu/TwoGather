@@ -7,17 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import config.ServerInfo;
 import web.servlet.model.vo.Gagyebu;
+import web.servlet.model.vo.User;
 
 public class GagyebuDAOImpl implements GagyebuDAO {
 	DataSource ds;
 	private GagyebuDAOImpl() {
-
 		
 //		try {
 //			InitialContext ic = new InitialContext();
@@ -25,6 +26,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 //		}catch (NamingException e) {
 //			System.out.println(e);
 //		}
+
 		
 		try {
 			Class.forName(ServerInfo.DRIVER_NAME);
@@ -39,9 +41,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-
 //		return ds.getConnection();
-
 		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
 	}
 	
@@ -206,15 +206,35 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	@Override
-	public void updateCategory(String[] categories, String userId) {
-		// TODO Auto-generated method stub
-		
+	public void updateCategory(String[] categories, String userId) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String DBCategory = String.join(",", categories);
+		try {
+			conn = getConnection();
+			String query = "UPDATE category SET category_name = ? WHERE User_id = ?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, DBCategory);
+			ps.setString(2, userId);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			closeAll(ps, conn);
+		}
 	}
 	
-	// test
-	public static void main(String[] args) throws SQLException {
+	// 단위테스트
+	public static void main(String[] args) throws Exception {
+	// emilyhong
 		GagyebuDAO dao = GagyebuDAOImpl.getInstance();
-		
+	
 		dao.expenseRatioByCategory();
-	}
+	
+		// believeme
+		String[] category = {"데이트"};
+		String[] category2 = {"식비"};
+		String[] category3 = {"데이트", "식비"};
+		GagyebuDAOImpl.getInstance().updateCategory(category3, "id1");
+	}//main	
 }
