@@ -15,6 +15,6 @@ public interface UserDAO {
 	String findId (String email, String mobile); // 아이디 찾기
 	String findPass (String id, String birthDate); // 비밀번호 찾기
 	/* MY */
-	void updateUser (User user); // 회원정보수정
-	void deleteUser (String id) ; // 회원탈퇴
+	void updateUser (User user) throws SQLException; // 회원정보수정
+	void deleteUser (String id) throws SQLException ; // 회원탈퇴
 }
