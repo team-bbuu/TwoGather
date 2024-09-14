@@ -79,13 +79,19 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	@Override
 	public int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus) {
-		// TODO Auto-generated method stub
-		return 0;
+		int depositTotal = 0;
+		for(Gagyebu gagyebu : gagyebus) {
+			if(gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+		}
+		return depositTotal;
 	}
 	@Override
 	public int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus) {
-		// TODO Auto-generated method stub
-		return 0;
+		int depositTotal = 0;
+		for(Gagyebu gagyebu : gagyebus) {
+			if(!gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+		}
+		return depositTotal;
 	}
 	@Override
 	public Map<String, Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus) {
