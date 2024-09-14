@@ -180,6 +180,6 @@ public class User {
 				+ ", breakDate=" + breakDate + ", category=" + Arrays.toString(category) + "]";
 	}
 	
-	
+	 
 	
 }

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.sql.DataSource;
 
@@ -14,19 +15,21 @@ import web.servlet.model.vo.User;
 public class UserDAOImpl implements UserDAO {
 	DataSource ds;
 	private UserDAOImpl() {
-		/*try {
+
+		/*
+		try {
 			InitialContext ic = new InitialContext();
-			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
+			ds = (DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
 			System.out.println(e);
-		}*/
+		}
+		*/
 		
 		try {
 			Class.forName(ServerInfo.DRIVER_NAME);
 		}catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
-		
 	}
 	private static UserDAOImpl dao = new UserDAOImpl();
 	public static UserDAOImpl getInstance() {
@@ -155,20 +158,96 @@ public class UserDAOImpl implements UserDAO {
 			closeAll(ps, conn);
 		}
 	}
+	
+	// LO 믿음 파트너id는 컨트롤러에서 작업
 	@Override
-	public User login(String id, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public User login(String id, String password) throws SQLException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User vo = null;
+		String[] javaCategory = null;
+		
+		try {
+			conn = getConnection();
+			String query = "SELECT u.id, u.partner_id, u.img_src, u.password, u.nickname, u.mobile, u.birthdate, u.email, u.gender, u.address, u.matching, u.start_date, u.break_date, c.category_name FROM User u, category c WHERE u.id = c.user_id AND u.id = ? AND u.password = ?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, id);
+			ps.setString(2, password);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				// 카테고리에 데이터가 없다면
+				String DBCategory = rs.getString("c.category_name");
+				if (DBCategory != null) javaCategory = DBCategory.split(",");
+				vo = new User(id,
+							  rs.getString("u.partner_id"),
+							  rs.getString("u.img_src"),
+							  password,
+							  rs.getString("u.nickname"),
+							  rs.getString("u.mobile"),
+							  rs.getString("u.birthdate"),
+							  rs.getString("u.email"),
+							  rs.getString("u.gender"),
+							  rs.getString("u.address"),
+							  rs.getString("u.matching"),
+							  rs.getString("u.start_date"),
+							  rs.getString("u.break_date"),
+							  javaCategory);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			closeAll(rs, ps, conn);
+		}
+		return vo;
 	}
+	// 믿음
 	@Override
-	public String findId(String email, String mobile) {
-		// TODO Auto-generated method stub
-		return null;
+	public String findId(String email, String mobile) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String id = null;
+		
+		try {
+			conn = getConnection();
+			String query = "SELECT id FROM User WHERE email = ? AND mobile = ?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, email);
+			ps.setString(2, mobile);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				id = rs.getString("id");
+			}
+		} finally {
+			closeAll(rs, ps, conn);
+		}
+		return id;
 	}
+	// 믿음
 	@Override
-	public String findPass(String id, String birthDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public String findPass(String id, String birthDate) throws Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String password = null;
+		
+		try {
+			conn = getConnection();
+			String query = "SELECT password FROM User WHERE id = ? AND birthDate = ?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, id);
+			ps.setString(2, birthDate);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				password = rs.getString("password");
+			}
+		} finally {
+			closeAll(rs, ps, conn);
+		}
+		return password;
 	}
 	/* 회원정보 수정 */
 	@Override
@@ -243,7 +322,15 @@ public class UserDAOImpl implements UserDAO {
 		// 현정 
 		// UserDAO dao = UserDAOImpl.getInstance();
 		// dao.updateUser(new User("id019", null, "image/a.jpg", "pass19", "나연2", "010-9012-3966", "1979-08-10", "abcde19@gmail.com", "f", "서울시 서대문구 홍제동", "매칭전", null, null,	null));
-		
+
+		// believeme
+//		String id = UserDAOImpl.getInstance().findId("abcde1@gmail.com", "010-1234-5678");
+//		System.out.println("id :: " + id);
+//		String password = UserDAOImpl.getInstance().findPass("id1", "1997-02-10");
+//		System.out.println("password :: " + password);
+//		User vo = UserDAOImpl.getInstance().login("id1", "pass1");
+//		System.out.println("vo :: " + Arrays.toString(vo.getCategory()));
+//		System.out.println(vo);
 	}
-	
+
 }
