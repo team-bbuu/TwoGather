@@ -83,13 +83,17 @@ public class StoryDAOImpl implements StoryDAO {
 	}
 	@Override
 	public void createStory(Story story, String userId) {
-		String query = "";
-		ResultSet rs = null;
+		String query = "insert into story(user_id,upload_date,img_src,title,content) values (?,?,?,?,?)";
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
-			
+			ps.setString(1, story.getUserId());
+			ps.setString(2, story.getUploadDate());
+			ps.setString(3, story.getImgSrc());
+			ps.setString(4, story.getTitle());
+			ps.setString(5, story.getContent());
+			ps.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -119,5 +123,10 @@ public class StoryDAOImpl implements StoryDAO {
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
+	}
+	public static void main(String[] args) {
+		StoryDAOImpl dao = getInstance();
+		Story story = new Story(0, "id01", "2024-09-14", "", "제목", "내용");
+		dao.createStory(story, null);
 	}
 }

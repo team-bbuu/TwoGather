@@ -38,10 +38,42 @@ public class User {
 		this.breakDate = breakDate;
 		this.category = category;
 	}
-	
+
+	public User(String id, String partnerId, String imgSrc, String password, String nickname, String mobile,
+			String birthdate, String email, String gender, String address, String matching, String startDate,
+			String breakDate) {
+		super();
+		this.id = id;
+		this.partnerId = partnerId;
+		this.imgSrc = imgSrc;
+		this.password = password;
+		this.nickname = nickname;
+		this.mobile = mobile;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.gender = gender;
+		this.address = address;
+		this.matching = matching;
+		this.startDate = startDate;
+		this.breakDate = breakDate;
+	}
+
+	public User(String id, String imgSrc, String password, String nickname, String mobile, String birthdate,
+			String email, String gender, String address) {
+		super();
+		this.id = id;
+		this.imgSrc = imgSrc;
+		this.password = password;
+		this.nickname = nickname;
+		this.mobile = mobile;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.gender = gender;
+		this.address = address;
+	}
 
 	public User(String id, String password, String nickname, String mobile, String birthdate, String email,
-			String gender, String address, String matching) {
+			String gender, String address) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -51,7 +83,6 @@ public class User {
 		this.email = email;
 		this.gender = gender;
 		this.address = address;
-		this.matching = matching;
 	}
 
 	public String getpassword() {
