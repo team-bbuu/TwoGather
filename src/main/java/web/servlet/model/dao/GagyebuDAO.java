@@ -7,7 +7,7 @@ import web.servlet.model.vo.Gagyebu;
 
 public interface GagyebuDAO {
 	Map<Integer,int[]> getYearTransaction (String year) ;// 해당년도 입금, 지출액 가져오는 메소드
-	ArrayList<Gagyebu> getMonthGagyebu (String yearMonth) ;// 월 데이터 받아오기 메소드
+	ArrayList<Gagyebu> getMonthGagyebu (String yearMonth, String userId, String partnerId) ;// 월 데이터 받아오기 메소드
 	void createGagyebu (Gagyebu g, String userId); // 가계부 등록
 	void updateGagyebu (Gagyebu g, String userId); // 가계부 수정
 	void deleteGagyebu (Gagyebu g, String userId); // 가계부 삭제
