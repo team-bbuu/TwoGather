@@ -56,7 +56,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	@Override
-	public Map<Integer, int[]> getYearTransaction(String year) {
+	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) {
 		String query = "";
 		ResultSet rs = null;
 		try(
@@ -75,7 +75,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		return null;
 	}
 	@Override
-	public void createGagyebu(Gagyebu g, String userId) {
+	public void createGagyebu(Gagyebu g) {
 		String query = "";
 		ResultSet rs = null;
 		try(
@@ -88,7 +88,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		}
 	}
 	@Override
-	public void updateGagyebu(Gagyebu g, String userId) {
+	public void updateGagyebu(Gagyebu g) {
 		String query = "";
 		ResultSet rs = null;
 		try(
@@ -101,7 +101,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		}
 	}
 	@Override
-	public void deleteGagyebu(Gagyebu g, String userId) {
+	public void deleteGagyebu(Gagyebu g) {
 		String query = "";
 		ResultSet rs = null;
 		try(
