@@ -21,7 +21,7 @@
 		border: 1px solid;
 		width: 25%;
 		height: 100vh;
-	} 
+	}
 </style>
 </head>
 <body class="d-flex">
