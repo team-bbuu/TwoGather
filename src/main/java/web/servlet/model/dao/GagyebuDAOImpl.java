@@ -70,7 +70,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				+ "ORDER BY\n"
 				+ "    연월;";
 		ResultSet rs = null;
-		Map<Integer, int[]>
+
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
