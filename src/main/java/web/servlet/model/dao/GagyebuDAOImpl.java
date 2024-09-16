@@ -73,7 +73,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth, String userId, String partnerId) throws SQLException {
 		// 커플의 각 아이디로 월별 가계부 데이터 조회 
 		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
-		
 	    Connection conn = null;
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
