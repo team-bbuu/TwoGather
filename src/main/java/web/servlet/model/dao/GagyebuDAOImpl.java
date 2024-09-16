@@ -135,40 +135,59 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		return gagyebus;
 	}
 	@Override
-	public void createGagyebu(Gagyebu g) {
-		String query = "";
+	public void createGagyebu(Gagyebu gagyebu) {
+		String query = "INSERT INTO gagyebu (user_id,transaction_date,is_deposit,category,price,title,payment_type,etc) "
+				+ " VALUES (?,?,?,?,?,?,?,?);";
 		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
-			
+			ps.setString(1, gagyebu.getUserId());
+			ps.setString(2, gagyebu.getTransactionDate());
+			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(4, gagyebu.getCategory());
+			ps.setInt(5, gagyebu.getPrice());
+			ps.setString(6, gagyebu.getTitle());
+			ps.setString(7, gagyebu.getPaymentType());
+			ps.setString(8, gagyebu.getEtc());
+			ps.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	@Override
-	public void updateGagyebu(Gagyebu g) {
-		String query = "";
+	public void updateGagyebu(Gagyebu gagyebu) {
+		String query = "UPDATE gagyebu SET user_id=?,transaction_date=?,is_deposit=?,category=?,price=?,title=?,payment_type=?,etc=? WHERE id=?;";
 		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
-			
+			ps.setString(1, gagyebu.getUserId());
+			ps.setString(2, gagyebu.getTransactionDate());
+			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(4, gagyebu.getCategory());
+			ps.setInt(5, gagyebu.getPrice());
+			ps.setString(6, gagyebu.getTitle());
+			ps.setString(7, gagyebu.getPaymentType());
+			ps.setString(8, gagyebu.getEtc());
+			ps.setInt(9, gagyebu.getId());
+			ps.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	@Override
-	public void deleteGagyebu(Gagyebu g) {
-		String query = "";
+	public void deleteGagyebu(int GagyebuId) {
+		String query = "DELETE FROM gagyebu WHERE id = ?";
 		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
-			
+			ps.setInt(1, GagyebuId);
+			ps.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -286,16 +305,35 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	
 	// 단위테스트
 	public static void main(String[] args) throws Exception {
+
+	// emilyhong
+		GagyebuDAO dao = GagyebuDAOImpl.getInstance();
+		Gagyebu gagyebu = null;
+	/*
+		dao.expenseRatioByCategory();
+		// believeme
+		String[] category = {"데이트"};
+		String[] category2 = {"식비"};
+		String[] category3 = {"데이트", "식비"};
+		GagyebuDAOImpl.getInstance().updateCategory(category3, "id1");
+		*/
+		/*
+		gagyebu = new Gagyebu(0, "id01", "2024-09-16", false, "식비", 30000, "제목", "카드", "기타");
+		dao.createGagyebu(gagyebu);
+		*/
+		/*
+		gagyebu = new Gagyebu(193, "id20", "2024-09-16", false, "식비", 90000, "제목", "카드", "기타");
+		dao.updateGagyebu(gagyebu);
+		*/
+		//dao.deleteGagyebu(193);
+		
+
 		// 현정 
 //		GagyebuDAO dao = GagyebuDAOImpl.getInstance();	
 //		dao.expenseRatioByCategory();
 //		dao.getMonthGagyebu("2024-09", "id01", "id20");
 		
 	
-		// believeme
-//		String[] category = {"데이트"};
-//		String[] category2 = {"식비"};
-//		String[] category3 = {"데이트", "식비"};
-//		GagyebuDAOImpl.getInstance().updateCategory(category3, "id1");
+
 	}//main	
 }

@@ -156,7 +156,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		}
 		
 	}
-	
+	/*
 	public static void main(String[] args) {
 		ScheduleDAO dao = getInstance();
 		Schedule sc = null;
@@ -165,22 +165,22 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		/*
 		sc = dao.getLatestSchedule("id01", "id20");
 		System.out.println(sc);
-		*/
+		
 		/*
 		list = dao.getMonthSchedule("2024-09", "id01", "id20");
 		list.forEach((i)->{
 			System.out.println(i);
 		});
-		*/
+		
 		/*
 		sc= new Schedule(0,"id01",false,"2024-01-01", "2024-01-01", "데이트","데이트이다.");
 		dao.createSchedule(sc);
-		*/
+		
 		/*
 		sc= new Schedule(33,"id01",false,"2024-01-05", "2024-01-05", "데이트2","데이트이다2.");
 		dao.updateSchedule(sc);
-		*/
+		
 		//dao.deleteSchedule(33);
 	}
-
+	*/
 }
