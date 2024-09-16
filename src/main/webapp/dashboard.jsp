@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +8,6 @@
     <!-- css 파일 -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dashboard.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/monthGagyebu.css">
-    <style type="text/css">
-
-
-    </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -23,10 +18,6 @@
         <div class="dashboard-content">
         	<!-- 각 jsp -->
         	<jsp:include page="monthGagyebu.jsp" />
-        	
-        	
-        	
-        	
         </div>
     </div>
 </body>

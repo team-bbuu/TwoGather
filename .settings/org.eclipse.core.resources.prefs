@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/dashboard.jsp=UTF-8
+<<<<<<< HEAD
 encoding//src/main/webapp/monthGagyebu.jsp=UTF-8
 encoding//src/main/webapp/nav.jsp=UTF-8
+=======
+>>>>>>> 38a03ba (dao 작업중)
 encoding/<project>=UTF-8

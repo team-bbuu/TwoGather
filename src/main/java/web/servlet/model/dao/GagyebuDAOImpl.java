@@ -57,12 +57,30 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	
 	@Override
 	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) {
-		String query = "";
+		String query = "SELECT\n"
+				+ "    DATE_FORMAT(transaction_date, '%m') 연월,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'true' THEN price ELSE 0 END) 월별입금액,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'false' THEN price ELSE 0 END) 월별지출액\n"
+				+ "FROM\n"
+				+ "    gagyebu\n"
+				+ "WHERE\n"
+				+ "	transaction_date LIKE ?\n"
+				+ "GROUP BY\n"
+				+ "    DATE_FORMAT(transaction_date, '%m')\n"
+				+ "ORDER BY\n"
+				+ "    연월;";
 		ResultSet rs = null;
+		Map<Integer, int[]>
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
+			ps.setString(1, year + "%");
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				
+			}
+			
 			
 		}catch (SQLException e) {
 			System.out.println(e);
