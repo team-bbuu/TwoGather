@@ -181,6 +181,7 @@ public class UserDAOImpl implements UserDAO {
 				// 카테고리에 데이터가 없다면
 				String DBCategory = rs.getString("c.category_name");
 				if (DBCategory != null) javaCategory = DBCategory.split(",");
+			
 				vo = new User(id,
 							  rs.getString("u.partner_id"),
 							  rs.getString("u.img_src"),
