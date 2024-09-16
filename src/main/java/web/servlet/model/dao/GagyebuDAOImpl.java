@@ -57,12 +57,30 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	
 	@Override
 	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) {
-		String query = "";
+		String query = "SELECT\n"
+				+ "    DATE_FORMAT(transaction_date, '%m') 연월,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'true' THEN price ELSE 0 END) 월별입금액,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'false' THEN price ELSE 0 END) 월별지출액\n"
+				+ "FROM\n"
+				+ "    gagyebu\n"
+				+ "WHERE\n"
+				+ "	transaction_date LIKE ?\n"
+				+ "GROUP BY\n"
+				+ "    DATE_FORMAT(transaction_date, '%m')\n"
+				+ "ORDER BY\n"
+				+ "    연월;";
 		ResultSet rs = null;
+
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
+			ps.setString(1, year + "%");
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				
+			}
+			
 			
 		}catch (SQLException e) {
 			System.out.println(e);
@@ -70,9 +88,51 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		return null;
 	}
 	@Override
-	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth,String userId, String partnerId) {
+	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth, String userId, String partnerId) throws SQLException {
+		// 커플의 각 아이디로 월별 가계부 데이터 조회 
+		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	    	conn = getConnection();
+	    	
+	    	String query = "select id, User_id, transaction_date, is_deposit, category, price, title, "
+	    			+ "payment_type, etc from Gagyebu where transaction_date like ? and (User_id=? or User_id=?);";
+	    	ps = conn.prepareStatement(query);
+	    	ps.setString(1, yearMonth+"%"); // "2024-09%"
+	    	ps.setString(2, userId);
+	    	ps.setString(3, partnerId);
+	    	
+	    	rs = ps.executeQuery();
+	    	
+			// 리스트에 추가
+			while(rs.next()) {				
+				Gagyebu gagyebu = new Gagyebu();
+				
+			    gagyebu.setId(rs.getInt("id"));
+			    gagyebu.setUserId(rs.getString("User_id"));
+			    gagyebu.setTransactionDate(rs.getString("transaction_date"));
+			    gagyebu.setDeposite(rs.getBoolean("is_deposit"));
+			    gagyebu.setCategory(rs.getString("category"));
+			    gagyebu.setPrice(rs.getInt("price"));
+			    gagyebu.setTitle(rs.getString("title"));
+			    gagyebu.setPaymentType(rs.getString("payment_type"));
+			    gagyebu.setEtc(rs.getString("etc"));
+				
+				gagyebus.add(gagyebu);
+			}
+			
+			System.out.println("getMonthGagyebu : " + gagyebus);
+	    	
+	    }catch (Exception e) {
+			System.out.println("getMonthGagyebu err : " + e);
+		}finally {
+			closeAll(rs, ps, conn);
+		}
 		
-		return null;
+		return gagyebus;
 	}
 	@Override
 	public void createGagyebu(Gagyebu gagyebu) {
@@ -198,7 +258,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	    Connection conn = null;
 	    PreparedStatement ps = null;
 	    
-	    // System.out.println("gagyebu list : " + gagyebus);
+	    //System.out.println("gagyebu list : " + gagyebus);
 		
 		try {
 			conn = getConnection();
@@ -245,6 +305,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	
 	// 단위테스트
 	public static void main(String[] args) throws Exception {
+
 	// emilyhong
 		GagyebuDAO dao = GagyebuDAOImpl.getInstance();
 		Gagyebu gagyebu = null;
@@ -266,5 +327,13 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		*/
 		//dao.deleteGagyebu(193);
 		
+
+		// 현정 
+//		GagyebuDAO dao = GagyebuDAOImpl.getInstance();	
+//		dao.expenseRatioByCategory();
+//		dao.getMonthGagyebu("2024-09", "id01", "id20");
+		
+	
+
 	}//main	
 }
