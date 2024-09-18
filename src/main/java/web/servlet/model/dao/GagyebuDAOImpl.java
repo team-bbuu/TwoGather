@@ -304,6 +304,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	// 단위테스트
+	/*
 	public static void main(String[] args) throws Exception {
 
 	// emilyhong
@@ -316,15 +317,15 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		String[] category2 = {"식비"};
 		String[] category3 = {"데이트", "식비"};
 		GagyebuDAOImpl.getInstance().updateCategory(category3, "id1");
-		*/
+		
 		/*
 		gagyebu = new Gagyebu(0, "id01", "2024-09-16", false, "식비", 30000, "제목", "카드", "기타");
 		dao.createGagyebu(gagyebu);
-		*/
+		
 		/*
 		gagyebu = new Gagyebu(193, "id20", "2024-09-16", false, "식비", 90000, "제목", "카드", "기타");
 		dao.updateGagyebu(gagyebu);
-		*/
+		
 		//dao.deleteGagyebu(193);
 		
 
@@ -336,4 +337,5 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	
 
 	}//main	
+	*/
 }

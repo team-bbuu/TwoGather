@@ -50,8 +50,8 @@
 <div id="nav">
 	<c:import url="nav.jsp"></c:import>
 </div>
-<div>
-	<img src="https://via.placeholder.com/150x100" alt="">
+<div id="content">
+	<c:import url="${page}"></c:import>
 </div>
 
 </body>
