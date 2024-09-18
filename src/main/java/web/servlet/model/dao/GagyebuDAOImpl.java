@@ -70,22 +70,21 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				+ "ORDER BY\n"
 				+ "    연월;";
 		ResultSet rs = null;
-
+		Map<Integer, int[]> map = new HashMap<>();
+	
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
 			ps.setString(1, year + "%");
 			rs = ps.executeQuery();
-			if(rs.next()) {
-				
+			while(rs.next()) {
+				map.put(rs.getInt("연월"), new int[] {rs.getInt("월별입금액"), rs.getInt("월별지출액")});
 			}
-			
-			
 		}catch (SQLException e) {
 			System.out.println(e);
 		}
-		return null;
+		return map;
 	}
 	@Override
 	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth, String userId, String partnerId) throws SQLException {
@@ -334,7 +333,14 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 //		dao.expenseRatioByCategory();
 //		dao.getMonthGagyebu("2024-09", "id01", "id20");
 		
-	
+		// 믿음
+		Map<Integer, int[]> map = new HashMap<>();
+		map = dao.getYearTransaction("2024", "id1", "id20");
+		for (Map.Entry<Integer, int[]> m : map.entrySet()) {
+            Integer month = m.getKey();
+            int[] values = m.getValue();
+            System.out.println("월 :: " + month + ", 입금, 지출 :: " + Arrays.toString(values));
+        }
 
 	}//main	
 	*/
