@@ -27,3 +27,6 @@ replay_pid*
 
 # server config
 ServerInfo.java
+
+#.settings
+.settings/org.eclipse.wst.common.component
