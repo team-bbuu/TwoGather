@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `TwoGather`.`User` (
   `address` VARCHAR(200) NULL,
   `matching` VARCHAR(5) NOT NULL DEFAULT '매칭전',
   `start_date` DATE NULL,
-  `break_date` DATE NULL,
+  `break_date` DATETIME NULL,
   UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   PRIMARY KEY (`id`),
