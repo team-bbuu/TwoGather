@@ -55,7 +55,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	
 	@Override
-	public Schedule getLatestSchedule(String userId, String partnerId) {
+	public Schedule getLatestSchedule(String userId, String partnerId) throws SQLException{
 		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule "
 				+ "WHERE start_date>curdate() AND user_id IN ( ?,?) "
 				+ "ORDER BY datediff(start_date,curdate()) LIMIT 1";
@@ -71,15 +71,13 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			if(rs.next()) {
 				schedule = new Schedule(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
 			}
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		
 		
 		return schedule;
 	}
 	@Override
-	public ArrayList<Schedule> getMonthSchedule(String yearMonth, String userId, String partnerId) {
+	public ArrayList<Schedule> getMonthSchedule(String yearMonth, String userId, String partnerId)  throws SQLException{
 		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule \r\n"
 				+ "WHERE user_id IN (?,?) AND (start_date LIKE ? or end_date LIKE ?)";
 		ResultSet rs = null;
@@ -96,13 +94,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			while(rs.next()) {
 				list.add(new Schedule(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 			}
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		return list;
 	}
 	@Override
-	public void createSchedule(Schedule schedule) {
+	public void createSchedule(Schedule schedule) throws SQLException {
 		String query = "INSERT INTO schedule(User_id,is_personal,start_date,end_date,title,description) VALUES \r\n"
 				+ "(?,?,?,?,?,?);";
 		try(
@@ -116,13 +112,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			ps.setString(5, schedule.getTitle());
 			ps.setString(6, schedule.getDescription());
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		
 	}
 	@Override
-	public void updateSchedule(Schedule schedule) {
+	public void updateSchedule(Schedule schedule)  throws SQLException{
 		String query = "UPDATE schedule set user_id=? , is_personal = ? ,start_date=?"
 				+ ",end_date=?,title=?,description=? WHERE id=?;";
 		try(
@@ -137,13 +131,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			ps.setString(6, schedule.getDescription());
 			ps.setInt(7, schedule.getId());
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		
 	}
 	@Override
-	public void deleteSchedule(int scheduleId) {
+	public void deleteSchedule(int scheduleId)  throws SQLException{
 		String query = "DELETE FROM schedule WHERE id=?";
 		try(
 			Connection conn = getConnection();
@@ -151,8 +143,6 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 				){
 			ps.setInt(1, scheduleId);
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		
 	}

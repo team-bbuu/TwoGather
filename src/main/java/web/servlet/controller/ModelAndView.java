@@ -10,6 +10,7 @@ public class ModelAndView {
 	public ModelAndView(String path) {
 		this.path = path;
 	}
+	public ModelAndView() {}
 	public String getPath() {
 		return path;
 	}
