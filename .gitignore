@@ -26,7 +26,7 @@ hs_err_pid*
 replay_pid*
 
 # server config
-ServerInfo.java
+src/main/java/config/ServerInfo.java
 
 #.settings
 .settings/org.eclipse.wst.common.component

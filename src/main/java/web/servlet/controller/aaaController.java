@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public class aaaController implements Controller {
 
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		/*
 		 * 1. 폼값 받아서
 		 * 2. dao 생성 후 비즈니스 로직 호출
