@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +19,10 @@
         <div class="dashboard-content">
         	<!-- 각 jsp -->
         	<jsp:include page="monthGagyebu.jsp" />
+        	
+        	
+        	
+        	
         </div>
     </div>
 </body>

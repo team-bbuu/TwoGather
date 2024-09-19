@@ -330,13 +330,13 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 //		dao.getMonthGagyebu("2024-09", "id01", "id20");
 		
 		// 믿음
-		Map<Integer, int[]> map = new HashMap<>();
-		map = dao.getYearTransaction("2024", "id1", "id20");
-		for (Map.Entry<Integer, int[]> m : map.entrySet()) {
-            Integer month = m.getKey();
-            int[] values = m.getValue();
-            System.out.println("월 :: " + month + ", 입금, 지출 :: " + Arrays.toString(values));
-        }
+//		Map<Integer, int[]> map = new HashMap<>();
+//		map = dao.getYearTransaction("2024", "id01", "id20");
+//		for (Map.Entry<Integer, int[]> m : map.entrySet()) {
+//            Integer month = m.getKey();
+//            int[] values = m.getValue();
+//            System.out.println("월 :: " + month + ", 입금, 지출 :: " + Arrays.toString(values));
+//        }
 
 	}//main	
 	*/

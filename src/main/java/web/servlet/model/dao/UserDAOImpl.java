@@ -179,10 +179,9 @@ public class UserDAOImpl implements UserDAO {
 			
 			if(rs.next()) {
 				// 카테고리에 데이터가 없다면
-				String DBCategory = rs.getString("c.category_name");
-				if (DBCategory != null) javaCategory = DBCategory.split(",");
-			
-				vo = new User(id,
+				javaCategory = rs.getString("c.category_name").split(",");
+				if(javaCategory !=null) {
+					vo = new User(id,
 							  rs.getString("u.partner_id"),
 							  rs.getString("u.img_src"),
 							  password,
@@ -196,6 +195,7 @@ public class UserDAOImpl implements UserDAO {
 							  rs.getString("u.start_date"),
 							  rs.getString("u.break_date"),
 							  javaCategory);
+				}
 			}
 		}catch (Exception e) {
 			System.out.println(e);

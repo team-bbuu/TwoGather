@@ -1,5 +1,6 @@
 package web.servlet.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +14,22 @@ import web.servlet.model.vo.User;
 public class StoryController implements Controller{
 
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+		String path = "error.jsp";
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
+		
 		String id = user.getId();
 		String partnerId = user.getPartnerId();
+		try {
 		ArrayList<Story> list = StoryDAOImpl.getInstance().getAllStory(id, partnerId);
 		request.setAttribute("list", list);
-		return null;
+		path="story.jsp";
+		}catch (SQLException e) {
+			
+		}
+		request.setAttribute("page", path);
+		return new ModelAndView("dashboard.jsp");
 	}
 
 }

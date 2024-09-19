@@ -1,5 +1,6 @@
 package web.servlet.controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,27 +13,29 @@ import web.servlet.model.vo.User;
 public class BreakPartnerController implements Controller {
 
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response){
 		//변경할 값 생성
 		String matching = "매칭전";
 		String breakDate = String.valueOf(LocalDate.now());
 		//session에서 user 받아오기
 		HttpSession session = request.getSession();
 		UserDAOImpl dao = UserDAOImpl.getInstance();
-		User user = (User)session.getAttribute("user");
-		String userId = user.getId();
-		String partnerId = user.getPartnerId();
+		
+		try {
 		//유저 업데이트
+		User user = (User)session.getAttribute("user");
 		user.setMatching(matching);
 		user.setBreakDate(breakDate);
 		dao.updateUser(user);
 		session.setAttribute("user", user); // session에 변경된 유저 덮어쓰기
 		//partner 업데이트
-		user= dao.FindUser(partnerId);
-		user.setMatching(matching);
-		user.setBreakDate(breakDate);
-		dao.updateUser(user);
-		
+		User partner =(User) session.getAttribute("partner");
+		partner.setMatching(matching);
+		partner.setBreakDate(breakDate);
+		dao.updateUser(partner);
+		}catch (SQLException e) {
+			
+		}
 		return null;
 	}
 	

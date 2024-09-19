@@ -1,5 +1,6 @@
 package web.servlet.controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +13,10 @@ import web.servlet.model.vo.User;
 public class UpdateStoryController implements Controller{
 
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response){
 		//폼값 받아서
-		//id 값을 어떻게 받을지 모르겠음
-		int id = 0;
+		String path="error.jsp";
+		int id = Integer.parseInt(request.getParameter("storyId")) ;
 		String userId = ((User)request.getSession().getAttribute("user")).getId();
 		String uploadDate = String.valueOf(LocalDate.now());
 		String imgSrc = request.getParameter("imgSrc");
@@ -23,9 +24,15 @@ public class UpdateStoryController implements Controller{
 		String content = request.getParameter("content");
 		Story story= new Story(id, userId, uploadDate, imgSrc, title, content);
 		//DAO 호출
+		try {
 		StoryDAOImpl.getInstance().updateStory(story);
+		path = "story.jsp";
 		
-		return null;
+		}catch (SQLException e) {
+			
+		}
+		request.setAttribute("page", path);
+		return new ModelAndView("dashboard.jsp");
 	}
 
 }
