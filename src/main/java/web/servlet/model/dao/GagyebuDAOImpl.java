@@ -1,36 +1,39 @@
 package web.servlet.model.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import config.ServerInfo;
 import web.servlet.model.vo.Gagyebu;
+import web.servlet.model.vo.User;
 
 public class GagyebuDAOImpl implements GagyebuDAO {
 	DataSource ds;
 	private GagyebuDAOImpl() {
 		
-		try {
-			InitialContext ic = new InitialContext();
-			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
-		}catch (NamingException e) {
-			System.out.println(e);
-		}
+//		try {
+//			InitialContext ic = new InitialContext();
+//			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
+//		}catch (NamingException e) {
+//			System.out.println(e);
+//		}
+
 		
-		/*
 		try {
 			Class.forName(ServerInfo.DRIVER_NAME);
 		}catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
-		*/
+		
 	}
 	private static GagyebuDAOImpl dao = new GagyebuDAOImpl();
 	public static GagyebuDAOImpl getInstance() {
@@ -38,8 +41,8 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-		return ds.getConnection();
-		//return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+//		return ds.getConnection();
+		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -53,48 +56,290 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	@Override
-	public Map<Integer, int[]> getYearTransaction(String year) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) {
+		String query = "SELECT\n"
+				+ "    DATE_FORMAT(transaction_date, '%m') 연월,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'true' THEN price ELSE 0 END) 월별입금액,\n"
+				+ "    SUM(CASE WHEN is_deposit = 'false' THEN price ELSE 0 END) 월별지출액\n"
+				+ "FROM\n"
+				+ "    gagyebu\n"
+				+ "WHERE\n"
+				+ "	transaction_date LIKE ?\n"
+				+ "GROUP BY\n"
+				+ "    DATE_FORMAT(transaction_date, '%m')\n"
+				+ "ORDER BY\n"
+				+ "    연월;";
+		ResultSet rs = null;
+		Map<Integer, int[]> map = new HashMap<>();
+	
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, year + "%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				map.put(rs.getInt("연월"), new int[] {rs.getInt("월별입금액"), rs.getInt("월별지출액")});
+			}
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
+		return map;
 	}
 	@Override
-	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void createGagyebu(Gagyebu g, String userId) {
-		// TODO Auto-generated method stub
+	public ArrayList<Gagyebu> getMonthGagyebu(String yearMonth, String userId, String partnerId) throws SQLException {
+		// 커플의 각 아이디로 월별 가계부 데이터 조회 
+		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	    	conn = getConnection();
+	    	
+	    	String query = "select id, User_id, transaction_date, is_deposit, category, price, title, "
+	    			+ "payment_type, etc from Gagyebu where transaction_date like ? and (User_id=? or User_id=?);";
+	    	ps = conn.prepareStatement(query);
+	    	ps.setString(1, yearMonth+"%"); // "2024-09%"
+	    	ps.setString(2, userId);
+	    	ps.setString(3, partnerId);
+	    	
+	    	rs = ps.executeQuery();
+	    	
+			// 리스트에 추가
+			while(rs.next()) {				
+				Gagyebu gagyebu = new Gagyebu();
+				
+			    gagyebu.setId(rs.getInt("id"));
+			    gagyebu.setUserId(rs.getString("User_id"));
+			    gagyebu.setTransactionDate(rs.getString("transaction_date"));
+			    gagyebu.setDeposite(rs.getBoolean("is_deposit"));
+			    gagyebu.setCategory(rs.getString("category"));
+			    gagyebu.setPrice(rs.getInt("price"));
+			    gagyebu.setTitle(rs.getString("title"));
+			    gagyebu.setPaymentType(rs.getString("payment_type"));
+			    gagyebu.setEtc(rs.getString("etc"));
+				
+				gagyebus.add(gagyebu);
+			}
+			
+			System.out.println("getMonthGagyebu : " + gagyebus);
+	    	
+	    }catch (Exception e) {
+			System.out.println("getMonthGagyebu err : " + e);
+		}finally {
+			closeAll(rs, ps, conn);
+		}
 		
+		return gagyebus;
 	}
 	@Override
-	public void updateGagyebu(Gagyebu g, String userId) {
-		// TODO Auto-generated method stub
-		
+	public void createGagyebu(Gagyebu gagyebu) {
+		String query = "INSERT INTO gagyebu (user_id,transaction_date,is_deposit,category,price,title,payment_type,etc) "
+				+ " VALUES (?,?,?,?,?,?,?,?);";
+		ResultSet rs = null;
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, gagyebu.getUserId());
+			ps.setString(2, gagyebu.getTransactionDate());
+			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(4, gagyebu.getCategory());
+			ps.setInt(5, gagyebu.getPrice());
+			ps.setString(6, gagyebu.getTitle());
+			ps.setString(7, gagyebu.getPaymentType());
+			ps.setString(8, gagyebu.getEtc());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
 	}
 	@Override
-	public void deleteGagyebu(Gagyebu g, String userId) {
-		// TODO Auto-generated method stub
-		
+	public void updateGagyebu(Gagyebu gagyebu) {
+		String query = "UPDATE gagyebu SET user_id=?,transaction_date=?,is_deposit=?,category=?,price=?,title=?,payment_type=?,etc=? WHERE id=?;";
+		ResultSet rs = null;
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, gagyebu.getUserId());
+			ps.setString(2, gagyebu.getTransactionDate());
+			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(4, gagyebu.getCategory());
+			ps.setInt(5, gagyebu.getPrice());
+			ps.setString(6, gagyebu.getTitle());
+			ps.setString(7, gagyebu.getPaymentType());
+			ps.setString(8, gagyebu.getEtc());
+			ps.setInt(9, gagyebu.getId());
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	@Override
+	public void deleteGagyebu(int GagyebuId) {
+		String query = "DELETE FROM gagyebu WHERE id = ?";
+		ResultSet rs = null;
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setInt(1, GagyebuId);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
 	}
 	@Override
 	public int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus) {
-		// TODO Auto-generated method stub
-		return 0;
+		int depositTotal = 0;
+		for(Gagyebu gagyebu : gagyebus) {
+			if(gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+		}
+		return depositTotal;
 	}
 	@Override
 	public int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus) {
-		// TODO Auto-generated method stub
-		return 0;
+		int depositTotal = 0;
+		for(Gagyebu gagyebu : gagyebus) {
+			if(!gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+		}
+		return depositTotal;
 	}
-	@Override
-	public Map<String, Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void updateCategory(String[] categories, String userId) {
-		// TODO Auto-generated method stub
+	
+	// 가계부 리스트 생성 테스트 메소드
+	public ArrayList<Gagyebu> gagyebuList(String userId) throws SQLException {
+		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
 		
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+			conn = getConnection();
+			String query = "SELECT category, price FROM Gagyebu WHERE User_id=?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, userId);
+			
+			rs = ps.executeQuery();
+			
+			// 리스트에 추가
+			while(rs.next()) {
+				String category = rs.getString("category");
+				int price = rs.getInt("price");
+				
+				Gagyebu gagyebu = new Gagyebu();
+				gagyebu.setCategory(category);
+				gagyebu.setPrice(price);
+				
+				gagyebus.add(gagyebu);
+			}
+			
+		}catch (Exception e) {
+			System.out.println("가계부 리스트 만들기 e : " + e);
+		}finally {
+			closeAll(ps, conn);
+		}
+		
+		return gagyebus;
 	}
+	
+	/* 항목별 지출 비율 데이터 조회 메소드 */
+	@Override
+//	public Map<String, Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus)
+	public Map<String, Integer> expenseRatioByCategory() throws SQLException {
+		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
+		Map<String, Integer> categoriesMap = new HashMap<String, Integer>();
+		
+		gagyebus = gagyebuList("id01"); // 테스트
+		
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    
+	    //System.out.println("gagyebu list : " + gagyebus);
+		
+		try {
+			conn = getConnection();
+			String query="";
+			
+			// 각 항목별 금액 집계
+			for(Gagyebu gagyebu : gagyebus) {
+				String category = gagyebu.getCategory();
+				int amount = gagyebu.getPrice();
+				
+				// 해당 카테고리에 금액을 더해나감
+				categoriesMap.put(category, categoriesMap.getOrDefault(category, 0) + amount);
+			}
+			
+			System.out.println("expenseRatioByCategory : " + categoriesMap);
+			
+		}catch (Exception e) {
+			System.out.println("expenseRatioByCategory e : " + e);
+		}finally {
+			closeAll(ps, conn);
+		}
+		
+		return categoriesMap;
+	}
+	
+	@Override
+	public void updateCategory(String[] categories, String userId) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String DBCategory = String.join(",", categories);
+		try {
+			conn = getConnection();
+			String query = "UPDATE category SET category_name = ? WHERE User_id = ?";
+			ps = conn.prepareStatement(query);
+			ps.setString(1, DBCategory);
+			ps.setString(2, userId);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			closeAll(ps, conn);
+		}
+	}
+	
+	// 단위테스트
+	public static void main(String[] args) throws Exception {
+
+	// emilyhong
+		GagyebuDAO dao = GagyebuDAOImpl.getInstance();
+		Gagyebu gagyebu = null;
+	/*
+		dao.expenseRatioByCategory();
+		// believeme
+		String[] category = {"데이트"};
+		String[] category2 = {"식비"};
+		String[] category3 = {"데이트", "식비"};
+		GagyebuDAOImpl.getInstance().updateCategory(category3, "id1");
+		*/
+		/*
+		gagyebu = new Gagyebu(0, "id01", "2024-09-16", false, "식비", 30000, "제목", "카드", "기타");
+		dao.createGagyebu(gagyebu);
+		*/
+		/*
+		gagyebu = new Gagyebu(193, "id20", "2024-09-16", false, "식비", 90000, "제목", "카드", "기타");
+		dao.updateGagyebu(gagyebu);
+		*/
+		//dao.deleteGagyebu(193);
+		
+
+		// 현정 
+//		GagyebuDAO dao = GagyebuDAOImpl.getInstance();	
+//		dao.expenseRatioByCategory();
+//		dao.getMonthGagyebu("2024-09", "id01", "id20");
+		
+		// 믿음
+//		Map<Integer, int[]> map = new HashMap<>();
+//		map = dao.getYearTransaction("2024", "id01", "id20");
+//		for (Map.Entry<Integer, int[]> m : map.entrySet()) {
+//            Integer month = m.getKey();
+//            int[] values = m.getValue();
+//            System.out.println("월 :: " + month + ", 입금, 지출 :: " + Arrays.toString(values));
+//        }
+
+	}//main	
 }

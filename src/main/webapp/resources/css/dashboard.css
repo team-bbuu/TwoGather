@@ -1,0 +1,26 @@
+@charset "UTF-8";
+   /* 공통 */
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+   
+body {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #efeefe; /* 임시 색상 */
+}
+
+.dashboard-container {
+    display: flex;
+    width: 90%;
+    height: 90vh;
+	background-color: #f7f6fc;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
