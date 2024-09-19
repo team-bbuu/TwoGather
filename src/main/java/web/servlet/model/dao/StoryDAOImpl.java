@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -54,7 +52,7 @@ public class StoryDAOImpl implements StoryDAO {
 	}
 	
 	@Override
-	public Story getLatestStory(String userId, String partnerId) {
+	public Story getLatestStory(String userId, String partnerId) throws SQLException {
 		String query = "SELECT id,user_id,upload_date,img_src,title,content FROM story WHERE user_id IN (?,?) ORDER BY upload_date desc LIMIT 1";
 		ResultSet rs = null;
 		Story story = null;
@@ -68,13 +66,11 @@ public class StoryDAOImpl implements StoryDAO {
 			if(rs.next()) {
 				story= new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 			}
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		return story;
 	}
 	@Override
-	public ArrayList<Story> getAllStory(String userId, String partnerId) {
+	public ArrayList<Story> getAllStory(String userId, String partnerId) throws SQLException {
 		String query = "SELECT id,user_id,upload_date,img_src,title,content FROM story WHERE user_id IN (?,?) ORDER BY upload_date desc";
 		ResultSet rs = null;
 		ArrayList<Story> list = new ArrayList<Story>();
@@ -88,13 +84,11 @@ public class StoryDAOImpl implements StoryDAO {
 			while(rs.next()) {
 				list.add(new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
 			}
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		return list;
 	}
 	@Override
-	public void createStory(Story story) {
+	public void createStory(Story story)  throws SQLException{
 		String query = "insert into story(user_id,upload_date,img_src,title,content) values (?,?,?,?,?)";
 		try(
 			Connection conn = getConnection();
@@ -106,14 +100,11 @@ public class StoryDAOImpl implements StoryDAO {
 			ps.setString(4, story.getTitle());
 			ps.setString(5, story.getContent());
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 	}
 	@Override
-	public void updateStory(Story story) {
+	public void updateStory(Story story)  throws SQLException{
 		String query = "UPDATE story set user_id=?, upload_date=?,img_src=?,title=?,content=? WHERE id=?";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -126,22 +117,17 @@ public class StoryDAOImpl implements StoryDAO {
 			ps.setInt(6, story.getId());
 			ps.executeUpdate();
 			
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 	}
 	@Override
-	public void deleteStory(int storyId) {
+	public void deleteStory(int storyId)  throws SQLException{
 		String query = "DELETE FROM story WHERE id = ?";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
 			ps.setInt(1, storyId);
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 	}
 	/*

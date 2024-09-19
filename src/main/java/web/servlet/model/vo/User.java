@@ -171,6 +171,15 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
+	
+
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
