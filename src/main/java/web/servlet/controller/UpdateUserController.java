@@ -50,7 +50,7 @@ public class UpdateUserController implements Controller {
 			
 		}
 		
-		
+		request.setAttribute("page", path);
 		return new ModelAndView("dashboard.jsp");
 	}
 

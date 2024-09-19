@@ -7,14 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import config.ServerInfo;
 import web.servlet.model.vo.Gagyebu;
-import web.servlet.model.vo.User;
 
 public class GagyebuDAOImpl implements GagyebuDAO {
 	DataSource ds;
@@ -135,7 +133,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	public void createGagyebu(Gagyebu gagyebu)  throws SQLException{
 		String query = "INSERT INTO gagyebu (user_id,transaction_date,is_deposit,category,price,title,payment_type,etc) "
 				+ " VALUES (?,?,?,?,?,?,?,?);";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -154,7 +151,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	@Override
 	public void updateGagyebu(Gagyebu gagyebu)  throws SQLException{
 		String query = "UPDATE gagyebu SET user_id=?,transaction_date=?,is_deposit=?,category=?,price=?,title=?,payment_type=?,etc=? WHERE id=?;";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -176,7 +172,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	@Override
 	public void deleteGagyebu(int GagyebuId)  throws SQLException{
 		String query = "DELETE FROM gagyebu WHERE id = ?";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -197,84 +192,71 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	@Override
 	public int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus) {
-		int depositTotal = 0;
+		int expenseTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {
-			if(!gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+			if(!gagyebu.isDeposit())	expenseTotal += gagyebu.getPrice();
 		}
-		return depositTotal;
+		return expenseTotal;
 	}
 	
 	// 가계부 리스트 생성 테스트 메소드
-	public ArrayList<Gagyebu> gagyebuList(String userId) throws SQLException {
-		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
-		
-	    Connection conn = null;
-	    PreparedStatement ps = null;
-	    ResultSet rs = null;
-	    
-	    try {
-			conn = getConnection();
-			String query = "SELECT category, price FROM Gagyebu WHERE User_id=?";
-			ps = conn.prepareStatement(query);
-			ps.setString(1, userId);
-			
-			rs = ps.executeQuery();
-			
-			// 리스트에 추가
-			while(rs.next()) {
-				String category = rs.getString("category");
-				int price = rs.getInt("price");
-				
-				Gagyebu gagyebu = new Gagyebu();
-				gagyebu.setCategory(category);
-				gagyebu.setPrice(price);
-				
-				gagyebus.add(gagyebu);
-			}
-			
-		}catch (Exception e) {
-			System.out.println("가계부 리스트 만들기 e : " + e);
-		}finally {
-			closeAll(ps, conn);
-		}
-		
-		return gagyebus;
-	}
+	/*
+	 * public ArrayList<Gagyebu> gagyebuList(String userId) throws SQLException {
+	 * ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
+	 * 
+	 * Connection conn = null; PreparedStatement ps = null; ResultSet rs = null;
+	 * 
+	 * try { conn = getConnection(); String query =
+	 * "SELECT category, price FROM Gagyebu WHERE User_id=?"; ps =
+	 * conn.prepareStatement(query); ps.setString(1, userId);
+	 * 
+	 * rs = ps.executeQuery();
+	 * 
+	 * // 리스트에 추가 while(rs.next()) { String category = rs.getString("category"); int
+	 * price = rs.getInt("price");
+	 * 
+	 * Gagyebu gagyebu = new Gagyebu(); gagyebu.setCategory(category);
+	 * gagyebu.setPrice(price);
+	 * 
+	 * gagyebus.add(gagyebu); }
+	 * 
+	 * }catch (Exception e) { System.out.println("가계부 리스트 만들기 e : " + e); }finally {
+	 * closeAll(ps, conn); }
+	 * 
+	 * return gagyebus; }
+	 */
 	
 	/* 항목별 지출 비율 데이터 조회 메소드 */
 	@Override
-//	public Map<String, Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus)
-	public Map<String, Integer> expenseRatioByCategory() throws SQLException {
-		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
+	public Map<String, Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus) {
+//	public Map<String, Integer> expenseRatioByCategory() throws SQLException {
+		//ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
 		Map<String, Integer> categoriesMap = new HashMap<String, Integer>();
 		
-		gagyebus = gagyebuList("id01"); // 테스트
+		//gagyebus = gagyebuList("id01"); // 테스트
 		
-	    Connection conn = null;
-	    PreparedStatement ps = null;
+	    //Connection conn = null;
+	    //PreparedStatement ps = null;
 	    
 	    //System.out.println("gagyebu list : " + gagyebus);
 		
-		try {
-			conn = getConnection();
-			String query="";
-			
-			// 각 항목별 금액 집계
-			for(Gagyebu gagyebu : gagyebus) {
-				String category = gagyebu.getCategory();
-				int amount = gagyebu.getPrice();
-				
-				// 해당 카테고리에 금액을 더해나감
-				categoriesMap.put(category, categoriesMap.getOrDefault(category, 0) + amount);
-			}
-			
-			System.out.println("expenseRatioByCategory : " + categoriesMap);
-			
-		}catch (Exception e) {
-			System.out.println("expenseRatioByCategory e : " + e);
-		}finally {
-			closeAll(ps, conn);
-		}
+	    // 각 항목별 금액 집계
+	    for(Gagyebu gagyebu : gagyebus) {
+	    	String category = gagyebu.getCategory();
+	    	int amount = gagyebu.getPrice();
+	    	
+	    	// 해당 카테고리에 금액을 더해나감
+	    	categoriesMap.put(category, categoriesMap.getOrDefault(category, 0) + amount);
+	    }
+	    System.out.println("expenseRatioByCategory : " + categoriesMap);
+		/*
+		 * try { conn = getConnection();
+		 * 
+		 * 
+		 * 
+		 * }catch (Exception e) { System.out.println("expenseRatioByCategory e : " + e);
+		 * }finally { closeAll(ps, conn); }
+		 */
 		
 		return categoriesMap;
 	}

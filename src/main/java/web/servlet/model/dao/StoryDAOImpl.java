@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -107,7 +105,6 @@ public class StoryDAOImpl implements StoryDAO {
 	@Override
 	public void updateStory(Story story)  throws SQLException{
 		String query = "UPDATE story set user_id=?, upload_date=?,img_src=?,title=?,content=? WHERE id=?";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -125,7 +122,6 @@ public class StoryDAOImpl implements StoryDAO {
 	@Override
 	public void deleteStory(int storyId)  throws SQLException{
 		String query = "DELETE FROM story WHERE id = ?";
-		ResultSet rs = null;
 		try(
 			Connection conn = getConnection();
 			PreparedStatement ps = conn.prepareStatement(query);

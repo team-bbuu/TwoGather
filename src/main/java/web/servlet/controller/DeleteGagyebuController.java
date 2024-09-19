@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.servlet.model.dao.GagyebuDAOImpl;
-import web.servlet.model.vo.Gagyebu;
 
 // 가계부 삭제 컨트롤러
 public class DeleteGagyebuController implements Controller{
