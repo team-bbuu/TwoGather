@@ -1,10 +1,8 @@
 package web.servlet.controller;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 import web.servlet.model.dao.UserDAOImpl;
 import web.servlet.model.vo.User;
 
@@ -12,39 +10,35 @@ import web.servlet.model.vo.User;
 public class SetDDayController implements Controller {
 
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		/*
-		 * 1. 폼값 받아서
-		 * 2. dao 생성 후 비즈니스 로직 호출
-		 * 3. 바인딩
-		 * 4. mv에 값 담아서 리턴
-		 */
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		
-		// 디데이의 년도와 월,일 받아옴
-		String id = request.getParameter("id");
-		String date = request.getParameter("date");
+		// 디데이의 설정한 날짜 받아옴
+		String startDate = request.getParameter("startDate"); // 설정한 날짜
+		User user = (User)session.getAttribute("user");
+		User partner = (User)session.getAttribute("partner");
 		
-		String path = "update_fail.jsp"; // default 업데이트 실패
-		// 2. 받아온 년,월,일 저장
-		try {
-			User user = UserDAOImpl.getInstance().FindUser(id); // 유저정보
-			
-			if (user != null) {
-				// start date 변
-				user.setStartDate(date);
+		// 받아온 설정한 날짜 저장
+		try {			
+			if (user != null) {	
+				// 유저, 파트너 startdate 변경 
+				user.setStartDate(startDate);
+				partner.setStartDate(startDate);
 
-				// 업데이트 실행
+				// 커플 각 정보 업데이트
 				UserDAOImpl.getInstance().updateUser(user);
+				UserDAOImpl.getInstance().updateUser(partner);
 
-                // 성공 페이지로 이동
-                request.setAttribute("user", user);
-                path = "update_success.jsp"; // 성공 페이지 설정
+                // 세션 갱신
+				session.setAttribute("user", user);
+				session.setAttribute("partner", partner);
+
 			}
-			
-		}catch (SQLException e) {
+		}catch (Exception e) {
+			request.setAttribute("page", "error.jsp");
 			
 		}
-		return new ModelAndView(null, false);
+		return new ModelAndView("dashboard.jsp");
 	}
 
 }
