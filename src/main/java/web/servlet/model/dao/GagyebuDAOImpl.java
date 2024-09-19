@@ -56,7 +56,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	@Override
-	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) {
+	public Map<Integer, int[]> getYearTransaction(String year, String userId, String partnerId) throws SQLException{
 		String query = "SELECT\n"
 				+ "    DATE_FORMAT(transaction_date, '%m') 연월,\n"
 				+ "    SUM(CASE WHEN is_deposit = 'true' THEN price ELSE 0 END) 월별입금액,\n"
@@ -81,8 +81,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 			while(rs.next()) {
 				map.put(rs.getInt("연월"), new int[] {rs.getInt("월별입금액"), rs.getInt("월별지출액")});
 			}
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 		return map;
 	}
@@ -134,7 +132,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		return gagyebus;
 	}
 	@Override
-	public void createGagyebu(Gagyebu gagyebu) {
+	public void createGagyebu(Gagyebu gagyebu)  throws SQLException{
 		String query = "INSERT INTO gagyebu (user_id,transaction_date,is_deposit,category,price,title,payment_type,etc) "
 				+ " VALUES (?,?,?,?,?,?,?,?);";
 		ResultSet rs = null;
@@ -151,12 +149,10 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 			ps.setString(7, gagyebu.getPaymentType());
 			ps.setString(8, gagyebu.getEtc());
 			ps.executeUpdate();
-		}catch (SQLException e) {
-			System.out.println(e);
 		}
 	}
 	@Override
-	public void updateGagyebu(Gagyebu gagyebu) {
+	public void updateGagyebu(Gagyebu gagyebu)  throws SQLException{
 		String query = "UPDATE gagyebu SET user_id=?,transaction_date=?,is_deposit=?,category=?,price=?,title=?,payment_type=?,etc=? WHERE id=?;";
 		ResultSet rs = null;
 		try(
@@ -178,7 +174,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		}
 	}
 	@Override
-	public void deleteGagyebu(int GagyebuId) {
+	public void deleteGagyebu(int GagyebuId)  throws SQLException{
 		String query = "DELETE FROM gagyebu WHERE id = ?";
 		ResultSet rs = null;
 		try(

@@ -329,7 +329,7 @@ public class UserDAOImpl implements UserDAO {
 //		System.out.println("id :: " + id);
 //		String password = UserDAOImpl.getInstance().findPass("id1", "1997-02-10");
 //		System.out.println("password :: " + password);
-//		User vo = UserDAOImpl.getInstance().login("id1", "pass1");
+//		User vo = UserDAOImpl.getInstance().login("id01", "pass1");
 //		System.out.println("vo :: " + Arrays.toString(vo.getCategory()));
 //		System.out.println(vo);
 	}
