@@ -11,4 +11,5 @@ public interface StoryDAO {
 	void createStory (Story story) throws SQLException;// 스토리 등록
 	void updateStory (Story story) throws SQLException; // 스토리 수정
 	void deleteStory (int storyId) throws SQLException; // 스토리 삭제
+	void deleteStory(String userId) throws SQLException;
 }

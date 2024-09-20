@@ -183,6 +183,19 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		}
 	}
 	@Override
+	public void deleteGagyebu(String userId)  throws SQLException{
+		String query = "DELETE FROM gagyebu WHERE user_id = ?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	@Override
 	public int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus) {
 		int depositTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {

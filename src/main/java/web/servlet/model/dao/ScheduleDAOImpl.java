@@ -144,6 +144,18 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		}
 		
 	}
+	@Override
+	public void deleteSchedule(String userId)  throws SQLException{
+		String query = "DELETE FROM schedule WHERE user_id=?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		}
+		
+	}
 	/*
 	public static void main(String[] args) {
 		ScheduleDAO dao = getInstance();

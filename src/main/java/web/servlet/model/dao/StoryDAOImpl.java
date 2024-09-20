@@ -130,6 +130,18 @@ public class StoryDAOImpl implements StoryDAO {
 			ps.executeUpdate();
 		}
 	}
+	
+	@Override
+	public void deleteStory(String userId)  throws SQLException{
+		String query = "DELETE FROM story WHERE user_id = ?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		}
+	}
 	/*
 	public static void main(String[] args) {
 		StoryDAOImpl dao = getInstance();

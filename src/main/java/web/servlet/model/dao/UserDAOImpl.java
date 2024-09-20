@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -331,6 +334,22 @@ public class UserDAOImpl implements UserDAO {
 //		User vo = UserDAOImpl.getInstance().login("id01", "pass1");
 //		System.out.println("vo :: " + Arrays.toString(vo.getCategory()));
 //		System.out.println(vo);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			Date formatDate = formatter.parse("2024-09-17 11:23:45");
+			Date now = new Date();
+			
+			String breakDate =  formatter2.format(formatDate);
+			String nowDate = formatter2.format(now);
+			
+			System.out.println(nowDate.compareTo(breakDate));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

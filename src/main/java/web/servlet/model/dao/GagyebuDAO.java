@@ -12,6 +12,7 @@ public interface GagyebuDAO {
 	void createGagyebu (Gagyebu g) throws SQLException; // 가계부 등록
 	void updateGagyebu (Gagyebu g) throws SQLException; // 가계부 수정
 	void deleteGagyebu (int gagyebuId) throws SQLException; // 가계부 삭제
+	void deleteGagyebu(String userId) throws SQLException;
 	int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus); // 한달 총 입금액 조회 메소드
 	int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus); // 한달 총 지출액 조회 메소드
 	Map<String,Integer> expenseRatioByCategory(ArrayList<Gagyebu> gagyebus); // 항목별 지출 비율 데이터 조회 메소드
