@@ -13,12 +13,16 @@ public class CheckIdController implements Controller {
 		String id =request.getParameter("id");
 		String path = "";
 		boolean isExist = false;
+
 		try {
 			User user = UserDAOImpl.getInstance().FindUser(id);
 			if(user!=null) {
 				isExist = true;
 			}
+			// 유저 존재유무 체크 
 			request.setAttribute("isExist", isExist);
+			// invitePartner에서 matching 확인가능 (추후 ajax 에서 객체로 핸들가능할지 확인하기)
+			request.setAttribute("user", user); 
 		} catch (Exception e) {
 			
 		}
