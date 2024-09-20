@@ -9,7 +9,6 @@ public class HandlerMapping {
 	
 	Controller createComponent(String command){
 		Controller controller = null;
-		/*
 		if(command.equals("login.do")) {
 			controller = new LoginController();
 		}else if(command.equals("findId.do")) {
@@ -33,7 +32,7 @@ public class HandlerMapping {
 		}else if(command.equals("setDDay.do")) {
 			 controller = new SetDDayController();
 		}else if(command.equals("gagyebu.do")) {
-			 controller = new GagyebuCreateController();
+			 controller = new GagyebuController();
 		}else if(command.equals("updateGagyebu.do")) {
 			 controller = new UpdateGagyebuController();
 		}else if(command.equals("deleteGagyebu.do")) {
@@ -67,7 +66,6 @@ public class HandlerMapping {
 		}else if(command.equals("deleteStory.do")) {
 			 controller = new DeleteStoryController();
 		}
-		*/
 		
 		return controller;
 	}
