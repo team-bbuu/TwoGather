@@ -20,12 +20,16 @@ public class MainController implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("main controller =========================");
+		
 		String page = "error.jsp";
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		//폼값 받아서
-		String userId = user.getId();
-		String partnerId = user.getPartnerId();
+//		String userId = user.getId();
+		String userId = "id01"; // test
+//		String partnerId = user.getPartnerId();
+		String partnerId = "id20"; // test
 		String year = String.valueOf(LocalDate.now()).substring(0, 4);
 		String yearMonth= String.valueOf(LocalDate.now()).substring(0, 7);
 		try {
@@ -44,12 +48,16 @@ public class MainController implements Controller {
 		request.setAttribute("map", map);
 		request.setAttribute("deposit", depositTotal);
 		request.setAttribute("expense", expenseTotal);
+		
+		System.out.println("getYearTransaction : " + map);
 		page= "main.jsp";
+		
 		}catch (Exception e) {
-			
+			System.out.println("main controller e : " + e);
 		}
+		
 		request.setAttribute("page", page);
-		return new ModelAndView("dashboard.jsp");
+		return new ModelAndView("dashboard.jsp", false);
 	}
 	
 }

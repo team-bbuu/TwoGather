@@ -72,6 +72,8 @@ public class UserDAOImpl implements UserDAO {
 						rs.getString("birthdate"), rs.getString("email"), rs.getString("gender"), rs.getString("address"), rs.getString("matching"), rs.getString("start_date"),
 						rs.getString("break_date"));
 			}
+		}catch (Exception e) {
+			System.out.println("findUser e : " + e);
 		} finally {
 			closeAll(rs, ps, conn);
 		}
