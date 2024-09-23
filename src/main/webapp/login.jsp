@@ -5,16 +5,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>login</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<style type="text/css">
 		body {
-			margin: 0px;
-			padding: 0px;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #efeefe; /* 임시 색상 */
+			text-align: center;
 		}
-		#total {
+		.dashboard-container {
+		    display: flex;
+		    width: 90%;
+		    height: 90vh;
+			background-color: #f7f6fc;
+		    border-radius: 15px;
+		    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		    overflow: hidden;
+		    margin: 0px;
+			padding: 0px;
 			display: flex;
 		}
+		
 		#left {
-			width: 50%;
+			width: 100%;
 			height: 1080px;
 			background: #dbc8fb;
 			display: flex;
@@ -23,34 +38,60 @@
 		}
 		#left>img {
 			max-width: 100%;
-			max-height: 100%;
+			height: 100%;
 			display: block;
 		}
 		
 		#right {
-			width: 50%;
+			width: 100%;
 			height: 1080px;
-			background: #c8fbf5;
 		}
 		#right-title {
 			font-size: 32px;
 			text-align: center;
 			margin-top: 200px;
 		}
-		#right-insert{
-			text-align: center;
-			
-		}
-		#right-login-btn {
-			text-align: center;
-		}
-		#right-footer {
-			text-align: center;
-		}
+		
+		
 	</style>
+	<script type="text/javascript">
+		$(function(){
+			$('#loginbtn').on("click",function(){
+				event.preventDefault();
+				let id = $('#id').val();
+				let password = $('#password').val();
+				 $.ajax({
+					type: "post",
+					url: "login.do",
+					data: {
+						"id":id,
+						"password":password,
+						
+					},
+					success: function (isCorrect) {
+						if(isCorrect != null){
+							if(isCorrect=="true"){
+								location.href="main.do"
+							}else{
+								$('#loginResult').html("<font color='crimson'> 잘못된 ID 또는 PASS 입니다. 다시 시도해 주세요.</font>")
+							}
+						}
+							
+					},
+					error: function() {
+						loaction.href="error.jsp";
+					},
+					
+				}) 
+				
+			})//onclick
+			
+		})//ready
+		
+	</script>
 </head>
 <body>
-	<div id="total">
+	<div  class="dashboard-container">
 		<div id="left">
 			<img src="./image/login.jpg">
 		</div>
@@ -58,15 +99,17 @@
 			<div id="right-title">
 				로그인하기<br /><br/>
 			</div>
-			<div id="right-insert">
-				<input type="text" placeholder="아이디를 입력해주세요"><br/>
-				<input type="password" placeholder="패스워드를 입력해주세요">
-			</div>
-			<div id="right-login-btn">
-				<br /><button>로그인하기</button>
-			</div>
+			<form action="login.do">
+				<div id="insertId">ID</div>
+				<input type="text" placeholder="아이디" name="id" id="id"><br/>
+				<div id="insertPass">PASS</div>
+				<input type="password" placeholder="비밀번호" name="password" id="password">
+			
+				<div id="loginResult"></div><br />
+				<button id="loginbtn">로그인하기</button>
+			</form>
 			<div id="right-footer">
-				<br />아이디찾기 | 비밀번호찾기 | 회원가입
+				<br /><a href="findId.jsp">아이디찾기</a> | <a href="findPassword.jsp">비밀번호찾기</a> | <a href="register.jsp">회원가입</a>
 			</div>
 		</div>
 	</div>

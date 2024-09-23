@@ -19,7 +19,7 @@ public class GagyebuMonthController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		String userId = request.getParameter("userId");
 		String partnerId = request.getParameter("partnerId");
-		String path = "gagyebu.jsp";
+		String path = "monthGagyebu.jsp";
 		GagyebuDAOImpl dao = GagyebuDAOImpl.getInstance();
 		
 		// 현재날짜 받아오기

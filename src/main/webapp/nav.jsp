@@ -22,10 +22,13 @@
       <a class="nav-link" href="main.jsp">main</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="story.do">Story</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="schedule.do">Schedule</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="gagyebu.do">Gagyebu</a>
     </li>
   </ul>
 </body>

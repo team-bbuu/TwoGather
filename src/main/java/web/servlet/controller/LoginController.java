@@ -13,28 +13,31 @@ public class LoginController implements Controller{
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		String page = "error.jsp";
+		
 		//폼값 받아서
 		String id = request.getParameter("id");
-		String pass = request.getParameter("passward");
+		String pass = request.getParameter("password");
 		//dao 호출
 		try {
 		User user = UserDAOImpl.getInstance().login(id, pass);
 		HttpSession session = request.getSession();
+		boolean isCorrect  = false;
 		//바인딩
 		if(user!=null) {
+			isCorrect = true;
 			session.setAttribute("user", user);
 			if(user.getMatching().equals("매칭완료")) {
 				User partner = UserDAOImpl.getInstance().FindUser(user.getPartnerId());
 				User partner2 = new User(partner.getId(), partner.getNickname(), partner.getImgSrc());
 				session.setAttribute("partner", partner2);
 			}
-			page="main.do";
-		}
-		}catch (SQLException e) {
 			
-		}request.setAttribute("page", page);
-		return new ModelAndView("dashboard.jsp");
+		}
+		response.getWriter().write(String.valueOf(isCorrect));
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 
 }

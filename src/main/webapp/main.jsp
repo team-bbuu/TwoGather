@@ -47,12 +47,6 @@
 	</div>
 </div>
 
-<div id="nav">
-	<c:import url="nav.jsp"></c:import>
-</div>
-<div id="content">
-	<c:import url="${page}"></c:import>
-</div>
-
+dwadawdawdawdwadwadawdawdwad
 </body>
 </html>

@@ -23,7 +23,7 @@ public class GagyebuController implements Controller{
 		User user = (User)session.getAttribute("user");
 		User partner = (User)session.getAttribute("partner");
 		
-		String path = "monthGagyebu.jsp";
+		String path = "gagyebu.jsp";
 		
 		try {
 			gagyebus = GagyebuDAOImpl.getInstance().getMonthGagyebu(yearMonth, user.getId(), partner.getId());
