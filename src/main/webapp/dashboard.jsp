@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <!-- css 파일 -->
+
 <%-- 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dashboard.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/monthGagyebu.css"> --%>
 	<style type="text/css">
@@ -115,12 +116,11 @@
     <div class="dashboard-container">
         <!-- 왼쪽 영역 : 사이드바jsp -->
 		<jsp:include page="nav.jsp" />
-<!--         <div class="nav"style="width: 25%; height: 100%; background: #fff;"></div>  -->
 
         <!-- 오른쪽 영역 : 콘텐츠 영역 -->
         <div class="dashboard-content">
         	<!-- 각 jsp -->
-        	<c:import url="${page }"></c:import>
+        	<c:import url="${page}"></c:import>
         	
         	<!-- 초대하기 모달 -->
 			<div class="modal fade" id="myModal">

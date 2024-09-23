@@ -24,7 +24,7 @@
 </style>
 <script type="text/javascript">
 	$(()=>{
-		$(".card-body").on("click", function() {	
+		$(".card-body").on("click", function() {
 			$("#img").attr("src", "${pageContext.request.contextPath}/uploads/" + $(this).prev().attr("id"));
 			$("#title").html($(this).find(".title").html());
 			$("#content").html($(this).find(".content").html());
@@ -96,7 +96,7 @@
 	});
 </script>
 </head>
-    
+
     <div class="modal fade" id="messageModal">
     	<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content"> 

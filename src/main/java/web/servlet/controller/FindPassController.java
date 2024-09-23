@@ -10,18 +10,16 @@ public class FindPassController implements Controller {
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		String id =request.getParameter("id");
-		String birthDate =request.getParameter("birthDate");
-		String path = "";
+		String birthDate =request.getParameter("birthdate");
 		try {
 			String password = UserDAOImpl.getInstance().findPass(id, birthDate);
 			if(password!=null) {
-				request.setAttribute("password", password);
-				path = "";
+				response.getWriter().write(password);
 			}
 		} catch (Exception e) {
 			
 		}
-		return new ModelAndView(path);
+		return null;
 	}
 
 }

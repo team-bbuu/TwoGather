@@ -16,11 +16,10 @@ public class GagyebuMonthController implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-//		String userId = request.getParameter("userId");
-//		String partnerId = request.getParameter("partnerId");
-		String userId = "id01"; // test
-		String partnerId = "id20"; // test
+		String userId = request.getParameter("userId");
+		String partnerId = request.getParameter("partnerId");
 		String path = "gagyebuMonth.jsp";
+
 		GagyebuDAOImpl dao = GagyebuDAOImpl.getInstance();
 		
 		

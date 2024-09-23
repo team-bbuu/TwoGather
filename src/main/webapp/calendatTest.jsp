@@ -125,7 +125,7 @@
         		</div>
         	</div>
         	<!-- 각 jsp -->
-        	<jsp:include page="monthGagyebu.jsp" />
+        	<jsp:include page="nav.jsp" />
         </div>
     </div>
 </body>

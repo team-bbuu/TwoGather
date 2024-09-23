@@ -43,7 +43,6 @@
 			display: flex;
 /* 			border: 1px solid green; */
 			gap: 10px;	
-
 		}
 		.section1 {
 			height: 45%;
@@ -123,16 +122,9 @@
 		}
 		
 	</style>
-	<script>
-/* 	    let storyTitle = "${story.title}";
-	    console.log("Story Title: " + storyTitle); */
-	   	console.log()
-	</script>
 	</head>
 
 	<section class="mainSection">
-
-		
 		<div class="mainContainer">
 			<%-- <c:import url="${page}"></c:import> --%>
 			<div class="section1">
@@ -304,7 +296,5 @@
 		    const dDayDisplay = document.getElementById('dDayDisplay');
 		    dDayDisplay.textContent = '디데이 : ' + dDay + '일 남았습니다';
 		</script>
-
-		 	
 	</section>
 </html>
