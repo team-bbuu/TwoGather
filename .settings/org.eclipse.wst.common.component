@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-<<<<<<< HEAD
-                        
-=======
-                            
-    
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
     
     
     
     
     <wb-module deploy-name="Two-Gather">
-<<<<<<< HEAD
-                                                
-=======
-                                                        
-        
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
         
         
         
@@ -23,39 +11,18 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-<<<<<<< HEAD
-                                                
-=======
-                                                        
-        
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
         
         
         
         
         <property name="context-root" value="Two-Gather"/>
-<<<<<<< HEAD
-        <property name="java-output-path" value="/Two-Gather/build/classes"/>
-                                            
-=======
-                                
-        
-        
         <property name="java-output-path" value="/Two-Gather/build/classes"/>
                                                     
-    
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
     
     
     
     
     </wb-module>
-<<<<<<< HEAD
-                    
-=======
-                        
-
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
 
 
 

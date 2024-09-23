@@ -6,10 +6,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
-<<<<<<< HEAD
-import javax.servlet.annotation.MultipartConfig;
-=======
->>>>>>> 46ac42b244f4685cfca51c5e008675e8b5e0f344
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
