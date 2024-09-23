@@ -36,7 +36,7 @@ public class RegisterController implements Controller{
 		}catch (SQLException e) {
 
 		}
-		return new ModelAndView(path,false);
+		return new ModelAndView(path,true);
 	}
 
 }

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -27,26 +26,30 @@ public class CreateStoryController implements Controller{
 			// Get the uploaded file (img_src from the form)
 	        Part filePart = request.getPart("img_src"); // Retrieves <input type="file" name="img_src">
 	        String fileName = filePart.getSubmittedFileName();
+	        
+//	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
+	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
+	        File uploadsDir = new File(uploadsDirPath);
+	        if (!uploadsDir.exists()) {
+	            uploadsDir.mkdir(); // Create the directory if it doesn't exist
+	        }
+
+	        // Optionally, prevent file name collisions
+	        String newFileName = System.currentTimeMillis() + "_" + fileName;
+	        String savePath = uploadsDirPath + File.separator + newFileName;
 	
-	        // Define the path where you want to save the file (on your server)
-	        String savePath = request.getServletContext().getRealPath("/uploads") + File.separator + fileName;
-	        File fileSaveDir = new File(savePath);
-	
-	        // Save the file to the specified path
 	        filePart.write(savePath);
-	
 	        // Now save the file path to the database
-	        String imgSrc = "/uploads/" + fileName;
+	        String imgSrc = newFileName;
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			System.out.println(imgSrc + ", " + title + ", " + content);
 			Story story = new Story(0, userId, uploadDate, imgSrc, title, content);
 			StoryDAOImpl.getInstance().createStory(story);
 			path= "story.do";
 		}catch (SQLException | IOException | ServletException e) {
 			System.out.println(e.getMessage());
 		}
-		return new ModelAndView(path);
+		return new ModelAndView(path,true);
 	}
 
 }

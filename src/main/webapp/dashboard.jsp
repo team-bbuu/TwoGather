@@ -119,8 +119,8 @@
 
         <!-- 오른쪽 영역 : 콘텐츠 영역 -->
         <div class="dashboard-content">
-        
-            <c:import url="${page}"></c:import>
+        	<!-- 각 jsp -->
+        	<c:import url="${page }"></c:import>
         	
         	<!-- 초대하기 모달 -->
 			<div class="modal fade" id="myModal">
