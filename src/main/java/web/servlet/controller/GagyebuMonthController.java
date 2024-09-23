@@ -2,6 +2,7 @@ package web.servlet.controller;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +18,13 @@ public class GagyebuMonthController implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		String userId = request.getParameter("userId");
-		String partnerId = request.getParameter("partnerId");
-		String path = "gagyebu.jsp";
+//		String userId = request.getParameter("userId");
+//		String partnerId = request.getParameter("partnerId");
+		String userId = "id01"; // test
+		String partnerId = "id20"; // test
+		String path = "gagyebuMonth.jsp";
 		GagyebuDAOImpl dao = GagyebuDAOImpl.getInstance();
+		
 		
 		// 현재날짜 받아오기
 		LocalDate nowDate = LocalDate.now();
@@ -32,7 +36,17 @@ public class GagyebuMonthController implements Controller {
 		//String nowDateYYYY = nowDate.format(YYYY);
 
 		
-		String yearMonth = request.getParameter("yearMonth");
+//		String yearMonth = request.getParameter("yearMonth");
+		
+//		String yearMonth = (String) request.getAttribute("yearMonth");
+		String yearMonth = "2024-09"; // test
+//		if(yearMonth == null ) {
+//			// now
+//			// request 
+//		}else {
+//			// 화면에서 이전,다음 월을 호출할때
+//		}
+		
 		String yearMonthBefore = (Integer.parseInt(yearMonth.substring(0, 4)) - 1) + "-" + yearMonth.substring(4, 7); // 2024-09
 		String Day = request.getParameter("Day");
 		
@@ -47,6 +61,7 @@ public class GagyebuMonthController implements Controller {
 			/* 왼쪽 아랫부분 항목별 지출 비율 */
 			Map<String, Integer> category = new HashMap<>();
 			category = dao.expenseRatioByCategory(gagyebus);
+			System.out.println("category : " +  category);
 			request.setAttribute("category", category);
 		
 			/* 오른쪽 윗부분 지난달 이번달 기간비교 */
@@ -69,12 +84,16 @@ public class GagyebuMonthController implements Controller {
 			
 			/* 오른쪽 아랫부분 알고리즘 미확정 */
 			
+			// 추가			
+			request.setAttribute("yearMonth", yearMonth);
+			
+			
 		}catch (SQLException e) {
 			path = "error.jsp";
 		}
 		request.setAttribute("page", path);
-			
-		return new ModelAndView(path);
+		
+		return new ModelAndView("dashboard.jsp");
 	}
 
 }
