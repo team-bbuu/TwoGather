@@ -12,6 +12,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+	#container{
+		overflow-y: scroll;
+		height: 100%;
+	}
 	img{
 		width: 150px;
 		height: 150px;
@@ -20,8 +24,8 @@
 </style>
 <script type="text/javascript">
 	$(()=>{
-		$(".card-body").on("click", function() {	
-			$("#img").attr("src", "${pageContext.request.contextPath}" + $(this).prev().attr("id"));
+		$(".card-body").on("click", function() {
+			$("#img").attr("src", "${pageContext.request.contextPath}/uploads/" + $(this).prev().attr("id"));
 			$("#title").html($(this).find(".title").html());
 			$("#content").html($(this).find(".content").html());
 			$("#storyId").html($(this).find(".storyId").html());
@@ -34,18 +38,39 @@
 			$("#delete").attr("value", $(this).parent().prev().find(".storyId").html());
 		});
 		
-		$(".createBtn").on("click", function() {
+		$("#submit").on("click", function() {
 			if($("#imgForm").val()!=""&&$("#titleForm").val()!=""){
-				alert($("#imgForm").val());
-				alert($("#titleForm").val());
-				alert($("#contentForm").val());
-				//document.frm.submit();
+				document.frm.submit();
 			}else{
 				$("#formModal").modal("hide");
 				$("#messageModal").find(".modal-body").html("정보를 입력해주세요");
 				$("#messageModal").find(".modal-footer").html("<button type='button' class='btn btn-danger' data-dismiss='modal' data-toggle='modal' data-target='#formModal'>확인</button>");
 				$("#messageModal").modal("show");
 			}
+		});
+		
+		$(".updateBtn").on("click", function() {
+			$(".inputImg")[0].reset();
+			$("#titleForm").val($(this).parent().prev().find(".title").html());
+			$("#contentForm").val($(this).parent().prev().find(".content").html());
+			$("#submit").html("수정하기");
+			$(".inputImg").attr("action", "updateStory.do");
+			$("#storyIdForm").val($(this).parent().prev().find(".storyId").html());
+			let parent = $(this).parent();
+			if(parent.attr("class")=="modal-footer"){
+				$("#image-show").html("<img src='" + parent.siblings(".modal-body").find("#img").attr("src") + "'>");
+				$("#detailModal").modal("hide");
+			}else{
+				$("#image-show").html("<img src='" + parent.siblings(".storyImg").attr("src") + "' >");
+			}
+			
+		});
+		
+		$("#createBtn").on("click", function() {
+			$(".inputImg")[0].reset();
+			$("#image-show").html("");
+			$("#submit").html("작성하기");
+			$(".inputImg").attr("action", "createStory.do");
 		});
 		
 		$("#messageModal").find(".modal-footer").on('click', '#refresh', refresh);
@@ -71,42 +96,12 @@
 	});
 </script>
 </head>
-<body>
-	<div class="modal fade" id="detailModal">
-    	<div class="modal-dialog modal-dialog-centered">
-    		<div class="modal-content"> 
-        		<!-- Modal Header -->
-        		<div class="modal-header">
-        			<h4 class="modal-title">Modal Heading</h4>
-        			<button type="button" class="close" data-dismiss="modal">&times;</button>
-        		</div>
-        
-        		<!-- Modal body -->
-        		<div class="modal-body">
-        			<img alt="뭘까요...." src="" id="img">
-					<div id="title"></div>
-					<div id="content"></div>
-					<div style="display: none;" id="storyId" class="storyId"></div>
-					<div style="display: none;" id="uploadDate"></div>
-					
-        		</div>
-        
-      			<!-- Modal footer -->
-        		<div class="modal-footer">
-        			<button type="button" class="updateBtn btn btn-danger">수정하기</button>
-					<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
-        			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        		</div>
-      		</div>
-      	</div>
-    </div>
-    
+
     <div class="modal fade" id="messageModal">
     	<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content"> 
         		<!-- Modal Header -->
         		<div class="modal-header">
-        			<h4 class="modal-title">Modal Heading</h4>
         			<button type="button" class="close" data-dismiss="modal">&times;</button>
         		</div>
         
@@ -126,7 +121,6 @@
     		<div class="modal-content"> 
         		<!-- Modal Header -->
         		<div class="modal-header">
-        			<h4 class="modal-title">Modal Heading</h4>
         			<button type="button" class="close" data-dismiss="modal">&times;</button>
         		</div>
         
@@ -134,7 +128,10 @@
         		<div class="modal-body">
 	        		<form class="inputImg" method="post" enctype="multipart/form-data" action="createStory.do" name="frm">
 					    <div class="addImage" id="image-show"></div>
-					    <input type="file" accept="image/*" onchange="loadFile(this)" name="img_src" id="imgForm"/>
+					    <label for="imgForm">
+							업로드
+						</label>
+						<input type="file" accept="image/*" onchange="loadFile(this)" name="img_src" id="imgForm" style="display: none;"/>
 					    <div class="form-group">
 						    <label for="titleForm">제목:</label>
 						    <input type="text" class="form-control" id="titleForm" name="title">
@@ -143,12 +140,41 @@
 						    <label for="contentForm">게시물 내용:</label>
 						    <input type="text" class="form-control" id="contentForm" name="content">
 					    </div>
+					    <input type="text" id="storyIdForm" name="storyId" style="display: none;">
 				    </form>
         		</div>
         
       			<!-- Modal footer -->
         		<div class="modal-footer">
-        			<button type="button" class="createBtn btn btn-danger">작성하기</button>
+        			<button type="button" class="btn btn-danger" id="submit">작성하기</button>
+        			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        		</div>
+      		</div>
+      	</div>
+    </div>
+    
+	<div class="modal fade" id="detailModal">
+    	<div class="modal-dialog modal-dialog-centered">
+    		<div class="modal-content"> 
+        		<!-- Modal Header -->
+        		<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		</div>
+        
+        		<!-- Modal body -->
+        		<div class="modal-body">
+        			<img alt="뭘까요...." src="" id="img"><br/><br/>
+					제목:<div id="title" class="title"></div><br/>
+					게시물 내용:<br/> <div id="content" class="content"></div>
+					<div style="display: none;" id="storyId" class="storyId"></div>
+					<div style="display: none;" id="uploadDate"></div>
+					
+        		</div>
+        
+      			<!-- Modal footer -->
+        		<div class="modal-footer">
+        			<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#formModal">수정하기</button>
+					<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
         			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         		</div>
       		</div>
@@ -156,11 +182,11 @@
     </div>
     
 	<div id="container">
-		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#formModal">작성하기</button>
+		<button type="button" class="btn btn-danger" id="createBtn" data-toggle="modal" data-target="#formModal">작성하기</button>
 		<div class="d-flex flex-wrap">
 			<c:forEach items="${list}" var="story">
 				<div class="card">
-					<img alt="뭘까요?" src="${pageContext.request.contextPath}${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+					<img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
 					<div class="card-body" data-toggle="modal" data-target="#detailModal">
 						<div id="${story.uploadDate }" class="uploadDate">${story.uploadDate }</div>
 						<div id="${story.title}" class="title">${story.title }</div>
@@ -168,14 +194,13 @@
 						<div style="display: none;" class="content">${story.content}</div>
 					</div>
 					<div class="card-footer">
-						<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#myModal">수정하기</button>
+						<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#formModal">수정하기</button>
 						<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
-</body>
 <script type="text/javascript">
 	function loadFile(input) {
 		let file = input.files[0]; // 선택 파일 가져오기
@@ -189,6 +214,7 @@
 	
 		// 이미지를 image-show div 에 추가
 		let container = document.getElementById("image-show");
+		container.innerHTML = "";
 		container.appendChild(newImg);
 		//$("#imgForm").val("/image/a.jpg" );
 	}

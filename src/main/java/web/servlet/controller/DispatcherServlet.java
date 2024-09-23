@@ -2,6 +2,7 @@ package web.servlet.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("*.do")
+@MultipartConfig()
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,11 +32,12 @@ public class DispatcherServlet extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requesturl.substring(contextPath.length()+1);
 		Controller controller= HandlerMapping.getInstance().createComponent(command);
-		System.out.println(controller);
+
 		try {
 			ModelAndView mv = controller.handleRequest(request, response);
 			if(mv != null) {
 				String path= mv.getPath();
+				
 				if(!mv.isRedirect()) {
 					request.getRequestDispatcher(path).forward(request, response);
 				}else {

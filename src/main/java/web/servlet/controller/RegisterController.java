@@ -36,6 +36,7 @@ public class RegisterController implements Controller{
 			System.out.println(e);
 		}
 		return null;
+
 	}
 
 }
