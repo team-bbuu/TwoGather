@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import web.servlet.model.dao.UserDAOImpl;
 import web.servlet.model.vo.User;
 
@@ -19,7 +21,7 @@ public class DeleteUserController implements Controller{
 		String id = user.getId();
 		try {
 		UserDAOImpl.getInstance().deleteUser(id);
-		path="landing.jsp";
+		path="login.jsp";
 		}catch (SQLException e) {
 				}
 		return new ModelAndView(path);
