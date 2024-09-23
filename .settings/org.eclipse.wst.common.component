@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
     
@@ -14,5 +15,35 @@
         <property name="java-output-path" value="/Two-Gather/build/classes"/>
         
     </wb-module>
+=======
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    
+    
+    
+    
+    <wb-module deploy-name="Two-Gather">
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        
+        
+        
+        
+        <property name="context-root" value="Two-Gather"/>
+        <property name="java-output-path" value="/Two-Gather/build/classes"/>
+                                                    
+    
+    
+    
+    
+    </wb-module>
+
+
+
+>>>>>>> f8d13c1a2931972a6ef53d046ccabe41f74f528a
 
 </project-modules>
