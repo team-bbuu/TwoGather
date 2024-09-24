@@ -8,7 +8,8 @@ public class LogoutController implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		String path = "landing.jsp"; // 메인홈페이지
+//		String path = "landing.jsp"; // 메인홈페이지
+		String path = "login.jsp";
 		try {
 			HttpSession session = request.getSession();
 			if(session.getAttribute("user") != null) {

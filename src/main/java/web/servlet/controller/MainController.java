@@ -26,10 +26,10 @@ public class MainController implements Controller {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		//폼값 받아서
-//		String userId = user.getId();
-		String userId = "id01"; // test
-//		String partnerId = user.getPartnerId();
-		String partnerId = "id20"; // test
+		String userId = user.getId();
+//		String userId = "id01"; // test
+		String partnerId = user.getPartnerId();
+//		String partnerId = "id20"; // test
 		String year = String.valueOf(LocalDate.now()).substring(0, 4);
 		String yearMonth= String.valueOf(LocalDate.now()).substring(0, 7);
 		try {

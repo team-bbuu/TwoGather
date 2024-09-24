@@ -25,11 +25,11 @@
 	        cursor: pointer; 
 	    }
 		.mainSection {
-/* 			border: 3px solid red; */
 			width: 100%;
 			height: 100%;
-			padding: 4%;
-			background: #F6F6FE; dd
+			padding: 2%;
+			background: #F6F6FE;
+			color: #4D4D4D;
 		}
 		.mainContainer{
 			height: 100%;
@@ -37,7 +37,11 @@
 			flex-direction: column;
 			gap: 2%;
 		}
-		
+		.breadcrumbs {
+			font-size: 1.2vw;
+			font-weight: bold;
+			margin-bottom: 1vw;
+		}
 		.section1, .section2 {
 			width: 100%;
 			display: flex;
@@ -45,11 +49,11 @@
 			gap: 10px;	
 		}
 		.section1 {
-			height: 45%;
+			height: 42%;
 
 		}
 		.section2 {
-			height: 55%;
+			height: 48%;
 		}
 		.item{
 			position: relative;
@@ -58,11 +62,11 @@
 			padding: 2%;			
 		}
 		.storySection{
-			width: 40%;
+			width: 50%;
 /* 			border: 1px solid red; */
 		}
 		.scheduleSection{
-			width: 60%;
+			width: 50%;
 /* 			border: 1px solid blue; */
 		}
 		.transactionSection{
@@ -87,17 +91,22 @@
 			position: absolute;
 			bottom: 1vw;
 			right: 1vw;
-			
-			
 		}
 		
 		/* 각 section 스타일 */
+		.stroyDiv{
+			display: flex;
+			height: 60%;
+			gap: 1vw;
+		}
+		.storyRight{
+			width: 50%;
+		}
 		.imageContainer {
 			position: relative;
-			height: 40%;
-			margin-bottom: 0.5vw;
+			width: 50%;
 		}
-		.imageContainer  img {
+		.imageContainer img {
 	        width: 100%;
 	        height: 100%;
 	        object-fit: cover;
@@ -112,35 +121,34 @@
 			font-size: 1vw;
 		}
 		
+		
+		.transactionTitleDiv{
+			display: flex;
+			flex-direction: column;
+			gap: 0.8vw;
+			padding-top: 10px;
+			
+		}
 		.transactionTitle{
 			font-size: 1vw;
+		}
+		.transactionTitle div:last-of-type{
+			text-align: right;	
 		}
 		.chart-container {
 			height: 80%;
 			display: flex;
 			justify-content: center;
 		}
+
 		
 	</style>
 	</head>
 
 	<section class="mainSection">
+					<div class="breadcrumbs">메인</div>
 		<div class="mainContainer">
-			<%-- <c:import url="${page}"></c:import> --%>
 			<div class="section1">
-				<!-- 스토리 사진, 제목, 내용, 더보기 버튼 -->
-				<div class="item storySection">
-					<div class="label">최근 스토리</div>
-					<div class="imageContainer">
-<%-- 						<img src="${stroy.imgSrc}" alt="story-image"> --%>
-						<img src="${pageContext.request.contextPath}/image/cat.jpg" alt="story-image">
-					</div>
-					<div class="storyTitle">${story.title}</div>
-					<div class="storyContent">${story.content}</div>
-					
-					<div class="moreBtn">스토리 더보기</div>
-				</div>
-
 				<!-- 가장 가까운 일정 -->
 				<div class="item scheduleSection">
 					<div class="label">다가오는 일정</div>
@@ -148,21 +156,42 @@
 					    <p>일정 : ${schedule.title}</p>
 					    <p>상세 : ${schedule.description}</p>
 					    <div id="dDayDisplay"></div> <!-- 디데이를 표시할 div -->
-					<div class="moreBtn">일정 더보기</div>
+					<div class="moreBtn"><a href="schedule.do" class="no-style">일정 더보기</a></div>
+				</div>
+				
+								<!-- 스토리 사진, 제목, 내용, 더보기 버튼 -->
+				<div class="item storySection">
+					<div class="label">최근 스토리</div>
+					
+					<div class="stroyDiv">
+						<div class="imageContainer">
+							<img src="${pageContext.request.contextPath}/image/cat.jpg" alt="story-image">
+						</div>
+						<div class="storyRight">
+							<div class="storyTitle">${story.title}</div>
+							<div class="storyContent">${story.content}</div>
+						</div>
+					
+					</div>
+					
+					<div class="moreBtn"><a href="story.do" class="no-style">스토리 더보기</a></div>
 				</div>
 			</div>
 			
 			<div class="section2">
 				<!-- 이번달 현황 : 총 지출액, 총 입금액 -->
 				<div class="item transactionSection">
-					<div class="label">이번 달 현황</div>
-					<div class="transactionTitle">
-						총 입금<br>
-						${deposit}
-					</div>
-					<div class="transactionTitle">
-						총 지출<br>
-						${expense}
+					<div class="label">이번 달 입금과 지출 현황</div>
+					<div class="transactionTitleDiv">
+						<div class="transactionTitle">
+							<div>총 입금</div>
+							<div>${deposit} 원</div>
+						</div>
+						<div class="transactionTitle">
+							<div>총 지출</div>
+							<div>${expense} 원</div>
+						</div>
+					
 					</div>
 					<div class="moreBtn"><a href="gagyebuMonth.do" class="no-style">이번 달 결산 더보기</a></div>
 				</div>	
