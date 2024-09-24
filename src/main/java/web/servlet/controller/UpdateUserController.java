@@ -47,11 +47,15 @@ public class UpdateUserController implements Controller {
 				user.setMobile(mobile);
 				user.setEmail(email);
 				user.setAddress(address);
-				//변경된 유저 db 저장
 				
+				//test
+				user.setBreakDate(null);
+				
+				//변경된 유저 db 저장
 				dao.updateUser(user);
 				//변경된 유저 세션 저장
 				session.setAttribute("user", user);
+				
 				
 			} else {
 				if(dao.checkEmail(email)) {
@@ -68,7 +72,8 @@ public class UpdateUserController implements Controller {
 		} catch (IOException e) {
 			
 		}
-		return null;
+		
+		return new ModelAndView("mypage.do", true);
 	}
 
 }

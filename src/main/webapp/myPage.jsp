@@ -28,8 +28,12 @@
 		    cursor: pointer; /* 클릭 가능 커서 */
 		}
 		.myPageSection {
-		    display: flex;
-		    border-radius: 15px;
+			overflow-y: scroll;
+			width: 100%;
+			height: 100%;
+			padding: 2%;
+			background: #F6F6FE;
+			color: #4D4D4D;
 			border: 1px solid red;
 		}
 		
@@ -53,14 +57,16 @@
 		input {
 			width: 100%;
 			height: 30px;
+			border: 1px solid red;
 		}
 		
 		/* 모달css */
 		.modal_btn_image, .modal_btn_image>img, modal_popup>img {
 			width: 150px;
 			height: 150px;
-			border-radius: 150px;
+			border-radius: 50%;
 		    cursor: pointer;
+		    border: 10px solid red;
 		}
 		.modal_btn_image:hover {
 		    box-shadow: 3px 4px 11px 0px #00000040;
@@ -119,6 +125,7 @@
 		  border-radius: 20px 20px / 20px 20px;
 		  overflow: hidden;
 		  margin: 0px 10px 10px 0px;
+		  border: 1px solid red;
 		}
 		
 		.inputImg {
@@ -130,6 +137,21 @@
 		  width: 100%;
 		  height: 100%;
 		  object-fit: cover;
+		}
+		
+		.profileImage{
+			position: relative;
+			width: 10vw;
+			height: 10vw;
+			border-radius: 50%;
+			overflow: hidden;
+		
+		}
+		.profileImage > img{
+			width: 100%;
+			height: 100%;
+	        object-fit: cover;
+			
 		}
 		
 	</style>
@@ -238,9 +260,14 @@
 					<!--end 모달 팝업-->
 					<main>
 					    <section>
-					        <button type="button" class="modal_btn_image">
+					       <%--  <button type="button" class="modal_btn_image">
 					            <img src="${user.imgSrc}">
-					        </button>
+					        </button> --%>
+					        <div class="profileImage">
+						        <img src="${user.imgSrc}">
+					        	
+					        
+					        </div>
 					    </section>
 					</main>
 				</div>
@@ -312,7 +339,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	const modalImage = document.querySelector('.modal_image');
+/* 	const modalImage = document.querySelector('.modal_image');
 	const modalBreak = document.querySelector('.modal_break');
 	const modalDelete = document.querySelector('.modal_delete');
 	const modalOpenImage = document.querySelector('.modal_btn_image');
@@ -321,8 +348,8 @@
 	const modalCloseImage = document.querySelector('.close_btn_image');
 	const modalCloseBreak = document.querySelector('.close_btn_break');
 	const modalCloseDelete = document.querySelector('.close_btn_delete');
-
-	modalOpenImage.addEventListener('click',function(){
+ */
+	/* modalOpenImage.addEventListener('click',function(){
 	    modalImage.style.display = 'block';
 	});
 	modalCloseImage.addEventListener('click',function(){
@@ -341,7 +368,7 @@
 	});
 	modalCloseDelete.addEventListener('click',function(){
 	    modalDelete.style.display = 'none';
-	});
+	}); */
 	
 	function loadFile(input) {
 		  let file = input.files[0]; // 선택 파일 가져오기

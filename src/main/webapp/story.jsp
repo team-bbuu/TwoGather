@@ -197,17 +197,14 @@
 			<%-- ${list.imgSrc}  /image/a.jpg --%>
 			
 				<div class="card">
-				
-				<c:if test="${list.imgSrc} == 'a.jpg' || ${list.imgSrc} == '' }">
-					<img alt="뭘까요?" src="${pageContext.request.contextPath}/image/imageDefault.png" id="${story.imgSrc}" class="storyImg card-img-top">
-					
-				</c:if>
-				
-				<c:if test="${list.imgSrc} != 'a.jpg' || ${list.imgSrc} != ''}">
-					<img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
-					
-				</c:if>
-				
+					<c:choose>
+					    <c:when test="${story.imgSrc == 'a.jpg' || story.imgSrc == ''}">
+					        <img alt="뭘까요?" src="${pageContext.request.contextPath}/image/imageDefault.png" id="${story.imgSrc}" class="storyImg card-img-top">					
+					    </c:when>
+					    <c:otherwise>
+					        <img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+					    </c:otherwise>
+					</c:choose>
 				
 					
 					<div class="card-body" data-toggle="modal" data-target="#detailModal">

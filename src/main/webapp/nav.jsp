@@ -187,7 +187,7 @@
 	}
 	
 	/* 로그아웃 버튼 */
-	.logutBtn {
+	.logoutBtn {
 		position: absolute;
 		bottom: 1vw;
 		font-size: 1vw;
@@ -286,7 +286,7 @@
 		    </li>
 		</ul>
 		
-		<div class="logutBtn">
+		<div class="logoutBtn">
 			<a class="no-style" href="logout.do">로그아웃</a>
 		</div>
 		</div>
