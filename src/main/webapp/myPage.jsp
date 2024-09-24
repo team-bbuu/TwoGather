@@ -18,19 +18,6 @@
 	<script src="resources/js/myPageImage.js"></script>
 
 	<style type="text/css">
-	    *{
-	    	margin: 0;
-	    	padding: 0;
-	    	box-sizing: border-box;
-		    font-family: Arial, sans-serif;
-	    }
-		body {
-	  		height: 100vh;
-	  		display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: #efeefe; /* 임시 색상 */
-		}
 		button {
 		    background: none; /* 배경 제거 */
 		    border: none; /* 테두리 제거 */
@@ -40,13 +27,10 @@
 		    color: inherit; /* 상속된 텍스트 색상 사용 */
 		    cursor: pointer; /* 클릭 가능 커서 */
 		}
-		.dashboard-container {
+		.myPageSection {
 		    display: flex;
-		    width: 90%;
-		    height: 90vh;
-			background-color: #f7f6fc;
 		    border-radius: 15px;
-
+			border: 1px solid red;
 		}
 		
 		#right {
@@ -60,14 +44,8 @@
 			flex-direction: column;
 			align-items: center;
 		}	
-		#myPage-image>img{
-			width: 150px;
-			height: 150px;
-			border-radius: 150px;
-		}
 		form {
 			width: 30%;
-			
 		}
 		#update-btn {
 			text-align: center;
@@ -232,14 +210,12 @@
 		});	
 	</script>
 </head>
-<body>
-	<div class="dashboard-container">
+	<div class="myPageSection">
 		<!-- 왼쪽 NAV -->
-		
 		<div id="right">
 			<div id="myPage">
+			
 				<div id="myPage-image">
-					
 					<!--모달 팝업-->
 					<div class="modal_image">
 					    <div class="modal_popup">
@@ -247,8 +223,8 @@
 					        <!-- 이미지파일업로드 부분-->
 							<form class="inputImg" method="post" enctype="multipart/form-data">
 						    	<!-- 이미지 파일 받기위해 enctype 설정 -->
-						        <div class="addImage" id="image-show">
-						        	<img src="${user.imgSrc}" style="width: 150px; height: 150px; border-radius: 150px;">
+						        <div class="addImage " id="image-show">
+						        	<img src="${user.imgSrc}">
 						        </div>
 						        <!-- 이미지 보여줄 영역 -->
 						        <input type="file" accept="image/*" onchange="loadFile(this)" id="imageUpload"/>
@@ -258,6 +234,7 @@
 					        <button type="button" class="close_btn_image">닫기</button>
 					    </div>
 					</div>
+					
 					<!--end 모달 팝업-->
 					<main>
 					    <section>
@@ -267,6 +244,7 @@
 					    </section>
 					</main>
 				</div>
+				
 				<form action="updateUser.do" method="post">
 					<div id="myPage-id">
 						${user.id}<br /><br /><br />
@@ -289,6 +267,7 @@
 						<br /><input type="submit" name="update" value="정보수정"><br />
 					</div>
 				</form>
+				
 				<div id="myPage-footer">
 					<br />
 					
@@ -380,6 +359,5 @@
 		  container.appendChild(newImg);
 		}
 	</script>
-	
-</body>
+	</div>
 </html>

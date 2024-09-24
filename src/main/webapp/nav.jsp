@@ -282,7 +282,7 @@
 		    	<a class="nav-link no-style" href="story.do">스토리</a>
 		    </li>
   		    <li class="nav-item" onclick="clickMenu(this)">
-		    	<a class="nav-link no-style" href="myPage.jsp">마이페이지</a>
+		    	<a class="nav-link no-style" href="mypage.do">마이페이지</a>
 		    </li>
 		</ul>
 		
