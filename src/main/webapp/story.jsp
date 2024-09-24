@@ -21,9 +21,18 @@
 		height: 150px;
 		border: 2px solid;
 	}
+
+    #dropdown {
+        width: 200px;
+        border: 2px solid blue;
+        display: none;
+    }
+
 </style>
 <script type="text/javascript">
 	$(()=>{
+		getLocalStorage();
+		
 		$(".card-body").on("click", function() {
 			$("#img").attr("src", "${pageContext.request.contextPath}/uploads/" + $(this).prev().attr("id"));
 			$("#title").html($(this).find(".title").html());
@@ -82,8 +91,13 @@
 			$(".inputImg").attr("action", "createStory.do");
 		});
 		
+		$("#searchBtn").on("clcik", function() {
+			
+		});
+		
 		$("#messageModal").find(".modal-footer").on('click', '#refresh', refresh);
 		$("#messageModal").find(".modal-footer").on('click', '#delete', deletef);
+		$("#dropdown").on('click', '.latestTitle', latestTitle);
 		
 		function refresh() {
 			location.href = "story.do";
@@ -102,6 +116,63 @@
 			});
 		}
 		
+	    var nameArr;
+
+		function getLocalStorage() {
+			nameArr = [];
+	    	for (let i = 0; i < localStorage.length; i++) {
+				let key = localStorage.key(i);
+				if (key.startsWith("TwoGatherTitle")) {
+					let data = localStorage.getItem(key);
+					nameArr.push(data);
+				}
+	    	}	
+		}
+		
+		$("#searchBtn").on("click", function() {
+			localStorage.setItem('TwoGatherTitle' + '&' + $("#searchTitle").val(), $("#searchTitle").val());
+			location.href = "selectStory.do?title=" + $("#searchTitle").val();
+		})
+		
+	    
+	    $("#searchTitle").keyup(function () {
+	        if (!this.value.trim()) {
+	            $("#dropdown").html();
+	            $("#dropdown").css("display","none");
+	            return;
+	        }
+	        $("#dropdown").html();
+	        $("#dropdown").css("display","none");
+
+
+	        let schArr = [];
+	        for (let i = 0; i < nameArr.length; i++) {
+	            if (nameArr[i].includes(this.value)) {
+	                schArr.push("<div class='latestTitle'>" + nameArr[i] + "</div>");
+	            }
+	        }
+
+	        if (schArr.length) {
+	        	let sch = "";
+	            schArr.forEach((item) => {
+	            	sch += item;
+	            })
+	            $("#dropdown").html(sch);
+	            $("#dropdown").css("display","block");
+	        }
+
+	        if (event.keyCode == 13) {
+	            if ($("#dropdown").children().first()) {
+	                $("#searchTitle").val($("#dropdown").children().first().html());
+	                $("#dropdown").css("display","none");
+	            }
+	        }
+	    });
+	    
+	    function latestTitle() {
+	    	$("#searchTitle").val($(this).html());
+	    	$("#dropdown").css("display","none");
+		};
 	});
 </script>
 </head>
@@ -192,7 +263,14 @@
     
 	<div id="container">
 		<button type="button" class="btn btn-danger" id="createBtn" data-toggle="modal" data-target="#formModal">작성하기</button>
-		<div class="d-flex flex-wrap">
+		<div class="input-group mt-3">
+			<input type="text" class="form-control" placeholder="Search" name="searchTitle" id="searchTitle" value="" autocomplete="off">
+			<div class="input-group-append">
+				<button class="btn btn-success" type="button" id="searchBtn">검색</button>
+			</div>
+		</div>
+		<div id="dropdown"></div>
+		<div class="d-flex flex-wrap mt-3">
 			<c:forEach items="${list}" var="story">
 			<%-- ${list.imgSrc}  /image/a.jpg --%>
 			

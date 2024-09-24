@@ -81,6 +81,25 @@ public class StoryDAOImpl implements StoryDAO {
 		return list;
 	}
 	@Override
+	public ArrayList<Story> getStory(String userId, String partnerId, String title) throws SQLException {
+		String query = "SELECT id,user_id,upload_date,img_src,title,content FROM story WHERE user_id IN (?,?) AND title LIKE ? ORDER BY upload_date desc";
+		ResultSet rs = null;
+		ArrayList<Story> list = new ArrayList<Story>();
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.setString(2, partnerId);
+			ps.setString(3, "%" + title + "%");
+			rs= ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+			}
+		}
+		return list;
+	}
+	@Override
 	public void createStory(Story story)  throws SQLException{
 		String query = "insert into story(user_id,upload_date,img_src,title,content) values (?,?,?,?,?)";
 		try(
