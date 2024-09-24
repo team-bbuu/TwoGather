@@ -67,6 +67,8 @@ public class HandlerMapping {
 			 controller = new DeleteStoryController();
 		}else if(command.equals("mypage.do")) {
 			 controller = new MyPageController();
+		}else if(command.equals("algo.do")) {
+			 controller = new AlogorithmController();
 		}
 		
 		return controller;
