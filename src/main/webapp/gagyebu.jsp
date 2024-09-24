@@ -108,19 +108,16 @@
     		const today = new Date(); // 현재 날짜를 나타내는 Date 객체를 저장
     		let currentMonth = today.getMonth(); // 현재 월 저장. getMonth(): 0부터 시작하는 월을 반환. (1월은 0, 2월은 1 반환)
     		let currentYear = today.getFullYear(); // 현재연도 저장
-    		
+    		 
     		// 날짜 클릭 상세 페이지 구성
     		function handleDateClick(event) {
-    			const clickDate = event.target;
+    			const clickDate = $(event.target).closest(".date");
     			//clickDate.textContent
     		  $('#detailView').attr("style","display: block");
-    		  $('#selectDate').html(clickDate.textContent.split("+")[0]);
-    		  
-    		  console.log("clickDate : ")
-    		
-    		 
-    		//  let daytransactiondata = for()
-    		  //$('#transactions').html("");
+    		  $('#selectDate').html(clickDate.text().split("+")[0]);
+    		 let cid = clickDate.find("input[type='hidden']").val();
+    		 let html2 =  
+    		 $('#transactions').html("");
     		  $('#form').attr("style","display: none");
     		  
     		}
@@ -180,10 +177,11 @@
     		    }
     		    if(tdeposit == "") tdeposit=0;
     		    if(texpense == "") texpense=0;
-    		    let text ="<div>"+i+"<br>"
+    		    let html ="<div>"+i+"<br><br>"
 				+"+"+tdeposit+"<br>"
-				+"-"+texpense+"</div>";
-    		    dateElement.innerHTML=  text;  		    
+				+"-"+texpense+"</div>"
+				+"<input type='hidden' value='"+classid+"'>";
+    		    dateElement.innerHTML=  html;  		    
     		    dateElement.addEventListener("click", handleDateClick); // 클릭 이벤트 추가
     		    calendarDates.appendChild(dateElement);
     		  }

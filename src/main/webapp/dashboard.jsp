@@ -43,14 +43,16 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
+			/* color: #4D4D4D; */
+			color: #5A5A5A;
 		}
 	
 		.dashboard-container {
 		    display: flex;
 		    width: 90%;
 		    height: 90vh;
-		    max-width: 1920px;
+/* 		    max-width: 1920px; */
+			max-width: 1700px;
 		    max-height: 972px;
 			background-color: #f7f6fc;
 		    border-radius: 15px;
@@ -122,27 +124,26 @@
         	<!-- 각 jsp -->
         	<c:import url="${page}"></c:import>
         	
-        	<!-- 초대하기 모달 -->
-			<div class="modal fade" id="myModal">
-				<div class="modal-dialog modal-dialog-centered">
-					<form class="modal-content" action="invitePartner.do" method="post" id="inviteFrm">
-						<div class="modalHeader">
-				        	<div class="modal-title">상대방 초대하기</div>
-			        		<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						
-			        	<div class="modalContent">
-			        		<input type="text" class="inviteInput" placeholder="상대방 아이디를 입력하세요." id="partnerId" name="partnerId">
-			        	</div>
-			        	<div class="buttonArea">
-				        	<button type="button" class="modal-button closeBtn" data-dismiss="modal">취소</button>
-<!-- 			        		<input type="submit" class="modal-button confirmBtn" id="confirmBtn" data-dismiss="modal"/> -->
-			        		<input type="submit" class="modal-button confirmBtn" id="confirmBtn"/>
-			        	</div>
-			        
-			        </form>
-				</div>
-			</div>
+        		<!-- 초대하기 모달 -->
+				<div class="modal fade" id="myModal">
+					<div class="modal-dialog modal-dialog-centered">
+						<form class="modal-content" action="invitePartner.do" method="post" id="inviteFrm">
+							<div class="modalHeader">
+					        	<div class="modal-title">상대방 초대하기</div>
+				        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							
+				        	<div class="modalContent">
+				        		<input type="text" class="inviteInput" placeholder="상대방 아이디를 입력하세요." id="partnerId" name="partnerId">
+				        	</div>
+				        	<div class="buttonArea">
+					        	<button type="button" class="modal-button closeBtn" data-dismiss="modal">취소</button>
+				        		<input type="submit" class="modal-button confirmBtn" id="confirmBtn" value="확인"/>
+				        	</div>
+				        
+				        </form>
+					</div>
+				</div>        	
         </div>
     </div>
 </body>

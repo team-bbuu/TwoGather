@@ -16,21 +16,17 @@ public class InvitePartnerController implements Controller{
 		HttpSession session = request.getSession(); 	
 		User user = (User)session.getAttribute("user");
 		
-		// String userId = user.getId(); // 아이디 추출
+		String userId = user.getId(); // 아이디 추출
 		
 		// test id10, id11 파트너 연결 
-		String userId = "id010";
+//		String userId = "id010";
 		String partnerId = request.getParameter("partnerId"); // 파트너아이디 값 받아옴
 		
-		System.out.println("partnerId : " + partnerId);
+//		System.out.println("partnerId : " + partnerId);
 		
 		// matching 유형 : 매칭전, 요청함, 요청받음, 매칭완료
-		
-		System.out.println("InvitePartnerController ==========");
 
 		try {
-			
-			System.out.println("InvitePartnerController try ========");
 			UserDAO userDao = UserDAOImpl.getInstance(); // 로그인 유저 객체
 			User partner = userDao.FindUser(partnerId); // 파트너 아이디 찾아서 객체 담음
 			user = userDao.FindUser(userId); // test
