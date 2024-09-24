@@ -79,7 +79,7 @@
 							
 					},
 					error: function() {
-						loaction.href="error.jsp";
+						location.href="error.jsp";
 					},
 					
 				}) 
