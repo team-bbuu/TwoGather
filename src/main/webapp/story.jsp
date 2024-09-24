@@ -194,8 +194,22 @@
 		<button type="button" class="btn btn-danger" id="createBtn" data-toggle="modal" data-target="#formModal">작성하기</button>
 		<div class="d-flex flex-wrap">
 			<c:forEach items="${list}" var="story">
+			<%-- ${list.imgSrc}  /image/a.jpg --%>
+			
 				<div class="card">
+				
+				<c:if test="${list.imgSrc} == 'a.jpg' || ${list.imgSrc} == '' }">
+					<img alt="뭘까요?" src="${pageContext.request.contextPath}/image/imageDefault.png" id="${story.imgSrc}" class="storyImg card-img-top">
+					
+				</c:if>
+				
+				<c:if test="${list.imgSrc} != 'a.jpg' || ${list.imgSrc} != ''}">
 					<img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+					
+				</c:if>
+				
+				
+					
 					<div class="card-body" data-toggle="modal" data-target="#detailModal">
 						<div id="${story.uploadDate }" class="uploadDate">${story.uploadDate }</div>
 						<div id="${story.title}" class="title">${story.title }</div>
