@@ -16,7 +16,7 @@
 		overflow-y: scroll;
 		height: 100%;
 	}
-	img{
+	.storyImg{
 		width: 150px;
 		height: 150px;
 		border: 2px solid;
@@ -30,6 +30,15 @@
 			$("#content").html($(this).find(".content").html());
 			$("#storyId").html($(this).find(".storyId").html());
 			$("#uploadDate").html($(this).find(".uploadDate").html());
+		});
+		
+		$(".card-img-top").on("click", function() {
+			$("#img").attr("src", "${pageContext.request.contextPath}/uploads/" + $(this).attr("id"));
+			$("#title").html($(this).next().find(".title").html());
+			$("#content").html($(this).next().find(".content").html());
+			$("#storyId").html($(this).next().find(".storyId").html());
+			$("#uploadDate").html($(this).next().find(".uploadDate").html());
+			$("#detailModal").modal("show");
 		});
 		
 		$(".deleteBtn").on("click", function() {
@@ -163,7 +172,7 @@
         
         		<!-- Modal body -->
         		<div class="modal-body">
-        			<img alt="뭘까요...." src="" id="img"><br/><br/>
+        			<img alt="뭘까요...." src="" id="img" class="storyImg"><br/><br/>
 					제목:<div id="title" class="title"></div><br/>
 					게시물 내용:<br/> <div id="content" class="content"></div>
 					<div style="display: none;" id="storyId" class="storyId"></div>

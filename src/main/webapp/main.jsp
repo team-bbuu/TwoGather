@@ -10,7 +10,7 @@
 <html>
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<meta charset="UTF-8">
@@ -69,7 +69,7 @@
 			width: 50%;
 /* 			border: 1px solid blue; */
 		}
-		.transactionSection{
+		.algorithmSection{
 			width : 30%;
 /* 			border: 1px solid red; */
 		}
@@ -121,7 +121,6 @@
 			font-size: 1vw;
 		}
 		
-		
 		.transactionTitleDiv{
 			display: flex;
 			flex-direction: column;
@@ -129,10 +128,10 @@
 			padding-top: 10px;
 			
 		}
-		.transactionTitle{
+		.algorithmTitle{
 			font-size: 1vw;
 		}
-		.transactionTitle div:last-of-type{
+		.algorithmTitle div:last-of-type{
 			text-align: right;	
 		}
 		.chart-container {
@@ -179,21 +178,32 @@
 			</div>
 			
 			<div class="section2">
-				<!-- 이번달 현황 : 총 지출액, 총 입금액 -->
-				<div class="item transactionSection">
-					<div class="label">이번 달 입금과 지출 현황</div>
-					<div class="transactionTitleDiv">
-						<div class="transactionTitle">
-							<div>총 입금</div>
-							<div>${deposit} 원</div>
-						</div>
-						<div class="transactionTitle">
-							<div>총 지출</div>
-							<div>${expense} 원</div>
-						</div>
-					
+				<div class="item algorithmSection">
+					<div class="label">이번 달 현황</div>
+					<div class="algorithmTitle">
+						목표금액:<br>
+						<input type="number" name="targetAmount" id="targetAmount" min="0" value="0">원
 					</div>
-					<div class="moreBtn"><a href="gagyebuMonth.do" class="no-style">이번 달 결산 더보기</a></div>
+					<div class="algorithmTitle">
+						월 납입액<br>
+						<input type="number" name="depositAmount" id="depositAmount" min="0" value="0">원
+					</div>
+					<div class="algorithmTitle">
+						이자율<br>
+						<input type="number" name="interestRate" step="0.1" id="interestRate" min="0" max="100" value="0.0">%
+					</div>
+					<div class="algorithmTitle form-check-inline">
+						<label class="form-check-label" for="compound">
+							<input type="radio" class="form-check-input" id="compound" name="isCompound" value="true">복리
+						</label>
+					</div>
+					<div class="algorithmTitle form-check-inline">
+						<label class="form-check-label" for="simple">
+							<input type="radio" class="form-check-input" id="simple" name="isCompound" value="false">단리
+						</label>
+					</div>
+					<div  class="algorithmTitle" id="algoResult"></div>
+					<div class="moreBtn"><button type="button" class="btn btn-outline-primary" id="searchAlgo">알아보기</button></div>
 				</div>	
 					
 				<!-- 가계부 곡선차트 : 1월 ~ 12월 입금, 지출 -->
@@ -314,6 +324,28 @@
 		</script>
 		
 		<script>
+			$(()=>{
+				$("#searchAlgo").on("click", function() {
+					$.ajax({
+						type: "post",
+						url: "algo.do",
+						data: {
+							"targetAmount":$("#targetAmount").val(),
+							"depositAmount":$("#depositAmount").val(),
+							"interestRate":$("#interestRate").val(),
+							"isCompound":$("[name=isCompound]").val(),
+						},
+						success: function (result) {
+							alert(result);
+							$("#algoResult").html(result);
+								
+						},
+						error: function() {
+							loaction.href="error.jsp";
+						},
+					});
+				});
+			});
 		    const start = new Date('${schedule.startDate}');
 		    const today = new Date(); // 현재 날
 		    
