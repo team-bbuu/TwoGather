@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -17,19 +19,10 @@ import web.servlet.model.vo.User;
 public class UserDAOImpl implements UserDAO {
 	DataSource ds;
 	private UserDAOImpl() {
-
-		/*
 		try {
 			InitialContext ic = new InitialContext();
 			ds = (DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
-			System.out.println(e);
-		}
-		*/
-		
-		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
 	}
@@ -39,8 +32,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-//		return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -174,7 +166,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			conn = getConnection();
-			String query = "SELECT u.id, u.partner_id, u.img_src, u.password, u.nickname, u.mobile, u.birthdate, u.email, u.gender, u.address, u.matching, u.start_date, u.break_date, c.category_name FROM User u, category c WHERE u.id = c.user_id AND u.id = ? AND u.password = ?";
+			String query = "SELECT u.id, u.partner_id, u.img_src, u.password, u.nickname, u.mobile, u.birthdate, u.email, u.gender, u.address, u.matching, u.start_date, u.break_date, c.category_name FROM user u, category c WHERE u.id = c.user_id AND u.id = ? AND u.password = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, id);
 			ps.setString(2, password);
