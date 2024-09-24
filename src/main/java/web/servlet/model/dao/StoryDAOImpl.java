@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -15,21 +17,12 @@ import web.servlet.model.vo.Story;
 public class StoryDAOImpl implements StoryDAO {
 	DataSource ds;
 	private StoryDAOImpl() {
-		/*
 		try {
 			InitialContext ic = new InitialContext();
 			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
 			System.out.println(e);
 		}
-		*/
-		
-		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
-			System.out.println(e);
-		}
-		
 	}
 	private static StoryDAOImpl dao = new StoryDAOImpl();
 	public static StoryDAOImpl getInstance() {
@@ -37,8 +30,7 @@ public class StoryDAOImpl implements StoryDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-		//return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
