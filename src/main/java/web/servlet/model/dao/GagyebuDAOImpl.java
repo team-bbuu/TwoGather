@@ -83,8 +83,8 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	    try {
 	    	conn = getConnection();
 	    	
-	    	String query = "select id, User_id, transaction_date, is_deposit, category, price, title, "
-	    			+ "payment_type, etc from Gagyebu where transaction_date like ? and (User_id=? or User_id=?);";
+	    	String query = "select id, user_id, transaction_date, is_deposit, category, price, title, "
+	    			+ "payment_type, etc from gagyebu where transaction_date like ? and (user_id=? or user_id=?);";
 	    	ps = conn.prepareStatement(query);
 	    	ps.setString(1, yearMonth+"%"); // "2024-09%"
 	    	ps.setString(2, userId);
@@ -97,7 +97,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				Gagyebu gagyebu = new Gagyebu();
 				
 			    gagyebu.setId(rs.getInt("id"));
-			    gagyebu.setUserId(rs.getString("User_id"));
+			    gagyebu.setUserId(rs.getString("user_id"));
 			    gagyebu.setTransactionDate(rs.getString("transaction_date"));
 			    gagyebu.setDeposite(rs.getBoolean("is_deposit"));
 			    gagyebu.setCategory(rs.getString("category"));
@@ -269,7 +269,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		String DBCategory = String.join(",", categories);
 		try {
 			conn = getConnection();
-			String query = "UPDATE category SET category_name = ? WHERE User_id = ?";
+			String query = "UPDATE category SET category_name = ? WHERE user_id = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, DBCategory);
 			ps.setString(2, userId);
