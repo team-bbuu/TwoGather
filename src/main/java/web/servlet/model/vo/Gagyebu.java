@@ -56,7 +56,7 @@ public class Gagyebu {
 		this.id = id;
 	}
 
-	public boolean isDeposit() {
+	public boolean getIsDeposit() {
 		return isDeposit;
 	}
 

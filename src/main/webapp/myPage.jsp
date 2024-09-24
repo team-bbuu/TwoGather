@@ -48,12 +48,7 @@
 		    border-radius: 15px;
 
 		}
-		#nav {
-			width: 25%;
-			background: #ddd;
-			height: 100%;
-			border-radius: 15px 15px 0px 0px;
-		}
+		
 		#right {
 			flex: 1;
 			display: flex;
@@ -240,9 +235,7 @@
 <body>
 	<div class="dashboard-container">
 		<!-- 왼쪽 NAV -->
-		<div id="nav">
-		NAV
-		</div>
+		
 		<div id="right">
 			<div id="myPage">
 				<div id="myPage-image">

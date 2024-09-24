@@ -65,6 +65,8 @@ public class HandlerMapping {
 			 controller = new UpdateStoryController();
 		}else if(command.equals("deleteStory.do")) {
 			 controller = new DeleteStoryController();
+		}else if(command.equals("mypage.do")) {
+			 controller = new MyPageController();
 		}
 		
 		return controller;
