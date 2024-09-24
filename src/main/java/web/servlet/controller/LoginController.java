@@ -17,6 +17,7 @@ public class LoginController implements Controller{
 		//폼값 받아서
 		String id = request.getParameter("id");
 		String pass = request.getParameter("password");
+		System.out.println(id+","+pass);
 		//dao 호출
 		try {
 		User user = UserDAOImpl.getInstance().login(id, pass);

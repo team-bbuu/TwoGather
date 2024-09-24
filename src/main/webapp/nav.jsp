@@ -268,6 +268,7 @@
 		    
 		    <li class="gagyebuLi">
 		   		<p>가계부</p>
+
 		   		<div class="subMemu">
 			    	<a class="nav-link no-style" href="gagyebu.do" onclick="clickMenu(this)">월별 가계부</a>
 				    <a class="nav-link no-style" href="gagyebuMonth.do" onclick="clickMenu(this)">결산</a>		   		

@@ -13,24 +13,26 @@
  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
  	
     <style type="text/css">
-    	body {
-		  font-family: Arial, sans-serif;
+    	.gagyebuSection {
+    	  position: relative;
 		  text-align: center;
-		  width: 100vw;
-		  height: 100vh;
+		  width: 100%;
+		  height: 100%;
 		  display: flex;
 		  justify-content: center;
 		  align-items: center;
+		  border: 1px solid red;
 		}
 		
 		.calendar-container {
-		  width: 100vw;
-		  height: 100vh;
+		  width: 100%;
+		  height: 100%;
 		  margin: 30px auto;
 		  border: 1px solid #ccc;
 		  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 		  padding: 10px;
 		  background-color: #fdefde;
+		  border: 3px solid red;
 		}
 		
 		.calendar-header {
@@ -69,6 +71,7 @@
 		.date {
 		  cursor: pointer;
 		  padding: 5px;
+		  border: 1px solid black;
 		}
 		
 		.date:hover {
@@ -77,16 +80,20 @@
 		#detailView{
 			border: 1px solid black;
 			width: 30%;
-			height: 100vh;
+			height: 100%;
 			background-color: white;
-			position:absolute;
-			right:0;
+			position: absolute;
+			right: 0;
 			display: none;
 			
 		}
 		#closeBtnImg{
 			width: 10%;
 			margin-left: 80%;
+		}
+		
+		.list {
+			border: 1px solid red;
 		}
     	
     </style>
@@ -101,16 +108,16 @@
     		const today = new Date(); // 현재 날짜를 나타내는 Date 객체를 저장
     		let currentMonth = today.getMonth(); // 현재 월 저장. getMonth(): 0부터 시작하는 월을 반환. (1월은 0, 2월은 1 반환)
     		let currentYear = today.getFullYear(); // 현재연도 저장
-    		
-    		// 날짜 클릭시 날짜 반환
+    		 
+    		// 날짜 클릭 상세 페이지 구성
     		function handleDateClick(event) {
-    			const clickDate = event.target;
+    			const clickDate = $(event.target).closest(".date");
+    			//clickDate.textContent
     		  $('#detailView').attr("style","display: block");
-    		  $('#selectDate').html(clickDate.textContent+"일");
-    		 
-    		 
-    		//  let daytransactiondata = for()
-    		  $('#transactions').html("");
+    		  $('#selectDate').html(clickDate.text().split("+")[0]);
+    		 let cid = clickDate.find("input[type='hidden']").val();
+    		 let html2 =  
+    		 $('#transactions').html("");
     		  $('#form').attr("style","display: none");
     		  
     		}
@@ -137,12 +144,44 @@
     		    2. const dateElement = document.createElement("div");를 통해 날짜를 나타내는 div 요소를 생성한다.
     		    3. dateElement.classList.add("date");를 통해 생성한 div 요소에 "date" 클래스를 추가한다.
     		    4. dateElement.textContent = i;를 통해 해당 날짜 값을 div 요소의 텍스트로 설정한다.
-    		    5. calendarDates.appendChild(dateElement);를 통해 생성한 날짜 요소를 캘린더 그리드에 추가한다.
+    		    5. 날짜와 해당 날의 총 입금액과 지출액을 추가한다.
+    		    6. calendarDates.appendChild(dateElement);를 통해 생성한 날짜 요소를 캘린더 그리드에 추가한다.
     		  */
     		  for (let i = 1; i <= daysInMonth; i++) {
     		    const dateElement = document.createElement("div");
     		    dateElement.classList.add("date");
-    		    dateElement.textContent = i;
+    		    
+    		 // currentMonth와 i를 두 자리 숫자로 변환
+    		    let formattedMonth = (currentMonth + 1).toString().padStart(2, '0'); // 월이 1부터 시작하므로 +1
+    		    let formattedDay = i.toString().padStart(2, '0'); // 일자도 두 자리로 변환
+
+    		    // classid 생성 ('2024-09-02' 형식)
+    		    let classid = currentYear + "-" + formattedMonth + "-" + formattedDay;
+    		    var tdeposit = "";
+    		    var texpense = "";
+    		    var isDeposit="";
+    		    var price = "";
+    		    //deposit,price 값 뽑아내기
+    		    $('.'+classid).each(function(index,item){
+    		    	isDeposit += $(item).attr("data-isDeposit")+",";
+    		    	price += $(item).attr("data-price")+",";
+    		    });
+    		    
+    		    //split으로 배열 만들기
+    		    let arrayIsDeposit= isDeposit.split(",");
+    		    let arrayPrice = price.split(",");
+    		    //조건식
+    		    for(let t=0; t<arrayIsDeposit.length;t++){
+    		    	if(arrayIsDeposit[t]=="true")tdeposit += arrayPrice[t];
+    		    	else if(arrayIsDeposit[t]=="false") texpense += arrayPrice[t];
+    		    }
+    		    if(tdeposit == "") tdeposit=0;
+    		    if(texpense == "") texpense=0;
+    		    let html ="<div>"+i+"<br><br>"
+				+"+"+tdeposit+"<br>"
+				+"-"+texpense+"</div>"
+				+"<input type='hidden' value='"+classid+"'>";
+    		    dateElement.innerHTML=  html;  		    
     		    dateElement.addEventListener("click", handleDateClick); // 클릭 이벤트 추가
     		    calendarDates.appendChild(dateElement);
     		  }
@@ -179,12 +218,10 @@
     		$('#closeBtnImg').on("click",function(){
     			$('#detailView').attr("style","display: none");
     		});
-    		
-    		
     	})
     </script>
   </head>
-  <div>
+  <div class="gagyebuSection">
     <div class="calendar-container">
       <div class="calendar-header">
         <button id="prevBtn">이전</button>
@@ -203,7 +240,7 @@
       <div class="calendar-dates" id="calendarDates"></div>
     </div>
     <div id="detailView">
-    	<img alt="" src="./image/닫기.png" id="closeBtnImg"><br>
+    	<img alt="" src="./image/a.png" id="closeBtnImg"><br>
     	<div id="selectDate">
     		
     	</div>
@@ -212,9 +249,12 @@
     		3
     	</div>
     </div>
-	<div>
+    
+	<div class="list">
 		<c:forEach items="${gagyebus}" var="gagyebu">
-			<div id="${gagyebu.transactionDate}">gegyebu</div>
+			<div class="${gagyebu.transactionDate}" data-isDeposit="${gagyebu.isDeposit}" 
+			data-price="${gagyebu.price}" >
+			${gagyebu}</div>
 		</c:forEach>
 	</div>
   </div>

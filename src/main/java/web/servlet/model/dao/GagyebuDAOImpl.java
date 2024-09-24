@@ -118,8 +118,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				
 				gagyebus.add(gagyebu);
 			}
-			
-			System.out.println("getMonthGagyebu : " + gagyebus);
 	    	
 	    }catch (Exception e) {
 			System.out.println("getMonthGagyebu err : " + e);
@@ -139,7 +137,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				){
 			ps.setString(1, gagyebu.getUserId());
 			ps.setString(2, gagyebu.getTransactionDate());
-			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(3, String.valueOf(gagyebu.getIsDeposit()));
 			ps.setString(4, gagyebu.getCategory());
 			ps.setInt(5, gagyebu.getPrice());
 			ps.setString(6, gagyebu.getTitle());
@@ -157,7 +155,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				){
 			ps.setString(1, gagyebu.getUserId());
 			ps.setString(2, gagyebu.getTransactionDate());
-			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(3, String.valueOf(gagyebu.getIsDeposit()));
 			ps.setString(4, gagyebu.getCategory());
 			ps.setInt(5, gagyebu.getPrice());
 			ps.setString(6, gagyebu.getTitle());
@@ -199,7 +197,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	public int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus) {
 		int depositTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {
-			if(gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+			if(gagyebu.getIsDeposit())	depositTotal += gagyebu.getPrice();
 		}
 		return depositTotal;
 	}
@@ -207,7 +205,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	public int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus) {
 		int expenseTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {
-			if(!gagyebu.isDeposit())	expenseTotal += gagyebu.getPrice();
+			if(!gagyebu.getIsDeposit())	expenseTotal += gagyebu.getPrice();
 		}
 		return expenseTotal;
 	}
