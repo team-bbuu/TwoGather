@@ -141,14 +141,14 @@
     			 $('.'+cid).eq(t).attr('data-price')+"원"  +
     		      	"<img alt='수정' src='./image/수정.png' class='editBtn'>"+
     		      	"<img alt='삭제' src='./image/삭제.png' class='deleteBtn'>"+
-    		      	"<input type='hidden' value='"+cid+"'"+
+    		      	"<input type='hidden' value='"+$('.'+cid).eq(t).attr('data-id')+"'>"+
     		      "</div>";
     		 }
     		 
     		 $('#transactions').html(html2);
     		 //폼 감추기
     		  $('#form').attr("style","display: none");
-    		  
+    		  $('#transactionDate').val(cid);
     		}
 
     		// renderCalendar 함수는 월별 캘랜더를 생성하고 표시하는 함수
@@ -186,8 +186,8 @@
 
     		    // classid 생성 ('2024-09-02' 형식)
     		    let classid = currentYear + "-" + formattedMonth + "-" + formattedDay;
-    		    var tdeposit = "";
-    		    var texpense = "";
+    		    var tdeposit = 0;
+    		    var texpense = 0;
     		    var isDeposit="";
     		    var price = "";
     		    //deposit,price 값 뽑아내기
@@ -201,15 +201,16 @@
     		    let arrayPrice = price.split(",");
     		    //조건식
     		    for(let t=0; t<arrayIsDeposit.length;t++){
-    		    	if(arrayIsDeposit[t]=="true")tdeposit += arrayPrice[t];
-    		    	else if(arrayIsDeposit[t]=="false") texpense += arrayPrice[t];
+    		    	if(arrayIsDeposit[t]=="true")tdeposit += arrayPrice[t]*1;
+    		    	else if(arrayIsDeposit[t]=="false") texpense += arrayPrice[t]*1;
     		    }
     		    if(tdeposit == "") tdeposit=0;
     		    if(texpense == "") texpense=0;
     		    let html ="<div>"+i+"<br><br>"
 				+"+"+tdeposit+"<br>"
 				+"-"+texpense+"</div>"
-				+"<input type='hidden' value='"+classid+"'>";
+				+"<input type='hidden' value='"+classid+"' name='cid'>";
+				+"<input type='hidden' value='"+$('')+"' name='cid'>";
     		    dateElement.innerHTML=  html;  		    
     		    dateElement.addEventListener("click", handleDateClick); // 클릭 이벤트 추가
     		    calendarDates.appendChild(dateElement);
@@ -260,15 +261,16 @@
     			$('#editgagyebu').attr("style","display: block");
     		});//수정버튼
 			
-    		$(document).on('click', '.deleteBtn', function() {
+    		$(document).on('click', '.deleteBtn', function(deleteEvent) {
 				let check = confirm("해당 가게부를 삭제할까요?");
 				if(check){
-					let cid = $('')
-					alert(cid);
+					let gid = $(deleteEvent.target).next().val();
+					alert(gid);
+					location.href="deleteGagyebu.do?gagyebuId="+gid;
 				}else{
 					return;
 				}
-    		});//삭제버튼
+     		});//삭제버튼
     		
     		
     		
@@ -306,19 +308,19 @@
     	</div><br><br>
     	
     	<div id="form">
-    		<form action="#">
+    		<form action="createGagyebu.do" method="post">
     			<input type="hidden" name="transactionDate" id="transactionDate">
     			<select name="isDeposit" id="isDeposit">
     				<option value="true">입금</option>
     				<option value="false">지출</option>
     			</select>
-    			<input type="radio" name="userId" value="">본인닉네임
-    			<input type="radio" name="userId" value="">파트너닉네임
+    			<input type="radio" name="userId" value="${user.id}">${user.nickname}
+    			<input type="radio" name="userId" value="${partner.id}">${partner.nickname}
     			<br>
     			<input type="text" class="inputstyle" name="price" placeholder="금액"><br>
     			<input type="text" class="inputstyle" name="title" placeholder="제목"><br>
     			<input type="text" class="inputstyle" name="etc" placeholder="비고"><br>
-    			<input type="button" id="creategagyebu" value="등록">
+    			<input type="submit" id="creategagyebu" value="등록">
     			<input type="button" id="editgagyebu" value="수정">
     		</form>
     	</div>
@@ -328,7 +330,7 @@
 	<div class="list">
 		<c:forEach items="${gagyebus}" var="gagyebu">
 			<div class="${gagyebu.transactionDate}" data-isDeposit="${gagyebu.isDeposit}" 
-			data-price="${gagyebu.price}" data-title="${gagyebu.title}" >
+			data-price="${gagyebu.price}" data-title="${gagyebu.title}" data-id="${gagyebu.id}" >
 			${gagyebu}</div>
 		</c:forEach>
 	</div>
