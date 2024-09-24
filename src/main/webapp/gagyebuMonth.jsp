@@ -130,9 +130,9 @@
 			    String formattedDate = parts[0] + "년 " + Integer.parseInt(parts[1]) + "월";
 			%>
 			<div class="monthNav">
-				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowLeft.svg" alt="prev"></div>
+<%-- 				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowLeft.svg" alt="prev"></div> --%>
 				<div class="currentYearMonth"><%= formattedDate %></div>
-				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowRight.svg" alt="next"></div>				
+<%-- 				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowRight.svg" alt="next"></div>	 --%>			
 			</div>
 		</div>
 		

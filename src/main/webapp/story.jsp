@@ -272,8 +272,19 @@
 		<div id="dropdown"></div>
 		<div class="d-flex flex-wrap mt-3">
 			<c:forEach items="${list}" var="story">
+			<%-- ${list.imgSrc}  /image/a.jpg --%>
+			
 				<div class="card">
-					<img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+					<c:choose>
+					    <c:when test="${story.imgSrc == 'a.jpg' || story.imgSrc == ''}">
+					        <img alt="뭘까요?" src="${pageContext.request.contextPath}/image/imageDefault.png" id="${story.imgSrc}" class="storyImg card-img-top">					
+					    </c:when>
+					    <c:otherwise>
+					        <img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+					    </c:otherwise>
+					</c:choose>
+				
+					
 					<div class="card-body" data-toggle="modal" data-target="#detailModal">
 						<div id="${story.uploadDate }" class="uploadDate">${story.uploadDate }</div>
 						<div id="${story.title}" class="title">${story.title }</div>
