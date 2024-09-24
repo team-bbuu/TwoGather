@@ -34,7 +34,7 @@ public class CreateGagyebuController implements Controller {
 			gagyebu = new Gagyebu(0, userId ,transactionDate, isDeposit, category, price, title, paymentType, etc);
 		}
 		
-		String path = "monthGagyebu.jsp";
+		String path = "gagyebu.do";
 		
 		try {
 			GagyebuDAOImpl.getInstance().createGagyebu(gagyebu);
@@ -43,7 +43,6 @@ public class CreateGagyebuController implements Controller {
 			path = "error.jsp";
 		}
 		
-		request.setAttribute("page", path);
-		return new ModelAndView("dashboard.jsp");
+		return new ModelAndView(path,true);
 	}
 }
