@@ -28,11 +28,9 @@
 		  width: 100%;
 		  height: 100%;
 		  margin: 30px auto;
-		  border: 1px solid #ccc;
 		  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 		  padding: 10px;
 		  background-color: #fdefde;
-		  border: 3px solid red;
 		}
 		
 		.calendar-header {
@@ -93,8 +91,21 @@
 		}
 		
 		.list {
+			display: none;
 			border: 1px solid red;
 		}
+		#form{
+			position: absolute;
+			bottom: 0;
+			border: 1px solid red;
+		}
+		.editBtn,.deleteBtn,#createBtn{
+			width: 20px;
+		}
+		.inputstyle{
+			border: 1px solid black;
+		}
+		
     	
     </style>
     <script type="text/javascript">
@@ -113,11 +124,29 @@
     		function handleDateClick(event) {
     			const clickDate = $(event.target).closest(".date");
     			//clickDate.textContent
+    		//오른쪽 창 표시
     		  $('#detailView').attr("style","display: block");
-    		  $('#selectDate').html(clickDate.text().split("+")[0]);
+    		  $('#selectDate').html(clickDate.text().split("+")[0]+"일");
     		 let cid = clickDate.find("input[type='hidden']").val();
-    		 let html2 =  
-    		 $('#transactions').html("");
+    		 let html2 = "";
+    		 for(let t=0; t<$('.'+cid).length; t++){
+    			 let deposit = "";
+    			 let isDeposit = $('.'+cid).eq(t).attr('data-isDeposit');
+    			 if(isDeposit == "true") deposit="입금" 
+    			 else if(isDeposit == "false")deposit="출금" 
+    			 //transactions 채워넣는 부분 
+		    	html2+=	"<div class='transactionRecord'>" +
+    			  deposit + "&nbsp"+
+    			 $('.'+cid).eq(t).attr('data-title') + 
+    			 $('.'+cid).eq(t).attr('data-price')+"원"  +
+    		      	"<img alt='수정' src='./image/수정.png' class='editBtn'>"+
+    		      	"<img alt='삭제' src='./image/삭제.png' class='deleteBtn'>"+
+    		      	"<input type='hidden' value='"+cid+"'"+
+    		      "</div>";
+    		 }
+    		 
+    		 $('#transactions').html(html2);
+    		 //폼 감추기
     		  $('#form').attr("style","display: none");
     		  
     		}
@@ -217,8 +246,35 @@
     		// detailView JS
     		$('#closeBtnImg').on("click",function(){
     			$('#detailView').attr("style","display: none");
-    		});
-    	})
+    		});//오른쪽 창 닫기
+    		$('#createBtn').on("click",function(){
+    			$('#form').attr("style","display: block");
+    			$('#editgagyebu').attr("style","display: none");
+    			$('#creategagyebu').attr("style","display: block");
+    			
+    		});//등록버튼
+    		
+    		$(document).on('click', '.editBtn', function() {
+    			$('#form').attr("style","display: block");
+    			$('#creategagyebu').attr("style","display: none");
+    			$('#editgagyebu').attr("style","display: block");
+    		});//수정버튼
+			
+    		$(document).on('click', '.deleteBtn', function() {
+				let check = confirm("해당 가게부를 삭제할까요?");
+				if(check){
+					let cid = $('')
+					alert(cid);
+				}else{
+					return;
+				}
+    		});//삭제버튼
+    		
+    		
+    		
+    		
+    		
+    	})//ready
     </script>
   </head>
   <div class="gagyebuSection">
@@ -228,6 +284,7 @@
         <h2 id="currentMonth"></h2>
         <button id="nextBtn">다음</button>
       </div>
+     
       <div class="calendar-days">
         <div class="day">일</div>
         <div class="day">월</div>
@@ -240,20 +297,38 @@
       <div class="calendar-dates" id="calendarDates"></div>
     </div>
     <div id="detailView">
-    	<img alt="" src="./image/a.png" id="closeBtnImg"><br>
+    	<img alt="" src="./image/닫기.png" id="closeBtnImg"><br>
     	<div id="selectDate">
     		
-    	</div>
-    	<div id="transactions">2</div>
+    	</div><br><br>
+    	<div id="transactions">2
+    		
+    	</div><br><br>
+    	
     	<div id="form">
-    		3
+    		<form action="#">
+    			<input type="hidden" name="transactionDate" id="transactionDate">
+    			<select name="isDeposit" id="isDeposit">
+    				<option value="true">입금</option>
+    				<option value="false">지출</option>
+    			</select>
+    			<input type="radio" name="userId" value="">본인닉네임
+    			<input type="radio" name="userId" value="">파트너닉네임
+    			<br>
+    			<input type="text" class="inputstyle" name="price" placeholder="금액"><br>
+    			<input type="text" class="inputstyle" name="title" placeholder="제목"><br>
+    			<input type="text" class="inputstyle" name="etc" placeholder="비고"><br>
+    			<input type="button" id="creategagyebu" value="등록">
+    			<input type="button" id="editgagyebu" value="수정">
+    		</form>
     	</div>
-    </div>
+    	<img alt="" src="./image/추가.png" id="createBtn">
+   		</div>
     
 	<div class="list">
 		<c:forEach items="${gagyebus}" var="gagyebu">
 			<div class="${gagyebu.transactionDate}" data-isDeposit="${gagyebu.isDeposit}" 
-			data-price="${gagyebu.price}" >
+			data-price="${gagyebu.price}" data-title="${gagyebu.title}" >
 			${gagyebu}</div>
 		</c:forEach>
 	</div>
