@@ -8,16 +8,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import web.servlet.model.dao.GagyebuDAOImpl;
 import web.servlet.model.vo.Gagyebu;
+import web.servlet.model.vo.User;
 
 public class GagyebuMonthController implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-		String userId = request.getParameter("userId");
-		String partnerId = request.getParameter("partnerId");
+//		String userId = request.getParameter("userId");
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		//폼값 받아서
+		String userId = user.getId();
+		String partnerId = user.getPartnerId();
 		String path = "gagyebuMonth.jsp";
 
 		GagyebuDAOImpl dao = GagyebuDAOImpl.getInstance();

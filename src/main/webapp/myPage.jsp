@@ -18,19 +18,6 @@
 	<script src="resources/js/myPageImage.js"></script>
 
 	<style type="text/css">
-	    *{
-	    	margin: 0;
-	    	padding: 0;
-	    	box-sizing: border-box;
-		    font-family: Arial, sans-serif;
-	    }
-		body {
-	  		height: 100vh;
-	  		display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: #efeefe; /* 임시 색상 */
-		}
 		button {
 		    background: none; /* 배경 제거 */
 		    border: none; /* 테두리 제거 */
@@ -40,13 +27,14 @@
 		    color: inherit; /* 상속된 텍스트 색상 사용 */
 		    cursor: pointer; /* 클릭 가능 커서 */
 		}
-		.dashboard-container {
-		    display: flex;
-		    width: 90%;
-		    height: 90vh;
-			background-color: #f7f6fc;
-		    border-radius: 15px;
-
+		.myPageSection {
+			overflow-y: scroll;
+			width: 100%;
+			height: 100%;
+			padding: 2%;
+			background: #F6F6FE;
+			color: #4D4D4D;
+			border: 1px solid red;
 		}
 		
 		#right {
@@ -60,14 +48,8 @@
 			flex-direction: column;
 			align-items: center;
 		}	
-		#myPage-image>img{
-			width: 150px;
-			height: 150px;
-			border-radius: 150px;
-		}
 		form {
 			width: 30%;
-			
 		}
 		#update-btn {
 			text-align: center;
@@ -75,14 +57,16 @@
 		input {
 			width: 100%;
 			height: 30px;
+			border: 1px solid red;
 		}
 		
 		/* 모달css */
 		.modal_btn_image, .modal_btn_image>img, modal_popup>img {
 			width: 150px;
 			height: 150px;
-			border-radius: 150px;
+			border-radius: 50%;
 		    cursor: pointer;
+		    border: 10px solid red;
 		}
 		.modal_btn_image:hover {
 		    box-shadow: 3px 4px 11px 0px #00000040;
@@ -141,6 +125,7 @@
 		  border-radius: 20px 20px / 20px 20px;
 		  overflow: hidden;
 		  margin: 0px 10px 10px 0px;
+		  border: 1px solid red;
 		}
 		
 		.inputImg {
@@ -152,6 +137,21 @@
 		  width: 100%;
 		  height: 100%;
 		  object-fit: cover;
+		}
+		
+		.profileImage{
+			position: relative;
+			width: 10vw;
+			height: 10vw;
+			border-radius: 50%;
+			overflow: hidden;
+		
+		}
+		.profileImage > img{
+			width: 100%;
+			height: 100%;
+	        object-fit: cover;
+			
 		}
 		
 	</style>
@@ -232,14 +232,12 @@
 		});	
 	</script>
 </head>
-<body>
-	<div class="dashboard-container">
+	<div class="myPageSection">
 		<!-- 왼쪽 NAV -->
-		
 		<div id="right">
 			<div id="myPage">
+			
 				<div id="myPage-image">
-					
 					<!--모달 팝업-->
 					<div class="modal_image">
 					    <div class="modal_popup">
@@ -247,8 +245,8 @@
 					        <!-- 이미지파일업로드 부분-->
 							<form class="inputImg" method="post" enctype="multipart/form-data">
 						    	<!-- 이미지 파일 받기위해 enctype 설정 -->
-						        <div class="addImage" id="image-show">
-						        	<img src="${user.imgSrc}" style="width: 150px; height: 150px; border-radius: 150px;">
+						        <div class="addImage " id="image-show">
+						        	<img src="${user.imgSrc}">
 						        </div>
 						        <!-- 이미지 보여줄 영역 -->
 						        <input type="file" accept="image/*" onchange="loadFile(this)" id="imageUpload"/>
@@ -258,15 +256,22 @@
 					        <button type="button" class="close_btn_image">닫기</button>
 					    </div>
 					</div>
+					
 					<!--end 모달 팝업-->
 					<main>
 					    <section>
-					        <button type="button" class="modal_btn_image">
+					       <%--  <button type="button" class="modal_btn_image">
 					            <img src="${user.imgSrc}">
-					        </button>
+					        </button> --%>
+					        <div class="profileImage">
+						        <img src="${user.imgSrc}">
+					        	
+					        
+					        </div>
 					    </section>
 					</main>
 				</div>
+				
 				<form action="updateUser.do" method="post">
 					<div id="myPage-id">
 						${user.id}<br /><br /><br />
@@ -289,6 +294,7 @@
 						<br /><input type="submit" name="update" value="정보수정"><br />
 					</div>
 				</form>
+				
 				<div id="myPage-footer">
 					<br />
 					
@@ -333,7 +339,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	const modalImage = document.querySelector('.modal_image');
+/* 	const modalImage = document.querySelector('.modal_image');
 	const modalBreak = document.querySelector('.modal_break');
 	const modalDelete = document.querySelector('.modal_delete');
 	const modalOpenImage = document.querySelector('.modal_btn_image');
@@ -342,8 +348,8 @@
 	const modalCloseImage = document.querySelector('.close_btn_image');
 	const modalCloseBreak = document.querySelector('.close_btn_break');
 	const modalCloseDelete = document.querySelector('.close_btn_delete');
-
-	modalOpenImage.addEventListener('click',function(){
+ */
+	/* modalOpenImage.addEventListener('click',function(){
 	    modalImage.style.display = 'block';
 	});
 	modalCloseImage.addEventListener('click',function(){
@@ -362,7 +368,7 @@
 	});
 	modalCloseDelete.addEventListener('click',function(){
 	    modalDelete.style.display = 'none';
-	});
+	}); */
 	
 	function loadFile(input) {
 		  let file = input.files[0]; // 선택 파일 가져오기
@@ -380,6 +386,5 @@
 		  container.appendChild(newImg);
 		}
 	</script>
-	
-</body>
+	</div>
 </html>

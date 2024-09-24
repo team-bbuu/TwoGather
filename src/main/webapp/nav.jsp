@@ -187,7 +187,7 @@
 	}
 	
 	/* 로그아웃 버튼 */
-	.logutBtn {
+	.logoutBtn {
 		position: absolute;
 		bottom: 1vw;
 		font-size: 1vw;
@@ -282,11 +282,11 @@
 		    	<a class="nav-link no-style" href="story.do">스토리</a>
 		    </li>
   		    <li class="nav-item" onclick="clickMenu(this)">
-		    	<a class="nav-link no-style" href="myPage.jsp">마이페이지</a>
+		    	<a class="nav-link no-style" href="mypage.do">마이페이지</a>
 		    </li>
 		</ul>
 		
-		<div class="logutBtn">
+		<div class="logoutBtn">
 			<a class="no-style" href="logout.do">로그아웃</a>
 		</div>
 		</div>
