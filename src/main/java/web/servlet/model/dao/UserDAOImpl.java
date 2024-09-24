@@ -5,7 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -14,19 +19,10 @@ import web.servlet.model.vo.User;
 public class UserDAOImpl implements UserDAO {
 	DataSource ds;
 	private UserDAOImpl() {
-
-		/*
 		try {
 			InitialContext ic = new InitialContext();
 			ds = (DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
-			System.out.println(e);
-		}
-		*/
-		
-		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
 	}
@@ -36,8 +32,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-//		return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -69,6 +64,8 @@ public class UserDAOImpl implements UserDAO {
 						rs.getString("birthdate"), rs.getString("email"), rs.getString("gender"), rs.getString("address"), rs.getString("matching"), rs.getString("start_date"),
 						rs.getString("break_date"));
 			}
+		}catch (Exception e) {
+			System.out.println("findUser e : " + e);
 		} finally {
 			closeAll(rs, ps, conn);
 		}
@@ -169,7 +166,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			conn = getConnection();
-			String query = "SELECT u.id, u.partner_id, u.img_src, u.password, u.nickname, u.mobile, u.birthdate, u.email, u.gender, u.address, u.matching, u.start_date, u.break_date, c.category_name FROM User u, category c WHERE u.id = c.user_id AND u.id = ? AND u.password = ?";
+			String query = "SELECT u.id, u.partner_id, u.img_src, u.password, u.nickname, u.mobile, u.birthdate, u.email, u.gender, u.address, u.matching, u.start_date, u.break_date, c.category_name FROM user u, category c WHERE u.id = c.user_id AND u.id = ? AND u.password = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, id);
 			ps.setString(2, password);
@@ -213,7 +210,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			conn = getConnection();
-			String query = "SELECT id FROM User WHERE email = ? AND mobile = ?";
+			String query = "SELECT id FROM user WHERE email = ? AND mobile = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, email);
 			ps.setString(2, mobile);
@@ -236,7 +233,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			conn = getConnection();
-			String query = "SELECT password FROM User WHERE id = ? AND birthDate = ?";
+			String query = "SELECT password FROM user WHERE id = ? AND birthdate = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, id);
 			ps.setString(2, birthDate);
@@ -258,7 +255,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			conn = getConnection();
 			// user의 id만 제외하였음
-			String query = "UPDATE User SET partner_id=?, img_src=?, password=?, nickname=?, mobile=?,"
+			String query = "UPDATE user SET partner_id=?, img_src=?, password=?, nickname=?, mobile=?,"
 					+ "birthdate=?, email=?, gender=?, address=?, matching=?, start_date=?,"
 					+ "break_date=? WHERE id=?";
 			ps = conn.prepareStatement(query);
@@ -294,7 +291,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		try {
 			conn = getConnection();
-			String query = "DELETE FROM User Where id=?";
+			String query = "DELETE FROM user Where id=?";
 			
 			// 유저 아이디 삭제
 			ps = conn.prepareStatement(query);
@@ -311,7 +308,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	
 	/* test */
-	public static void main(String[] args) throws SQLException {
+//	public static void main(String[] args) throws SQLException {
 		// 선민 
 		//System.out.println(dao.FindUser("id01"));
 		//System.out.println(dao.checkEmail("abcde3@gmail.com"));
@@ -331,6 +328,22 @@ public class UserDAOImpl implements UserDAO {
 //		User vo = UserDAOImpl.getInstance().login("id01", "pass1");
 //		System.out.println("vo :: " + Arrays.toString(vo.getCategory()));
 //		System.out.println(vo);
-	}
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		try {
+//			Date formatDate = formatter.parse("2024-09-17 11:23:45");
+//			Date now = new Date();
+//			
+//			String breakDate =  formatter2.format(formatDate);
+//			String nowDate = formatter2.format(now);
+//			
+//			System.out.println(nowDate.compareTo(breakDate));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }

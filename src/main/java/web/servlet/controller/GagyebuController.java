@@ -1,6 +1,7 @@
 package web.servlet.controller;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +20,14 @@ public class GagyebuController implements Controller{
 		HttpSession session = request.getSession();
 		ArrayList<Gagyebu> gagyebus = new ArrayList<Gagyebu>();
 		
-		String yearMonth = request.getParameter("yearMonth");
+		String yearMonth = request.getParameter("yearMonth"); //2024-09
+		if(yearMonth == null) {
+			yearMonth= String.valueOf(LocalDate.now()).substring(0,7);
+		}
 		User user = (User)session.getAttribute("user");
 		User partner = (User)session.getAttribute("partner");
 		
-		String path = "monthGagyebu.jsp";
+		String path = "gagyebu.jsp";
 		
 		try {
 			gagyebus = GagyebuDAOImpl.getInstance().getMonthGagyebu(yearMonth, user.getId(), partner.getId());

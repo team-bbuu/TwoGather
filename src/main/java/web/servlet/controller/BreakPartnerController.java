@@ -1,11 +1,14 @@
 package web.servlet.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import web.servlet.model.dao.UserDAOImpl;
 import web.servlet.model.vo.User;
@@ -16,7 +19,7 @@ public class BreakPartnerController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response){
 		//변경할 값 생성
 		String matching = "매칭전";
-		String breakDate = String.valueOf(LocalDate.now());
+		String breakDate = String.valueOf(LocalDateTime.now()).substring(0,19).replace("T", " ");
 		//session에서 user 받아오기
 		HttpSession session = request.getSession();
 		UserDAOImpl dao = UserDAOImpl.getInstance();
@@ -38,5 +41,4 @@ public class BreakPartnerController implements Controller {
 		}
 		return null;
 	}
-	
 }

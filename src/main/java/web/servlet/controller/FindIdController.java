@@ -11,16 +11,14 @@ public class FindIdController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		String email =request.getParameter("email");
 		String mobile =request.getParameter("mobile");
-		String path = "";
 		try {
 			String userId = UserDAOImpl.getInstance().findId(email, mobile);
 			if(userId!=null) {
-				request.setAttribute("userId", userId);
-				path = ""; // path설정 고민
+				response.getWriter().write(userId);
 			}
 		} catch (Exception e) {
 			
 		}
-		return new ModelAndView(path);
+		return null;
 	}
 }

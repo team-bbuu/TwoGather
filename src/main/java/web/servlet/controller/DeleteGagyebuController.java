@@ -12,7 +12,7 @@ public class DeleteGagyebuController implements Controller{
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		String gagyebuId = request.getParameter("gagyebuId"); // 삭제할 가계부 아이디
 		
-		String path = "monthGagyebu.jsp";
+		String path = "gagyebu.do";
 		
 		try {
 			GagyebuDAOImpl.getInstance().deleteGagyebu(Integer.parseInt(gagyebuId));
@@ -21,8 +21,7 @@ public class DeleteGagyebuController implements Controller{
 			path = "error.jsp";
 		}
 		
-		request.setAttribute("page", path);
-		return new ModelAndView("dashboard.jsp");
+		return new ModelAndView(path,true);
 	}
 	
 }

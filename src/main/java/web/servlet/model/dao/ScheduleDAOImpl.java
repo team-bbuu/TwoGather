@@ -1,36 +1,26 @@
 package web.servlet.model.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import config.ServerInfo;
 import web.servlet.model.vo.Schedule;
 
 public class ScheduleDAOImpl implements ScheduleDAO {
 	DataSource ds;
 	private ScheduleDAOImpl() {
-		/*
 		try {
-		
 			InitialContext ic = new InitialContext();
 			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
 			System.out.println(e);
 		}
-		*/
-		
-		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
-			System.out.println(e);
-		}
-		
 	}
 	private static ScheduleDAOImpl dao = new ScheduleDAOImpl();
 	public static ScheduleDAOImpl getInstance() {
@@ -38,8 +28,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-		//return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -54,7 +43,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	
 	@Override
 	public Schedule getLatestSchedule(String userId, String partnerId) throws SQLException{
-		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule "
+		String query = "SELECT id,user_id,is_personal,start_date,end_date,title,description FROM schedule "
 				+ "WHERE start_date>curdate() AND user_id IN ( ?,?) "
 				+ "ORDER BY datediff(start_date,curdate()) LIMIT 1";
 		ResultSet rs = null;
@@ -76,7 +65,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	@Override
 	public ArrayList<Schedule> getMonthSchedule(String yearMonth, String userId, String partnerId)  throws SQLException{
-		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule \r\n"
+		String query = "SELECT id,user_id,is_personal,start_date,end_date,title,description FROM schedule \r\n"
 				+ "WHERE user_id IN (?,?) AND (start_date LIKE ? or end_date LIKE ?)";
 		ResultSet rs = null;
 		ArrayList<Schedule> list = new ArrayList<Schedule>();
@@ -97,7 +86,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	@Override
 	public void createSchedule(Schedule schedule) throws SQLException {
-		String query = "INSERT INTO schedule(User_id,is_personal,start_date,end_date,title,description) VALUES \r\n"
+		String query = "INSERT INTO schedule(user_id,is_personal,start_date,end_date,title,description) VALUES \r\n"
 				+ "(?,?,?,?,?,?);";
 		try(
 			Connection conn = getConnection();
@@ -140,6 +129,18 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
 			ps.setInt(1, scheduleId);
+			ps.executeUpdate();
+		}
+		
+	}
+	@Override
+	public void deleteSchedule(String userId)  throws SQLException{
+		String query = "DELETE FROM schedule WHERE user_id=?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
 			ps.executeUpdate();
 		}
 		

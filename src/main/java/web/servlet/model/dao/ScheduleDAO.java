@@ -11,4 +11,5 @@ public interface ScheduleDAO {
 	void createSchedule (Schedule schedule) throws SQLException;  // 일정 생성
 	void updateSchedule (Schedule schedule) throws SQLException;  // 일정 수정
 	void deleteSchedule (int scheduleId) throws SQLException;// 일정 삭제
+	void deleteSchedule(String userId) throws SQLException;
 }

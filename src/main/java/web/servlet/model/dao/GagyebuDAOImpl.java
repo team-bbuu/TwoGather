@@ -1,7 +1,6 @@
 package web.servlet.model.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,29 +8,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import config.ServerInfo;
 import web.servlet.model.vo.Gagyebu;
 
 public class GagyebuDAOImpl implements GagyebuDAO {
 	DataSource ds;
 	private GagyebuDAOImpl() {
-		
-//		try {
-//			InitialContext ic = new InitialContext();
-//			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
-//		}catch (NamingException e) {
-//			System.out.println(e);
-//		}
-
-		
 		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
+			InitialContext ic = new InitialContext();
+			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
+		}catch (NamingException e) {
 			System.out.println(e);
 		}
-		
 	}
 	private static GagyebuDAOImpl dao = new GagyebuDAOImpl();
 	public static GagyebuDAOImpl getInstance() {
@@ -39,8 +30,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-//		return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -93,8 +83,8 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	    try {
 	    	conn = getConnection();
 	    	
-	    	String query = "select id, User_id, transaction_date, is_deposit, category, price, title, "
-	    			+ "payment_type, etc from Gagyebu where transaction_date like ? and (User_id=? or User_id=?);";
+	    	String query = "select id, user_id, transaction_date, is_deposit, category, price, title, "
+	    			+ "payment_type, etc from gagyebu where transaction_date like ? and (user_id=? or user_id=?);";
 	    	ps = conn.prepareStatement(query);
 	    	ps.setString(1, yearMonth+"%"); // "2024-09%"
 	    	ps.setString(2, userId);
@@ -107,7 +97,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				Gagyebu gagyebu = new Gagyebu();
 				
 			    gagyebu.setId(rs.getInt("id"));
-			    gagyebu.setUserId(rs.getString("User_id"));
+			    gagyebu.setUserId(rs.getString("user_id"));
 			    gagyebu.setTransactionDate(rs.getString("transaction_date"));
 			    gagyebu.setDeposite(rs.getBoolean("is_deposit"));
 			    gagyebu.setCategory(rs.getString("category"));
@@ -118,8 +108,6 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				
 				gagyebus.add(gagyebu);
 			}
-			
-			System.out.println("getMonthGagyebu : " + gagyebus);
 	    	
 	    }catch (Exception e) {
 			System.out.println("getMonthGagyebu err : " + e);
@@ -139,7 +127,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				){
 			ps.setString(1, gagyebu.getUserId());
 			ps.setString(2, gagyebu.getTransactionDate());
-			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(3, String.valueOf(gagyebu.getIsDeposit()));
 			ps.setString(4, gagyebu.getCategory());
 			ps.setInt(5, gagyebu.getPrice());
 			ps.setString(6, gagyebu.getTitle());
@@ -157,7 +145,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 				){
 			ps.setString(1, gagyebu.getUserId());
 			ps.setString(2, gagyebu.getTransactionDate());
-			ps.setString(3, String.valueOf(gagyebu.isDeposit()));
+			ps.setString(3, String.valueOf(gagyebu.getIsDeposit()));
 			ps.setString(4, gagyebu.getCategory());
 			ps.setInt(5, gagyebu.getPrice());
 			ps.setString(6, gagyebu.getTitle());
@@ -183,10 +171,23 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		}
 	}
 	@Override
+	public void deleteGagyebu(String userId)  throws SQLException{
+		String query = "DELETE FROM gagyebu WHERE user_id = ?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	@Override
 	public int getMonthDepositTotal(ArrayList<Gagyebu> gagyebus) {
 		int depositTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {
-			if(gagyebu.isDeposit())	depositTotal += gagyebu.getPrice();
+			if(gagyebu.getIsDeposit())	depositTotal += gagyebu.getPrice();
 		}
 		return depositTotal;
 	}
@@ -194,7 +195,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	public int getMonthExpenseTotal(ArrayList<Gagyebu> gagyebus) {
 		int expenseTotal = 0;
 		for(Gagyebu gagyebu : gagyebus) {
-			if(!gagyebu.isDeposit())	expenseTotal += gagyebu.getPrice();
+			if(!gagyebu.getIsDeposit())	expenseTotal += gagyebu.getPrice();
 		}
 		return expenseTotal;
 	}
@@ -268,7 +269,7 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 		String DBCategory = String.join(",", categories);
 		try {
 			conn = getConnection();
-			String query = "UPDATE category SET category_name = ? WHERE User_id = ?";
+			String query = "UPDATE category SET category_name = ? WHERE user_id = ?";
 			ps = conn.prepareStatement(query);
 			ps.setString(1, DBCategory);
 			ps.setString(2, userId);

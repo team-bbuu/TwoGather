@@ -84,6 +84,11 @@ public class User {
 		this.gender = gender;
 		this.address = address;
 	}
+	public User(String id,String nickname,String imgSrc) {
+		this.id = id;
+		this.nickname = nickname;
+		this.imgSrc = imgSrc;
+	}
 
 	public String getpassword() {
 		return password;

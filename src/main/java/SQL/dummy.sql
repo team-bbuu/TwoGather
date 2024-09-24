@@ -294,27 +294,27 @@ VALUES
 -- story dummy data
 -- 2024년 9월 데이터 삽입
 INSERT INTO story (id, User_id, upload_date, img_src, title, content) VALUES
-(1, 'id01', '2024-09-03', '/image/a.jpg', 'Our Cozy Corner', 'Just a quiet evening at home with my love. Cozy vibes only!'),
-(2, 'id20', '2024-09-08', '/image/a.jpg', 'Sunday Brunch', 'Nothing beats a relaxing brunch with the best company.'),
-(3, 'id01', '2024-09-12', '/image/a.jpg', 'Adventure Awaits', 'Exploring new places with you is always the best part of the day.'),
-(4, 'id20', '2024-09-17', '/image/a.jpg', 'Sweet Moments', 'Caught in a sweet moment together. Life is beautiful with you.'),
-(5, 'id01', '2024-09-21', '/image/a.jpg', 'Late Night Talks', 'Our late-night talks are my favorite. Endless conversations and laughter.'),
-(6, 'id20', '2024-09-24', '/image/a.jpg', 'Movie Night', 'Enjoying a classic movie with the one I love. Perfect night in.'),
-(7, 'id01', '2024-09-27', '/image/a.jpg', 'Sunny Day Out', 'Sunshine and smiles on a perfect day out together.'),
-(8, 'id20', '2024-09-29', '/image/a.jpg', 'Date Night', 'A special date night that we’ll remember for a long time.'),
-(9, 'id01', '2024-09-30', '/image/a.jpg', 'Weekend Getaway', 'Escaping the routine with a lovely weekend trip.'),
-(10, 'id20', '2024-09-15', '/image/a.jpg', 'Simple Joys', 'Finding joy in the simple things when we’re together.'),
+(1, 'id01', '2024-09-03', 'a.jpg', 'Our Cozy Corner', 'Just a quiet evening at home with my love. Cozy vibes only!'),
+(2, 'id20', '2024-09-08', 'a.jpg', 'Sunday Brunch', 'Nothing beats a relaxing brunch with the best company.'),
+(3, 'id01', '2024-09-12', 'a.jpg', 'Adventure Awaits', 'Exploring new places with you is always the best part of the day.'),
+(4, 'id20', '2024-09-17', 'a.jpg', 'Sweet Moments', 'Caught in a sweet moment together. Life is beautiful with you.'),
+(5, 'id01', '2024-09-21', 'a.jpg', 'Late Night Talks', 'Our late-night talks are my favorite. Endless conversations and laughter.'),
+(6, 'id20', '2024-09-24', 'a.jpg', 'Movie Night', 'Enjoying a classic movie with the one I love. Perfect night in.'),
+(7, 'id01', '2024-09-27', 'a.jpg', 'Sunny Day Out', 'Sunshine and smiles on a perfect day out together.'),
+(8, 'id20', '2024-09-29', 'a.jpg', 'Date Night', 'A special date night that we’ll remember for a long time.'),
+(9, 'id01', '2024-09-30', 'a.jpg', 'Weekend Getaway', 'Escaping the routine with a lovely weekend trip.'),
+(10, 'id20', '2024-09-15', 'a.jpg', 'Simple Joys', 'Finding joy in the simple things when we’re together.'),
 -- 2024년 10월 데이터 삽입
-(11, 'id01', '2024-10-02', '/image/a.jpg', 'Autumn Walk', 'Enjoying the crisp autumn air and colorful leaves with you.'),
-(12, 'id20', '2024-10-07', '/image/a.jpg', 'Pumpkin Patch Fun', 'Had a blast picking out pumpkins together. Fall is here!'),
-(13, 'id01', '2024-10-10', '/image/a.jpg', 'Rainy Day Comfort', 'Snuggling up on a rainy day with you is the best.'),
-(14, 'id20', '2024-10-12', '/image/a.jpg', 'Concert Night', 'Rocking out at a concert with my favorite person.'),
-(15, 'id01', '2024-10-16', '/image/a.jpg', 'Scenic Drive', 'A scenic drive and great company make for an unforgettable day.'),
-(16, 'id20', '2024-10-20', '/image/a.jpg', 'Cafe Date', 'Sipping coffee and enjoying good conversation at our favorite cafe.'),
-(17, 'id01', '2024-10-22', '/image/a.jpg', 'Cooking Together', 'Creating delicious memories in the kitchen with you.'),
-(18, 'id20', '2024-10-25', '/image/a.jpg', 'Evening Stroll', 'An evening stroll with you is always the highlight of my day.'),
-(19, 'id01', '2024-10-28', '/image/a.jpg', 'Halloween Prep', 'Getting into the Halloween spirit with some fun prep work.'),
-(20, 'id20', '2024-10-31', '/image/a.jpg', 'Spooky Celebration', 'Celebrating Halloween with spooky fun and lots of laughter.');
+(11, 'id01', '2024-10-02', 'a.jpg', 'Autumn Walk', 'Enjoying the crisp autumn air and colorful leaves with you.'),
+(12, 'id20', '2024-10-07', 'a.jpg', 'Pumpkin Patch Fun', 'Had a blast picking out pumpkins together. Fall is here!'),
+(13, 'id01', '2024-10-10', 'a.jpg', 'Rainy Day Comfort', 'Snuggling up on a rainy day with you is the best.'),
+(14, 'id20', '2024-10-12', 'a.jpg', 'Concert Night', 'Rocking out at a concert with my favorite person.'),
+(15, 'id01', '2024-10-16', 'a.jpg', 'Scenic Drive', 'A scenic drive and great company make for an unforgettable day.'),
+(16, 'id20', '2024-10-20', 'a.jpg', 'Cafe Date', 'Sipping coffee and enjoying good conversation at our favorite cafe.'),
+(17, 'id01', '2024-10-22', 'a.jpg', 'Cooking Together', 'Creating delicious memories in the kitchen with you.'),
+(18, 'id20', '2024-10-25', 'a.jpg', 'Evening Stroll', 'An evening stroll with you is always the highlight of my day.'),
+(19, 'id01', '2024-10-28', 'a.jpg', 'Halloween Prep', 'Getting into the Halloween spirit with some fun prep work.'),
+(20, 'id20', '2024-10-31', 'a.jpg', 'Spooky Celebration', 'Celebrating Halloween with spooky fun and lots of laughter.');
 
 -- category dummy data
 INSERT into category(User_id, Category_name) values

@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import config.ServerInfo;
@@ -15,21 +17,12 @@ import web.servlet.model.vo.Story;
 public class StoryDAOImpl implements StoryDAO {
 	DataSource ds;
 	private StoryDAOImpl() {
-		/*
 		try {
 			InitialContext ic = new InitialContext();
 			ds=	(DataSource)ic.lookup("java:comp/env/jdbc/mysql");
 		}catch (NamingException e) {
 			System.out.println(e);
 		}
-		*/
-		
-		try {
-			Class.forName(ServerInfo.DRIVER_NAME);
-		}catch (ClassNotFoundException e) {
-			System.out.println(e);
-		}
-		
 	}
 	private static StoryDAOImpl dao = new StoryDAOImpl();
 	public static StoryDAOImpl getInstance() {
@@ -37,8 +30,7 @@ public class StoryDAOImpl implements StoryDAO {
 	}
 	
 	public Connection getConnection() throws SQLException{
-		//return ds.getConnection();
-		return DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASSWORD) ;
+		return ds.getConnection();
 	}
 	
 	public void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -67,6 +59,7 @@ public class StoryDAOImpl implements StoryDAO {
 				story= new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 			}
 		}
+		System.out.println("getLastestStory : ");
 		return story;
 	}
 	@Override
@@ -80,6 +73,25 @@ public class StoryDAOImpl implements StoryDAO {
 				){
 			ps.setString(1, userId);
 			ps.setString(2, partnerId);
+			rs= ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+			}
+		}
+		return list;
+	}
+	@Override
+	public ArrayList<Story> getStory(String userId, String partnerId, String title) throws SQLException {
+		String query = "SELECT id,user_id,upload_date,img_src,title,content FROM story WHERE user_id IN (?,?) AND title LIKE ? ORDER BY upload_date desc";
+		ResultSet rs = null;
+		ArrayList<Story> list = new ArrayList<Story>();
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
+			ps.setString(2, partnerId);
+			ps.setString(3, "%" + title + "%");
 			rs= ps.executeQuery();
 			while(rs.next()) {
 				list.add(new Story(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
@@ -127,6 +139,18 @@ public class StoryDAOImpl implements StoryDAO {
 			PreparedStatement ps = conn.prepareStatement(query);
 				){
 			ps.setInt(1, storyId);
+			ps.executeUpdate();
+		}
+	}
+	
+	@Override
+	public void deleteStory(String userId)  throws SQLException{
+		String query = "DELETE FROM story WHERE user_id = ?";
+		try(
+			Connection conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+				){
+			ps.setString(1, userId);
 			ps.executeUpdate();
 		}
 	}
