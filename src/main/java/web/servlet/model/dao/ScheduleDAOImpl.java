@@ -43,7 +43,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	
 	@Override
 	public Schedule getLatestSchedule(String userId, String partnerId) throws SQLException{
-		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule "
+		String query = "SELECT id,user_id,is_personal,start_date,end_date,title,description FROM schedule "
 				+ "WHERE start_date>curdate() AND user_id IN ( ?,?) "
 				+ "ORDER BY datediff(start_date,curdate()) LIMIT 1";
 		ResultSet rs = null;
@@ -65,7 +65,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	@Override
 	public ArrayList<Schedule> getMonthSchedule(String yearMonth, String userId, String partnerId)  throws SQLException{
-		String query = "SELECT id,User_id,is_personal,start_date,end_date,title,description FROM schedule \r\n"
+		String query = "SELECT id,user_id,is_personal,start_date,end_date,title,description FROM schedule \r\n"
 				+ "WHERE user_id IN (?,?) AND (start_date LIKE ? or end_date LIKE ?)";
 		ResultSet rs = null;
 		ArrayList<Schedule> list = new ArrayList<Schedule>();
@@ -86,7 +86,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	}
 	@Override
 	public void createSchedule(Schedule schedule) throws SQLException {
-		String query = "INSERT INTO schedule(User_id,is_personal,start_date,end_date,title,description) VALUES \r\n"
+		String query = "INSERT INTO schedule(user_id,is_personal,start_date,end_date,title,description) VALUES \r\n"
 				+ "(?,?,?,?,?,?);";
 		try(
 			Connection conn = getConnection();
