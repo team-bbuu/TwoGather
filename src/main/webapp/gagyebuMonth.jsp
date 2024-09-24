@@ -25,11 +25,11 @@
 			flex-direction: column;
 			gap: 2%;
 			overflow: scroll;
+			color: #5A5A5A;
 		}
 		.breadcrumbs {
 			font-size: 1.2vw;
 			font-weight: bold;
-			margin-bottom: 1vw;
 		}
 		.monthNav{
 			font-size: 2vw;
@@ -37,6 +37,9 @@
 			justify-content: center;
 			gap: 10px;
 /* 			margin-bottom: 1vw; */
+		}
+		.currentYearMonth{
+			line-height: 2;
 		}
 		.arrowImg {
 			position: relative;
@@ -75,10 +78,24 @@
 			bottom : 0;
 		}
 		
+		/* 총 입금, 지출 */
+		.transactionContainer{
+			display: flex;
+			flex-direction: column;
+			gap: 1.2vw;
+		}
+		.transactionTitle{
+			display: flex;
+			justify-content: space-between;
+			font-size: 1.2vw;
+		}
 		.priceDifference{
 			font-size: 1.2vw;
 		}
-
+		.priceDifferenceDiv{
+			text-align: center;
+		}
+		
 		.chart-container{
 			width:100%;
 			height: 80%;
@@ -113,9 +130,9 @@
 			    String formattedDate = parts[0] + "년 " + Integer.parseInt(parts[1]) + "월";
 			%>
 			<div class="monthNav">
-				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrow-left.svg" alt="" width="100"></div>
-				<div><%= formattedDate %></div>
-				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrow-right.svg" alt=""></div>				
+				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowLeft.svg" alt="prev"></div>
+				<div class="currentYearMonth"><%= formattedDate %></div>
+				<div class="arrowImg"><img src="${pageContext.request.contextPath}/image/arrowRight.svg" alt="next"></div>				
 			</div>
 		</div>
 		
@@ -123,18 +140,20 @@
 			<div class="section1">
 				<div class="item transactionSection">
 					<div class="label">이번 달 현황</div>
-					<div class="transactionTitle">
-						총 입금<br>
-						${depositMonth}
-					</div>
-					<div class="transactionTitle">
-						총 지출<br>
-						${expenseMonth}
+					<div class="transactionContainer">
+						<div class="transactionTitle">
+							<div>총 입금</div>
+							<div>${depositMonth} 원</div>
+						</div>
+						<div class="transactionTitle">
+							<div>총 지출</div>
+							<div>${expenseMonth} 원</div>
+						</div>
 					</div>
 				</div>
 				<div class="item priceDifference">
 					<div class="label">전월 대비 동일 기간 비교</div>
-					<div>
+					<div class="priceDifferenceDiv">
 						<c:choose>
 							<c:when test="${priceDifference > 0}">
 								지난 달보다 <br> 지출이 <font>${priceDifference}원</font> 늘었습니다</c:when>

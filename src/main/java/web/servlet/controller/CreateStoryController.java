@@ -29,6 +29,10 @@ public class CreateStoryController implements Controller{
 	        
 //	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
 	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
+	        
+	        // 현정
+//	        String uploadsDirPath ="Users/emily/Dev/kosta-projects/TwoGather/src/main/webapp/uploads/";
+	        
 	        File uploadsDir = new File(uploadsDirPath);
 	        if (!uploadsDir.exists()) {
 	            uploadsDir.mkdir(); // Create the directory if it doesn't exist
