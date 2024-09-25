@@ -5,5 +5,6 @@ public interface ServerInfo {
 	String URL = "jdbc:mysql://127.0.0.1:3306/TwoGather?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8";
 	String USER = "root";
 	String PASSWORD = "1234";
-	// String PASSWORD = "Kosta284!@";
+	//String PASSWORD = "Kosta284!@";
+
 }
