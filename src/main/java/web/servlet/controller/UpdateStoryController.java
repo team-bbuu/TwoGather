@@ -25,8 +25,8 @@ public class UpdateStoryController implements Controller{
 	        Part filePart = request.getPart("img_src"); // Retrieves <input type="file" name="img_src">
 	        String fileName = filePart.getSubmittedFileName();
 	        
-//	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
-	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
+	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
+//	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
 	        File uploadsDir = new File(uploadsDirPath);
 	        if (!uploadsDir.exists()) {
 	            uploadsDir.mkdir(); // Create the directory if it doesn't exist
