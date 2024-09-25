@@ -27,6 +27,9 @@ public class UpdateUserController implements Controller {
 		String email =request.getParameter("email");
 		String address =request.getParameter("address");
 		
+		System.out.println("imgSrc : "+ imgSrc);
+		System.out.println("nickName : "+ nickName);
+		
 		//email,mobile 검증
 		UserDAOImpl dao = UserDAOImpl.getInstance();
 		HttpSession session = request.getSession();

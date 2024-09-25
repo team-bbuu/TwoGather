@@ -314,6 +314,7 @@
 				</div>
 				
 				<form action="updateUser.do" method="post">
+					<input type="hidden" name="imgSrc" value="${user.imgSrc}">
 					<div id="myPage-id">
 						${user.id}
 					</div>
@@ -330,12 +331,12 @@
 						
 						<div class="inputSection">
 						<div class="label">닉네임</div>
-						<input type="text" placeholder="닉네임을 입력해주세요" name="nickname">
+						<input type="text" placeholder="닉네임을 입력해주세요" name="nickname" value="${user.nickname}">
 						</div>
 						
 						<div class="inputSection">
 						<div class="label">연락처</div>
-						<input type="text" placeholder="연락처를 입력해주세요" name="mobile">
+						<input type="text" placeholder="연락처를 입력해주세요" name="mobile" value="${user.mobile}">
 						</div>
 						
 						<div id="resultMobile"></div>
@@ -347,7 +348,7 @@
 						
 						<div class="inputSection">
 						<div class="label">이메일</div>
-						<input type="text" placeholder="이메일을 입력해주세요" name="email">
+						<input type="text" placeholder="이메일을 입력해주세요" name="email" value="${user.email}">
 						</div>
 						
 						<div id="resultEmail"></div>
@@ -364,7 +365,7 @@
 						
 						<div class="inputSection">
 						<div class="label">주소</div>
-						<input type="text" placeholder="주소를 입력해주세요" name="address">
+						<input type="text" placeholder="주소를 입력해주세요" name="address" value="${user.address}">
 						</div>
 						
 					</div>

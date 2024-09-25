@@ -343,7 +343,7 @@
 				let check = confirm("해당 가게부를 삭제할까요?");
 				if(check){
 					let gid = $(deleteEvent.target).next().val();
-					alert(gid);
+/* 					alert(gid); */
 					location.href="deleteGagyebu.do?gagyebuId="+gid;
 				}else{
 					return;
