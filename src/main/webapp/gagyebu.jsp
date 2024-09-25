@@ -33,9 +33,7 @@
 		}
 		.calendar-container {
 		  width: 85%;
- 		  height: 70%;
-		  padding: 10px;
-		  
+ 		  height: 70%;		  
 		}
 		
 		.calendar-header {
@@ -88,18 +86,21 @@
 		  background-color: #EFEEFE;
 		}
 		#detailView{
-			width: 33%;
+			width: 40%;
 			height: 100%;
 			background-color: white;
 			position: absolute;
 			right: 0;
 			display: none;
-			padding: 10px;
+/* 			padding: 10px; */
+			border-radius: 20px;
 			
 		}
 		.closeBtnDiv{
 			display: flex;
 			justify-content: end;
+			padding: 10px 10px 0 0;
+			cursor: pointer;
 		}
 		#closeBtnImg{
 			width: 30px;
@@ -111,18 +112,28 @@
 			position: absolute;
 			bottom: 0;
 			width: 100%;
-			border: 1px solid blue;
+			height: 200px;
+			padding: 10px 20px 0 20px;
+		}
+		.hr{
+			border-top: 1px solid #EFECE7;
+			margin-bottom: 20px;
 		}
 		#createBtn{
 			width: 28px;
 			margin-top: 10px;
+			cursor: pointer;
 		}
 		.editBtn, .deleteBtn {
 			width: 20px;
 			height: 20px;
+			cursor: pointer;
 		}
 		.inputstyle{
-			border: 1px solid black;
+			background-color: #F6F6FE;
+			border-radius: 10px;
+			padding: 0 10px;
+			font-size: 12px;
 		}
 		#prevBtn, #nextBtn{
 			position: relative;
@@ -154,7 +165,7 @@
 		.tdeposit, .texpense{
 			text-align: right;
 			padding-right: 12px;
-			font-size: 16px;
+			font-size: 1vw;
 		}
 		.tdeposit{
 			color: #D65B8F;
@@ -167,24 +178,79 @@
 			font-size: 22px;
 			font-weight: bold;
 			margin-bottom: 10px;
+			padding: 0 10px;
+			
 		}
 		.transactionRecord{
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			border: 1px solid lightgray;
-			padding: 10px 5px;
+			border: 1px solid #F6F6FE;
+			background-color: #F6F6FE;
+			padding: 15px;
 			margin-bottom: 10px;
 			font-weight: bold;
+			margin: 0 10px 10px 10px;	
+			border-radius: 15px;
 		}
-		.recordLabel{
+		#isDeposit {
+			width: 100px;
+			height: 24px;
+			font-size: 1vw;
+		}
+		.selectDiv{
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+		.inputAndButtonArea{
+			display: flex;
+			justify-content:space-between;
+		}
+		.formInputSection{
+			width: 100%;
+			height: 20px;
+			display:flex;
+			gap: 12px;
+			font-weight: bold;
+			font-size: 1vw;
+		}
+		.formInputArea{
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
 			
 		}
-		.recordTitle{
-		
+		.formBtnArea{
+			width: 30%;
+			display: flex;
+			align-items: flex-end;
+		}
+		.formButton{
+			width: 100%;
+			border-radius: 13px;
+			padding: 5px 0;
+			color: white;
+			background-color: #8187f5;
+		}
+		.recordLabel{
+			border-right: 1px solid #4D4D4D;
+			padding-right: 10px;
+			margin-right: 10px;
 		}
 		.recordPrice{
+			padding-right: 5px;
 		}
+		.record1, .record2 {
+			display: flex;
+			gap: 10px;
+		}
+		.radioInput{
+			margin-left: 8px;
+			margin-right: 3px;
+		}
+		
+		
     </style>
     <script type="text/javascript">
     	$(()=>{
@@ -213,14 +279,14 @@
     			 if(isDeposit == "true") deposit="입금" 
     			 else if(isDeposit == "false")deposit="출금" 
     			 //transactions 채워넣는 부분 
-		    	html2+=	"<div class='transactionRecord'><div class='recordLabel'>" +
+		    	html2+=	"<div class='transactionRecord'><div class='record1'><div class='recordLabel'>" +
     			  deposit + "</div>"+ "<div class='recordTitle'>" +
-    			 $('.'+cid).eq(t).attr('data-title') + "</div><div class='recordPrice'>" + 
+    			 $('.'+cid).eq(t).attr('data-title') + "</div></div><div class='record2'><div class='recordPrice'>" + 
     			 $('.'+cid).eq(t).attr('data-price')+"원</div>"  +
     		      	/* "<div><img alt='수정' src='./image/수정.png' class='editBtn'>"+ */
     		      	"<img alt='삭제' src='./image/삭제.png' class='deleteBtn'>"+
     		      	"<input type='hidden' value='"+$('.'+cid).eq(t).attr('data-id')+"'>"+
-    		      "</div>";
+    		      "</div></div>";
     		 }
     		 
     		 $('#transactions').html(html2);
@@ -354,7 +420,7 @@
     </script>
   </head>
   <div class="gagyebuSection">
- 			<div class="breadcrumbs">가계부 월별 가계부</div>
+ 			<div class="breadcrumbs">가계부 - 월별 가계부</div>
     <div class="calendar-container">
       <div class="calendar-header">
         <button id="prevBtn">
@@ -383,20 +449,38 @@
     	<div id="transactions"></div>
     	
     	<div id="form">
-    		<form action="createGagyebu.do" method="post">
+    		<div class="hr"></div>
+    		<form action="createGagyebu.do" method="post" class="formSection">
     			<input type="hidden" name="transactionDate" id="transactionDate">
-    			<select name="isDeposit" id="isDeposit">
-    				<option value="true">입금</option>
-    				<option value="false">지출</option>
-    			</select>
-    			<input type="radio" name="userId" value="${user.id}">${user.nickname}
-    			<input type="radio" name="userId" value="${partner.id}">${partner.nickname}
-    			<br>
-    			<input type="text" class="inputstyle" name="price" placeholder="금액"><br>
-    			<input type="text" class="inputstyle" name="title" placeholder="제목"><br>
-    			<input type="text" class="inputstyle" name="etc" placeholder="비고"><br>
-    			<input type="submit" id="creategagyebu" value="등록">
-    			<input type="button" id="editgagyebu" value="수정">
+    			<div class="selectDiv">
+	    			<select name="isDeposit" id="isDeposit">
+	    				<option value="true">입금</option>
+	    				<option value="false">지출</option>
+	    			</select>
+	    			<div>
+		    			<input type="radio" name="userId" value="${user.id}" class="radioInput">${user.nickname}
+		    			<input type="radio" name="userId" value="${partner.id}" class="radioInput">${partner.nickname}
+	    			</div>
+    			</div>
+    			
+    			<div class="inputAndButtonArea">
+    				<div class="formInputArea">
+			   			<div class="formInputSection">
+			    			<div>금액</div> <input type="text" class="inputstyle" name="price">
+			   			</div>
+		    			<div class="formInputSection">
+			    			<div>내용</div> <input type="text" class="inputstyle" name="title">
+		    			</div>
+		    			<div class="formInputSection">
+			    			<div>비고</div> <input type="text" class="inputstyle" name="etc">
+		    			</div>
+    				</div>
+					<div class="formBtnArea">
+		    			<input type="submit" id="creategagyebu" value="등록" class="formButton">
+		    			<input type="button" id="editgagyebu" value="수정" class="formButton">				
+					</div>    			
+    			
+    			</div>
     		</form>
     	</div>
     	<!-- 추가버튼 -->
