@@ -82,7 +82,7 @@
 		.transactionContainer{
 			display: flex;
 			flex-direction: column;
-			gap: 1.2vw;
+			gap: 1vw;
 		}
 		.transactionTitle{
 			display: flex;

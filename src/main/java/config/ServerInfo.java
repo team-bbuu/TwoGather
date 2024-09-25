@@ -6,4 +6,5 @@ public interface ServerInfo {
 	String USER = "root";
 	String PASSWORD = "1234";
 	//String PASSWORD = "Kosta284!@";
+
 }

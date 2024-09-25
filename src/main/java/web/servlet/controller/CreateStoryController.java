@@ -27,8 +27,8 @@ public class CreateStoryController implements Controller{
 	        Part filePart = request.getPart("img_src"); // Retrieves <input type="file" name="img_src">
 	        String fileName = filePart.getSubmittedFileName();
 	        
-//	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
-	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
+	        String uploadsDirPath = request.getServletContext().getRealPath("/uploads");
+//	        String uploadsDirPath = "C:\\Users\\Sunmin\\Desktop\\284\\Kosta284\\Kosta284\\TwoGather\\src\\main\\webapp\\uploads";
 	        
 	        // 현정
 //	        String uploadsDirPath ="Users/emily/Dev/kosta-projects/TwoGather/src/main/webapp/uploads/";
