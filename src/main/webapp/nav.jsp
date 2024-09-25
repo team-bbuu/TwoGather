@@ -207,7 +207,13 @@
 			<c:if test="${user.matching == '매칭전' || user.matching == '요청함' || user.matching == '요청받음'}">
 				<div class="userProfile">
 					<div class="userImage">
-						<img src="${pageContext.request.contextPath}/image/cat.jpg">
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
+<%-- 						<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
 					</div>
 					<div class="username">${user.nickname}</div>
 				</div>				
@@ -217,7 +223,13 @@
 			<c:if test="${user.matching == '매칭완료'}">
 				<div class="userProfile">
 					<div class="userImage">
-						<img src="${pageContext.request.contextPath}/image/cat.jpg">
+<%-- 						<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
 					</div>
 					<div class="username">${user.nickname}</div>
 				</div>
@@ -227,7 +239,13 @@
 				
 				<div class="userProfile">
 						<div class="userImage">
-							<img src="${pageContext.request.contextPath}/image/cat.jpg">
+<%-- 					<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
 						</div>
 						<div class="username">${partner.nickname}</div>
 				</div>
