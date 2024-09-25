@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="web.servlet.model.vo.User"%>
-    <%
-	User user = new User("id01", "id20", "image/login.jpg", "pass1", "쭈니", "010-1234-5678", "1997-02-10", "abcde1@gmail.com", "m", "서울시 강남구 역삼동", "매칭완료", "2024-09-13", "null");
-	session.setAttribute("user", user);
-	%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,19 +24,19 @@
 		    cursor: pointer; /* 클릭 가능 커서 */
 		}
 		.myPageSection {
-			overflow-y: scroll;
+			overflow: hidden;
 			width: 100%;
 			height: 100%;
 			padding: 2%;
 			background: #F6F6FE;
 			color: #4D4D4D;
-			border: 1px solid red;
+			font-size: 10px;
 		}
 		
 		#right {
 			flex: 1;
 			display: flex;
-			font-size: 1.2rem;
+			font-size: 17px;
 		}
 		#myPage {
 			width: 100%;
@@ -49,24 +45,36 @@
 			align-items: center;
 		}	
 		form {
-			width: 30%;
+			width: 70%;
 		}
-		#update-btn {
-			text-align: center;
-		}
-		input {
-			width: 100%;
+		input[type="text"] {
+			width: 320px;
 			height: 30px;
-			border: 1px solid red;
+			margin-bottom: 10px;
+/* 			margin-left: 40px; */
 		}
+		/* 정보수정 버튼 */
+		.btnArea {
+			display: flex;
+			justify-content: center;
+			align-content: center;
+		}
+		.updateBtn{
+			width: 300px;
+			height: 50px;
+			border: 1px solid #4D4D4D;
+			font-size: 24px;
+			border-radius: 25px;
+			margin: 15px 0px;
 		
+		}
+	
 		/* 모달css */
 		.modal_btn_image, .modal_btn_image>img, modal_popup>img {
 			width: 150px;
 			height: 150px;
 			border-radius: 50%;
 		    cursor: pointer;
-		    border: 10px solid red;
 		}
 		.modal_btn_image:hover {
 		    box-shadow: 3px 4px 11px 0px #00000040;
@@ -125,7 +133,6 @@
 		  border-radius: 20px 20px / 20px 20px;
 		  overflow: hidden;
 		  margin: 0px 10px 10px 0px;
-		  border: 1px solid red;
 		}
 		
 		.inputImg {
@@ -152,6 +159,24 @@
 			height: 100%;
 	        object-fit: cover;
 			
+		}
+		#myPage-id{
+			text-align: center;
+			margin: 15px 0px;
+			font-weight: bolder;
+		}
+		#update{
+			font-weight: bolder;
+		}
+		.modal_btn_break,.modal_btn_delete{
+			margin: 0px 10px;
+		}
+		.label{
+			width: fit-content;
+		}
+		.inputSection{
+			display: flex;
+			justify-content: space-between;
 		}
 		
 	</style>
@@ -229,9 +254,18 @@
 		            }
 		        });
 		    });
+		  
 		});	
 	</script>
 </head>
+	<c:choose>
+		<c:when test="">
+		
+		</c:when>
+		<c:otherwise>
+		
+		</c:otherwise>
+	</c:choose>
 	<div class="myPageSection">
 		<!-- 왼쪽 NAV -->
 		<div id="right">
@@ -246,7 +280,8 @@
 							<form class="inputImg" method="post" enctype="multipart/form-data">
 						    	<!-- 이미지 파일 받기위해 enctype 설정 -->
 						        <div class="addImage " id="image-show">
-						        	<img src="${user.imgSrc}">
+						        	
+						        	
 						        </div>
 						        <!-- 이미지 보여줄 영역 -->
 						        <input type="file" accept="image/*" onchange="loadFile(this)" id="imageUpload"/>
@@ -264,7 +299,13 @@
 					            <img src="${user.imgSrc}">
 					        </button> --%>
 					        <div class="profileImage">
-						        <img src="${user.imgSrc}">
+					        	
+						        <c:if test="${!user.imgSrc.equals('default')}">
+						        	<img src="${pageContext.request.contextPath}/uploads/${user.imgSrc}">
+						        </c:if>
+						        <c:if test="${user.imgSrc.equals('default')}">
+						        	<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						        </c:if>
 					        	
 					        
 					        </div>
@@ -273,25 +314,64 @@
 				</div>
 				
 				<form action="updateUser.do" method="post">
+					<input type="hidden" name="imgSrc" value="${user.imgSrc}">
 					<div id="myPage-id">
-						${user.id}<br /><br /><br />
+						${user.id}
 					</div>
 					<div id="update">
-						패스워드<br /><input type="text" placeholder="변경할 패스워드를 입력해주세요" name="password"><br /><br />
-						패스워드 확인<br /><input type="text" placeholder="변경할 패스워드를 다시 입력해주세요"><br /><br />
-						닉네임<br /><input type="text" placeholder="닉네임을 입력해주세요" name="nickname"><br /><br />
-						연락처<br /><input type="text" placeholder="연락처를 입력해주세요" name="mobile"><br /><br />
+						<div class="inputSection">
+							<div class="label">패스워드</div>
+							<input type="text" placeholder="변경할 패스워드를 입력해주세요" name="password">
+						</div>
+						
+						<div class="inputSection">
+						<div class="label">패스워드 확인</div>
+						<input type="text" placeholder="변경할 패스워드를 다시 입력해주세요">
+						</div>
+						
+						<div class="inputSection">
+						<div class="label">닉네임</div>
+						<input type="text" placeholder="닉네임을 입력해주세요" name="nickname" value="${user.nickname}">
+						</div>
+						
+						<div class="inputSection">
+						<div class="label">연락처</div>
+						<input type="text" placeholder="연락처를 입력해주세요" name="mobile" value="${user.mobile}">
+						</div>
+						
 						<div id="resultMobile"></div>
-						<div>생년월일</div>
-						<div>${user.birthdate}</div><br />
-						이메일<br /><input type="text" placeholder="이메일을 입력해주세요" name="email"><br /><br />
+						
+						<div class="inputSection">
+						<div class="label">생년월일</div>
+						<input type="text" disabled="disabled" value="${user.birthdate}">
+						</div>
+						
+						<div class="inputSection">
+						<div class="label">이메일</div>
+						<input type="text" placeholder="이메일을 입력해주세요" name="email" value="${user.email}">
+						</div>
+						
 						<div id="resultEmail"></div>
-						<div>성별</div>
-						<div>${user.gender}</div><br />
-						주소<br /><input type="text" placeholder="주소를 입력해주세요" name="address"><br /><br />
+						
+						<div class="inputSection">
+						<div class="label">성별</div>
+						<c:if test="${user.gender.equals('m')}">
+						<input type="text" disabled="disabled" value="남성">
+						</c:if>
+						<c:if test="${user.gender.equals('f')}">
+						<input type="text" disabled="disabled" value="여성">
+						</c:if>
+						</div>
+						
+						<div class="inputSection">
+						<div class="label">주소</div>
+						<input type="text" placeholder="주소를 입력해주세요" name="address" value="${user.address}">
+						</div>
+						
 					</div>
-					<div id="update-btn">
-						<br /><input type="submit" name="update" value="정보수정"><br />
+					
+					<div class="btnArea">
+						<input type="submit" name="update" value="정보수정" class="updateBtn">
 					</div>
 				</form>
 				
@@ -307,6 +387,7 @@
 					    </div>
 					</div>
 					<!--end 모달 팝업-->
+					
 					<main>
 					    <section>
 					        <button type="button" class="modal_btn_break">

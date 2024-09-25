@@ -26,6 +26,7 @@ public class LoginController implements Controller{
 		//바인딩
 		if(user!=null) {
 			isCorrect = true;
+			System.out.println(user);
 			session.setAttribute("user", user);
 			if(user.getMatching().equals("매칭완료")) {
 				User partner = UserDAOImpl.getInstance().FindUser(user.getPartnerId());

@@ -13,11 +13,11 @@ public class AlogorithmController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		int targetAmount = Integer.parseInt(request.getParameter("targetAmount"));
 		int depositAmount = Integer.parseInt(request.getParameter("depositAmount"));
-		double interestRate = Double.parseDouble(request.getParameter("interestRate"))/100;
+		double interestRate = Integer.parseInt(request.getParameter("interestRate"))/100.0;
 		boolean isCompound = Boolean.parseBoolean(request.getParameter("isCompound"));
-		//System.out.println(targetAmount + ", " + depositAmount + ", " + interestRate + ", " + isCompound);
+		System.out.println(targetAmount + ", " + depositAmount + ", " + interestRate + ", " + isCompound);
 		int result = Savings.execute(targetAmount, depositAmount, interestRate, isCompound);
-		//System.out.println(result);
+		System.out.println(result);
 		try {
 			response.getWriter().write(String.valueOf(result));
 		} catch (IOException e) {

@@ -22,14 +22,14 @@
 	}
 	/* a태그의 기본 속성 제거 */
     .no-style {
-        text-decoration: none; /* 밑줄 제거 */
+        text-decoration: none !important; /* 밑줄 제거 */
         cursor: pointer;
-   		color: #4D4D4D;
+   		color: #4D4D4D !important;
         padding: 0;
     }
     a:hover {
-    	text-decoration: none; 
-	    color: inherit; /* hover 시 색상 변경 방지 */
+    	text-decoration: none !important; 
+	    color: inherit !important; /* hover 시 색상 변경 방지 */
 	}
 	.logo {
 		font-size: 1.5vw;
@@ -207,7 +207,13 @@
 			<c:if test="${user.matching == '매칭전' || user.matching == '요청함' || user.matching == '요청받음'}">
 				<div class="userProfile">
 					<div class="userImage">
-						<img src="${pageContext.request.contextPath}/image/cat.jpg">
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
+<%-- 						<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
 					</div>
 					<div class="username">${user.nickname}</div>
 				</div>				
@@ -217,7 +223,13 @@
 			<c:if test="${user.matching == '매칭완료'}">
 				<div class="userProfile">
 					<div class="userImage">
-						<img src="${pageContext.request.contextPath}/image/cat.jpg">
+<%-- 						<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
 					</div>
 					<div class="username">${user.nickname}</div>
 				</div>
@@ -227,7 +239,13 @@
 				
 				<div class="userProfile">
 						<div class="userImage">
-							<img src="${pageContext.request.contextPath}/image/cat.jpg">
+<%-- 					<img src="${pageContext.request.contextPath}/image/cat.jpg"> --%>
+						<c:if test="${user.imgSrc == 'default'}">
+							<img src="${pageContext.request.contextPath}/image/profileDefault.png">
+						</c:if>
+						<c:if test="${user.imgSrc != 'default'}">
+							<img src="${pageContext.request.contextPath}/uploads/${user.img_src}">
+						</c:if>
 						</div>
 						<div class="username">${partner.nickname}</div>
 				</div>
@@ -262,27 +280,27 @@
 		
 
 		<ul class="navUl">
-		    <li class="nav-item" onclick="clickMenu(this)">
-		    	<a class="nav-link no-style" href="main.do">메인</a>
+		    <li class="nav-item">
+		    	<a class="no-style" href="main.do">메인</a>
 		    </li>
 		    
 		    <li class="gagyebuLi">
 		   		<p>가계부</p>
 
 		   		<div class="subMemu">
-			    	<a class="nav-link no-style" href="gagyebu.do" onclick="clickMenu(this)">월별 가계부</a>
-				    <a class="nav-link no-style" href="gagyebuMonth.do" onclick="clickMenu(this)">결산</a>		   		
+			    	<a class="matching no-style" href="gagyebu.do" >월별 가계부</a>
+				    <a class="matching no-style" href="gagyebuMonth.do" >결산</a>	
 		   		</div>
 		    </li>
 		    
-<!-- 		    <li class="nav-item" onclick="clickMenu(this)">
+<!-- 		    <li class="nav-item" >
 		    	<a class="nav-link no-style" href="schedule.do">일정</a>
 		    </li> -->
-   		    <li class="nav-item" onclick="clickMenu(this)">
-		    	<a class="nav-link no-style" href="story.do">스토리</a>
+			<li class="nav-item" >
+		    	<a class="matching no-style" href="story.do">스토리</a>
 		    </li>
-  		    <li class="nav-item" onclick="clickMenu(this)">
-		    	<a class="nav-link no-style" href="mypage.do">마이페이지</a>
+  		    <li class="nav-item" >
+		    	<a class="no-style" href="mypage.do">마이페이지</a>
 		    </li>
 		</ul>
 		
@@ -290,5 +308,15 @@
 			<a class="no-style" href="logout.do">로그아웃</a>
 		</div>
 		</div>
-		
+		<script type="text/javascript">
+			$(()=>{
+				$(".matching").on("click", function() {
+					if("${user.matching}"!="매칭완료"){
+						event.preventDefault();
+						//alert("${user.matching}");
+						$("#matchingModal").modal("show");
+					}
+				});
+			});
+		</script>
 </html>
