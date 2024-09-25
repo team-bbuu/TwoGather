@@ -245,7 +245,10 @@ public class GagyebuDAOImpl implements GagyebuDAO {
 	    for(Gagyebu gagyebu : gagyebus) {
 	    	String category = gagyebu.getCategory();
 	    	int amount = gagyebu.getPrice();
-	    	if(category == null) continue;
+	    	// category가 null 은 제외
+	    	if(gagyebu.getCategory() == null) {
+	    		continue;
+	    	}
 	    	// 해당 카테고리에 금액을 더해나감
 	    	categoriesMap.put(category, categoriesMap.getOrDefault(category, 0) + amount);
 	    }

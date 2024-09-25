@@ -262,7 +262,7 @@
 		
 
 		<ul class="navUl">
-		    <li class="nav-item" onclick="clickMenu(this)">
+		    <li class="nav-item">
 		    	<a class="nav-link no-style" href="main.do">메인</a>
 		    </li>
 		    
@@ -270,18 +270,18 @@
 		   		<p>가계부</p>
 
 		   		<div class="subMemu">
-			    	<a class="matching nav-link no-style" href="gagyebu.do" onclick="clickMenu(this)">월별 가계부</a>
-				    <a class="matching nav-link no-style" href="gagyebuMonth.do" onclick="clickMenu(this)">결산</a>		   		
+			    	<a class="nav-link no-style" href="gagyebu.do" >월별 가계부</a>
+				    <a class="nav-link no-style" href="gagyebuMonth.do" >결산</a>	
 		   		</div>
 		    </li>
 		    
-<!-- 		    <li class="nav-item" onclick="clickMenu(this)">
+<!-- 		    <li class="nav-item" >
 		    	<a class="nav-link no-style" href="schedule.do">일정</a>
 		    </li> -->
-   		    <li class="matching nav-item" onclick="clickMenu(this)">
+			<li class="nav-item" >
 		    	<a class="nav-link no-style" href="story.do">스토리</a>
 		    </li>
-  		    <li class="nav-item" onclick="clickMenu(this)">
+  		    <li class="nav-item" >
 		    	<a class="nav-link no-style" href="mypage.do">마이페이지</a>
 		    </li>
 		</ul>
