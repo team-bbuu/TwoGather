@@ -125,7 +125,7 @@ public class UserDAOImpl implements UserDAO {
 			ps = conn.prepareStatement(query);
 			
 			ps.setString(1, vo.getId());
-			ps.setString(2, "image/image.jpg");
+			ps.setString(2, "default");
 			ps.setString(3, vo.getPassword());
 			ps.setString(4, vo.getNickname());
 			ps.setString(5, vo.getMobile());

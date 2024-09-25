@@ -28,13 +28,10 @@ public class DispatcherServlet extends HttpServlet {
 	}
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("dispatcher start");
 		String requesturl = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requesturl.substring(contextPath.length()+1);
-		System.out.println("command: "+ command);
 		Controller controller= HandlerMapping.getInstance().createComponent(command);
-		System.err.println("controller: "+controller);
 		try {
 			ModelAndView mv = controller.handleRequest(request, response);
 			if(mv != null) {

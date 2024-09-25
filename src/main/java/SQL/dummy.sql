@@ -9,16 +9,16 @@ INSERT INTO user(id, partner_id, img_src, password, nickname, mobile, birthdate,
 ('id07', NULL, 'default', 'pass7', '준서', '010-7890-1244', '1991-08-10', 'abcde7@gmail.com', 'm', '서울시 강북구 미아동', '매칭전', NULL, NULL),
 ('id08', NULL, 'default', 'pass8', '태민', '010-8901-2355', '1990-09-15', 'abcde8@gmail.com', 'm', '서울시 노원구 중계동', '매칭전', NULL, NULL),
 ('id09', NULL, 'default', 'pass9', '지훈', '010-9012-3466', '1989-10-20', 'abcde9@gmail.com', 'm', '서울시 은평구 불광동', '매칭전', NULL, NULL),
-('id010', NULL, 'default', 'pass10', '성민', '010-0123-4577', '1988-11-25', 'abcde10@gmail.com', 'm', '서울시 동작구 사당동', '매칭전', NULL, NULL),
-('id011', NULL, 'default', 'pass11', '미소', '010-1234-5688', '1987-12-30', 'abcde11@gmail.com', 'f', '서울시 용산구 이태원동', '매칭전', NULL, NULL),
-('id012', NULL, 'default', 'pass12', '수지', '010-2345-6799', '1986-01-05', 'abcde12@gmail.com', 'f', '서울시 강서구 화곡동', '매칭전', NULL, NULL),
-('id013', NULL, 'default', 'pass13', '다영', '010-3456-7800', '1985-02-10', 'abcde13@gmail.com', 'f', '서울시 중랑구 면목동', '매칭전', NULL, NULL),
-('id014', NULL, 'default', 'pass14', '유리', '010-4567-8911', '1984-03-15', 'abcde14@gmail.com', 'f', '서울시 관악구 신림동', '매칭전', NULL, NULL),
-('id015', NULL, 'default', 'pass15', '혜리', '010-5678-9042', '1983-04-20', 'abcde15@gmail.com', 'f', '서울시 도봉구 창동', '매칭전', NULL, NULL),
-('id016', NULL, 'default', 'pass16', '민정', '010-6789-0153', '1982-05-25', 'abcde16@gmail.com', 'f', '서울시 금천구 독산동', '매칭전', NULL, NULL),
-('id017', NULL, 'default', 'pass17', '은비', '010-7290-1244', '1981-06-30', 'abcde17@gmail.com', 'f', '서울시 성북구 동소문동', '매칭전', NULL, NULL),
-('id018', NULL, 'default', 'pass18', '다인', '010-8901-2755', '1980-07-05', 'abcde18@gmail.com', 'f', '서울시 양천구 목동', '매칭전', NULL, NULL),
-('id019', NULL, 'default', 'pass19', '나연', '010-9012-3966', '1979-08-10', 'abcde19@gmail.com', 'f', '서울시 서대문구 홍제동', '매칭전', NULL, NULL),
+('id10', NULL, 'default', 'pass10', '성민', '010-0123-4577', '1988-11-25', 'abcde10@gmail.com', 'm', '서울시 동작구 사당동', '매칭전', NULL, NULL),
+('id11', NULL, 'default', 'pass11', '미소', '010-1234-5688', '1987-12-30', 'abcde11@gmail.com', 'f', '서울시 용산구 이태원동', '매칭전', NULL, NULL),
+('id12', NULL, 'default', 'pass12', '수지', '010-2345-6799', '1986-01-05', 'abcde12@gmail.com', 'f', '서울시 강서구 화곡동', '매칭전', NULL, NULL),
+('id13', NULL, 'default', 'pass13', '다영', '010-3456-7800', '1985-02-10', 'abcde13@gmail.com', 'f', '서울시 중랑구 면목동', '매칭전', NULL, NULL),
+('id14', NULL, 'default', 'pass14', '유리', '010-4567-8911', '1984-03-15', 'abcde14@gmail.com', 'f', '서울시 관악구 신림동', '매칭전', NULL, NULL),
+('id15', NULL, 'default', 'pass15', '혜리', '010-5678-9042', '1983-04-20', 'abcde15@gmail.com', 'f', '서울시 도봉구 창동', '매칭전', NULL, NULL),
+('id16', NULL, 'default', 'pass16', '민정', '010-6789-0153', '1982-05-25', 'abcde16@gmail.com', 'f', '서울시 금천구 독산동', '매칭전', NULL, NULL),
+('id17', NULL, 'default', 'pass17', '은비', '010-7290-1244', '1981-06-30', 'abcde17@gmail.com', 'f', '서울시 성북구 동소문동', '매칭전', NULL, NULL),
+('id18', NULL, 'default', 'pass18', '다인', '010-8901-2755', '1980-07-05', 'abcde18@gmail.com', 'f', '서울시 양천구 목동', '매칭전', NULL, NULL),
+('id19', NULL, 'default', 'pass19', '나연', '010-9012-3966', '1979-08-10', 'abcde19@gmail.com', 'f', '서울시 서대문구 홍제동', '매칭전', NULL, NULL),
 ('id20', 'id01', 'default', 'pass20', '예린', '010-0123-2577', '1978-09-15', 'abcde20@gmail.com', 'f', '서울시 동대문구 장안동', '매칭완료', '2023-09-13', NULL);
 UPDATE user set partner_id = 'id20' WHERE id = 'id01';
 
@@ -57,12 +57,12 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (22, 'id20', '2024-07-20', 'true', NULL, 500000, '입금', NULL, ''),
 -- 2024년 8월
 (23, 'id01', '2024-08-10', 'true', NULL, 500000, '입금', NULL, ''),
-(24, 'id20', '2024-08-20', 'true', NULL, 500000, '입금', NULL, '');
+(24, 'id20', '2024-08-20', 'true', NULL, 500000, '입금', NULL, ''),
 -- 2024년 9월
 (1, 'id01', '2024-09-10', 'true', NULL, 500000, '입금', NULL, ''),
-(2, 'id20', '2024-09-20', 'true', NULL, 500000, '입금', NULL, ''),
+(2, 'id20', '2024-09-20', 'true', NULL, 500000, '입금', NULL, '');
 -- 12개월 동안의 지출 데이터 (한 달에 약 14개, 주말에 더 많이 발생)
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+
 -- 2023년 10월 지출
 INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (39, 'id01', '2023-10-02', 'false', '식비', 13000, '점심', '카드', ''),
@@ -240,6 +240,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (191, 'id01', '2024-08-29', 'false', '식비', 18000, '점심 식사', '카드', ''),
 (192, 'id20', '2024-08-30', 'false', '숙박', 92000, '호텔 숙박', '계좌이체', '');
 -- 2024년 9월 지출
+INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (25, 'id01', '2024-09-01', 'false', '식비', 15000, '주말 데이트 점심', '카드', ''),
 (26, 'id01', '2024-09-02', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (27, 'id20', '2024-09-06', 'false', '숙박', 80000, '주말 여행 숙소', '계좌이체', ''),
@@ -338,3 +339,4 @@ INSERT into category(User_id, Category_name) values
 ('id18','교육,의료,숙박,교통,시설'),
 ('id19','교육,의료,숙박,교통,시설'),
 ('id20','교육,의료,숙박,교통,시설');
+ 
