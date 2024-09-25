@@ -51,15 +51,27 @@
 		form {
 			width: 30%;
 		}
-		#update-btn {
+		.btnArea {
 			text-align: center;
+			width : 300px;
+			height: 50px;
+			border: 1px solid #4D4D4D;
+			font-size: 24px;
+			border-radius: 25px;
 		}
 		input {
 			width: 100%;
 			height: 30px;
 			border: 1px solid red;
 		}
+		/* 정보수정 버튼 */
+		.updateBtn{
+			border: 1px solid #8187f5;
+			color: #4D4D4D;
 		
+		}
+		
+	
 		/* 모달css */
 		.modal_btn_image, .modal_btn_image>img, modal_popup>img {
 			width: 150px;
@@ -290,8 +302,9 @@
 						<div>${user.gender}</div><br />
 						주소<br /><input type="text" placeholder="주소를 입력해주세요" name="address"><br /><br />
 					</div>
-					<div id="update-btn">
-						<br /><input type="submit" name="update" value="정보수정"><br />
+					
+					<div class="btnArea">
+						<input type="submit" name="update" value="정보수정" class="updateBtn">
 					</div>
 				</form>
 				
