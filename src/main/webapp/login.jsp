@@ -170,7 +170,7 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
-			$('#loginbtn').on("click",function(){
+			$('#loginbtn').on("click",function(event){
 				event.preventDefault();
 				let id = $('#id').val();
 				let password = $('#password').val();
@@ -184,7 +184,7 @@
 					success: function (isCorrect) {
 						if(isCorrect != null){
 							if(isCorrect=="true"){
-								location.href="main.do"
+								location.href="main.do";
 							}else{
 								$('#loginResult').html("<font color='crimson'> 잘못된 ID 또는 PASS 입니다. 다시 시도해 주세요.</font>")
 							}
