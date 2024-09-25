@@ -24,7 +24,7 @@ UPDATE user set partner_id = 'id20' WHERE id = 'id01';
 
 -- 가계부 더미 데이터
 -- 12개월 동안의 입금 데이터 (2023년 9월부터 2024년 8월까지)
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 -- 2023년 10월
 (3, 'id01', '2023-10-10', 'true', NULL, 500000, '입금', NULL, ''),
 (4, 'id20', '2023-10-20', 'true', NULL, 500000, '입금', NULL, ''),
@@ -64,7 +64,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 -- 12개월 동안의 지출 데이터 (한 달에 약 14개, 주말에 더 많이 발생)
 
 -- 2023년 10월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (39, 'id01', '2023-10-02', 'false', '식비', 13000, '점심', '카드', ''),
 (40, 'id20', '2023-10-05', 'false', '시설', 22000, '노래방', '카드', ''),
 (41, 'id01', '2023-10-07', 'false', '교통', 4000, '지하철 요금', '현금', ''),
@@ -80,7 +80,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (51, 'id20', '2023-10-27', 'false', '식비', 20000, '주말 저녁 식사', '카드', ''),
 (52, 'id01', '2023-10-29', 'false', '시설', 18000, '볼링', '카드', '');
 -- 2023년 11월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (53, 'id01', '2023-11-02', 'false', '식비', 15000, '점심', '카드', ''),
 (54, 'id20', '2023-11-05', 'false', '교통', 5000, '지하철 요금', '현금', ''),
 (55, 'id01', '2023-11-08', 'false', '시설', 25000, '영화 관람', '카드', ''),
@@ -96,7 +96,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (65, 'id20', '2023-11-29', 'false', '시설', 30000, '헬스장 등록', '계좌이체', ''),
 (66, 'id01', '2023-11-30', 'false', '숙박', 80000, '호텔 숙박', '카드', '');
 -- 2023년 12월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (67, 'id01', '2023-12-02', 'false', '식비', 13000, '점심', '카드', ''),
 (68, 'id20', '2023-12-04', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (69, 'id01', '2023-12-06', 'false', '시설', 50000, '스파 이용', '카드', ''),
@@ -112,7 +112,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (79, 'id01', '2023-12-26', 'false', '식비', 18000, '브런치', '카드', ''),
 (80, 'id20', '2023-12-28', 'false', '시설', 20000, '영화 관람', '카드', '');
 -- 2024년 1월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (81, 'id01', '2024-01-02', 'false', '식비', 13000, '점심 식사', '카드', ''),
 (82, 'id20', '2024-01-05', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (83, 'id01', '2024-01-06', 'false', '시설', 40000, '노래방', '카드', ''),
@@ -128,7 +128,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (93, 'id01', '2024-01-29', 'false', '시설', 20000, '영화 관람', '카드', ''),
 (94, 'id20', '2024-01-30', 'false', '숙박', 90000, '호텔 숙박', '계좌이체', '');
 -- 2024년 2월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (95, 'id01', '2024-02-02', 'false', '식비', 13000, '점심 식사', '카드', ''),
 (96, 'id20', '2024-02-05', 'false', '교통', 3500, '지하철 요금', '현금', ''),
 (97, 'id01', '2024-02-07', 'false', '시설', 25000, '볼링장', '카드', ''),
@@ -144,7 +144,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (107, 'id01', '2024-02-28', 'false', '시설', 20000, '스파 이용', '카드', ''),
 (108, 'id20', '2024-02-28', 'false', '식비', 32000, '저녁 외식', '카드', '');
 -- 2024년 3월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (109, 'id01', '2024-03-02', 'false', '식비', 15000, '점심 식사', '카드', ''),
 (110, 'id20', '2024-03-04', 'false', '교통', 3500, '지하철 요금', '현금', ''),
 (111, 'id01', '2024-03-06', 'false', '시설', 45000, '스포츠센터 등록', '카드', ''),
@@ -160,7 +160,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (121, 'id01', '2024-03-28', 'false', '시설', 20000, '영화 관람', '카드', ''),
 (122, 'id20', '2024-03-30', 'false', '식비', 30000, '저녁 외식', '카드', '');
 -- 2024년 4월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (123, 'id01', '2024-04-02', 'false', '식비', 14000, '점심 식사', '카드', ''),
 (124, 'id20', '2024-04-04', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (125, 'id01', '2024-04-06', 'false', '시설', 18000, '카페 이용', '카드', ''),
@@ -176,7 +176,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (135, 'id01', '2024-04-29', 'false', '숙박', 90000, '호텔 숙박', '카드', ''),
 (136, 'id20', '2024-04-30', 'false', '식비', 35000, '저녁 외식', '카드', '');
 -- 2024년 5월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (137, 'id01', '2024-05-02', 'false', '식비', 12000, '점심 식사', '카드', ''),
 (138, 'id20', '2024-05-04', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (139, 'id01', '2024-05-06', 'false', '시설', 18000, '카페 이용', '카드', ''),
@@ -192,7 +192,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (149, 'id01', '2024-05-29', 'false', '식비', 18000, '점심 식사', '카드', ''),
 (150, 'id20', '2024-05-30', 'false', '숙박', 92000, '호텔 숙박', '계좌이체', '');
 -- 2024년 6월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (151, 'id01', '2024-06-02', 'false', '식비', 15000, '점심 식사', '카드', ''),
 (152, 'id20', '2024-06-04', 'false', '교통', 2500, '지하철 요금', '현금', ''),
 (153, 'id01', '2024-06-06', 'false', '시설', 22000, '카페 이용', '카드', ''),
@@ -208,7 +208,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (163, 'id01', '2024-06-29', 'false', '식비', 14000, '점심 식사', '카드', ''),
 (164, 'id20', '2024-06-30', 'false', '숙박', 87000, '호텔 숙박', '계좌이체', '');
 -- 2024년 7월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (165, 'id01', '2024-07-02', 'false', '식비', 15000, '점심 식사', '카드', ''),
 (166, 'id20', '2024-07-04', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (167, 'id01', '2024-07-06', 'false', '시설', 18000, '카페 이용', '카드', ''),
@@ -224,7 +224,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (177, 'id01', '2024-07-29', 'false', '식비', 18000, '점심 식사', '카드', ''),
 (178, 'id20', '2024-07-30', 'false', '숙박', 92000, '호텔 숙박', '계좌이체', '');
 -- 2024년 8월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (179, 'id01', '2024-08-02', 'false', '식비', 14000, '점심 식사', '카드', ''),
 (180, 'id20', '2024-08-04', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (181, 'id01', '2024-08-06', 'false', '시설', 18000, '카페 이용', '카드', ''),
@@ -240,7 +240,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 (191, 'id01', '2024-08-29', 'false', '식비', 18000, '점심 식사', '카드', ''),
 (192, 'id20', '2024-08-30', 'false', '숙박', 92000, '호텔 숙박', '계좌이체', '');
 -- 2024년 9월 지출
-INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
+INSERT INTO gagyebu (id, user_id, transaction_date, is_deposit, category, price, title, payment_type, etc) VALUES
 (25, 'id01', '2024-09-01', 'false', '식비', 15000, '주말 데이트 점심', '카드', ''),
 (26, 'id01', '2024-09-02', 'false', '교통', 3000, '버스 요금', '현금', ''),
 (27, 'id20', '2024-09-06', 'false', '숙박', 80000, '주말 여행 숙소', '계좌이체', ''),
@@ -259,7 +259,7 @@ INSERT INTO gagyebu (id, User_id, transaction_date, is_deposit, category, price,
 -- schedule dummy data
 -- Correctly sorted by start_date with adjusted ids
 
-INSERT INTO schedule (id, User_id, is_personal, start_date, end_date, title, description)
+INSERT INTO schedule (id, user_id, is_personal, start_date, end_date, title, description)
 VALUES
 (1, 'id01', 'true', '2024-09-03', '2023-09-03', '데이트', '저녁 영화관 데이트'),
 (2, 'id20', 'true', '2024-09-05', '2023-09-05', '운동', '함께 헬스장 가기'),
@@ -294,7 +294,7 @@ VALUES
 
 -- story dummy data
 -- 2024년 7월 데이터 삽입
-INSERT INTO story (id, User_id, upload_date, img_src, title, content) VALUES
+INSERT INTO story (id, user_id, upload_date, img_src, title, content) VALUES
 (1, 'id01', '2024-07-03', 'a.jpg', 'Our Cozy Corner', 'Just a quiet evening at home with my love. Cozy vibes only!'),
 (2, 'id20', '2024-07-08', 'a.jpg', 'Sunday Brunch', 'Nothing beats a relaxing brunch with the best company.'),
 (3, 'id01', '2024-07-12', 'a.jpg', 'Adventure Awaits', 'Exploring new places with you is always the best part of the day.'),
@@ -318,7 +318,7 @@ INSERT INTO story (id, User_id, upload_date, img_src, title, content) VALUES
 (20, 'id20', '2024-08-31', 'a.jpg', 'Spooky Celebration', 'Celebrating Halloween with spooky fun and lots of laughter.');
 
 -- category dummy data
-INSERT into category(User_id, Category_name) values
+INSERT into category(user_id, category_name) values
 ('id01','교육,의료,숙박,교통,시설'),
 ('id02','교육,의료,숙박,교통,시설'),
 ('id03','교육,의료,숙박,교통,시설'),
