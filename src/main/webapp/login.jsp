@@ -186,7 +186,7 @@
 							if(isCorrect=="true"){
 								location.href="main.do"
 							}else{
-								$('#loginResult').html("<font color='crimson'> 잘못된 ID 또는 PASS 입니다. 다시 시도해 주세요.</font>")
+								$('#loginResult').html("<font color='crimson'>아이디 또는 패스워드를 확인해주세요</font>")
 							}
 						}
 					},

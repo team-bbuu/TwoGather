@@ -19,25 +19,31 @@
 		  width: 100%;
 		  height: 100%;
 		  display: flex;
-		  justify-content: center;
+		  flex-direction: column;
 		  align-items: center;
-		  border: 1px solid red;
+		  color: #4D4D4D;
 		}
-		
+   		.breadcrumbs {
+			font-size: 1.2vw;
+			font-weight: bold;
+			width: 100%;
+			text-align: left;
+			margin-top:2%;
+			margin-left: 2%;
+		}
 		.calendar-container {
-		  width: 100%;
-		  height: 100%;
-		  margin: 30px auto;
-		  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		  width: 85%;
+ 		  height: 70%;
 		  padding: 10px;
-		  background-color: #fdefde;
+		  
 		}
 		
 		.calendar-header {
 		  display: flex;
-		  justify-content: space-between;
+		  justify-content: center;
+		  gap: 1vw;
 		  align-items: center;
-		  margin-bottom: 10px;
+ 		  margin-bottom: 10px;
 		}
 		
 		.calendar-days {
@@ -49,7 +55,6 @@
 		  repeat(7, 1fr) : 1행에 7개의 열이 있으며, 
 		  각 열의 크기를 동일하게 1분의 1(fractional unit, fr)로 설정하라는 의미한다. */
 		  font-weight: bold;
-		  border-bottom: 1px solid #ccc;
 		  padding-bottom: 5px;
 		}
 		/* grid-template-columns 속성을 사용하여 그리드 컨테이너의 열 크기를 유연하게 조정할 수 있으며, 
@@ -59,54 +64,127 @@
 		.day {
 		  padding: 5px;
 		}
-		
+		/* 날짜 그리드 */
 		.calendar-dates {
 		  display: grid;
 		  grid-template-columns: repeat(7, 1fr);
+		  /* 행 높이를 균등하게 설정 */
+	   	 /*  grid-auto-rows: 100%;  */
+ 		  grid-auto-rows: 100px; /* 각 행의 높이를 균등하게 설정 */
 		  grid-gap: 5px;
+		  width: 100%;
+		  grid-gap: 10px; /* 그리드 셀 간의 간격 */
+		  /* height: 80%; /* 부모 높이에 맞추기 */ */
+		  
 		}
-		
 		.date {
 		  cursor: pointer;
 		  padding: 5px;
-		  border: 1px solid black;
-		}
-		
+		  border-radius:20px;
+		  background-color: white;
+		  box-sizing: border-box;
+		}	
 		.date:hover {
-		  background-color: #f5f5f5;
+		  background-color: #EFEEFE;
 		}
 		#detailView{
-			border: 1px solid black;
-			width: 30%;
+			width: 33%;
 			height: 100%;
 			background-color: white;
 			position: absolute;
 			right: 0;
 			display: none;
+			padding: 10px;
 			
 		}
-		#closeBtnImg{
-			width: 10%;
-			margin-left: 80%;
+		.closeBtnDiv{
+			display: flex;
+			justify-content: end;
 		}
-		
+		#closeBtnImg{
+			width: 30px;
+		}
 		.list {
 			display: none;
-			border: 1px solid red;
 		}
 		#form{
 			position: absolute;
 			bottom: 0;
-			border: 1px solid red;
+			width: 100%;
+			border: 1px solid blue;
 		}
-		.editBtn,.deleteBtn,#createBtn{
+		#createBtn{
+			width: 28px;
+			margin-top: 10px;
+		}
+		.editBtn, .deleteBtn {
 			width: 20px;
+			height: 20px;
 		}
 		.inputstyle{
 			border: 1px solid black;
 		}
+		#prevBtn, #nextBtn{
+			position: relative;
+			width: 20px;
+			height: 20px;
+		}
+		#prevBtn > img, #nextBtn > img{
+			width: 100%;
+			height: 100%;
+		}
+		#currentMonth{
+			font-size: 24px;
+		}
+		.datContainer{
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+		/* 일자 */
+		.dateSpan{	
+			width: 100%;
+			text-align: left;
+			padding-left: 12px;
+			font-size: 20px;
+		}
+		.transactionPriceDiv{
+		}
+		.tdeposit, .texpense{
+			text-align: right;
+			padding-right: 12px;
+			font-size: 16px;
+		}
+		.tdeposit{
+			color: #D65B8F;
+		}
+		.texpense{
+			color: #5E9EFA;
+		}
+		#selectDate{
+			text-align: left;
+			font-size: 22px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		.transactionRecord{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border: 1px solid lightgray;
+			padding: 10px 5px;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		.recordLabel{
+			
+		}
+		.recordTitle{
 		
-    	
+		}
+		.recordPrice{
+		}
     </style>
     <script type="text/javascript">
     	$(()=>{
@@ -135,11 +213,11 @@
     			 if(isDeposit == "true") deposit="입금" 
     			 else if(isDeposit == "false")deposit="출금" 
     			 //transactions 채워넣는 부분 
-		    	html2+=	"<div class='transactionRecord'>" +
-    			  deposit + "&nbsp"+
-    			 $('.'+cid).eq(t).attr('data-title') + 
-    			 $('.'+cid).eq(t).attr('data-price')+"원"  +
-    		      	"<img alt='수정' src='./image/수정.png' class='editBtn'>"+
+		    	html2+=	"<div class='transactionRecord'><div class='recordLabel'>" +
+    			  deposit + "</div>"+ "<div class='recordTitle'>" +
+    			 $('.'+cid).eq(t).attr('data-title') + "</div><div class='recordPrice'>" + 
+    			 $('.'+cid).eq(t).attr('data-price')+"원</div>"  +
+    		      	/* "<div><img alt='수정' src='./image/수정.png' class='editBtn'>"+ */
     		      	"<img alt='삭제' src='./image/삭제.png' class='deleteBtn'>"+
     		      	"<input type='hidden' value='"+$('.'+cid).eq(t).attr('data-id')+"'>"+
     		      "</div>";
@@ -206,9 +284,9 @@
     		    }
     		    if(tdeposit == "") tdeposit=0;
     		    if(texpense == "") texpense=0;
-    		    let html ="<div>"+i+"<br><br>"
-				+"+"+tdeposit+"<br>"
-				+"-"+texpense+"</div>"
+    		    let html ="<div class='datContainer'><div class='dateSpan'>"+i+"</div>"
+				+"<div><div class='tdeposit'>+"+tdeposit+"</div>"
+				+"<div class='texpense'>-"+texpense+"</div></div></div>"
 				+"<input type='hidden' value='"+classid+"' name='cid'>";
 				+"<input type='hidden' value='"+$('')+"' name='cid'>";
     		    dateElement.innerHTML=  html;  		    
@@ -272,19 +350,20 @@
 				}
      		});//삭제버튼
     		
-    		
-    		
-    		
-    		
     	})//ready
     </script>
   </head>
   <div class="gagyebuSection">
+ 			<div class="breadcrumbs">가계부 월별 가계부</div>
     <div class="calendar-container">
       <div class="calendar-header">
-        <button id="prevBtn">이전</button>
-        <h2 id="currentMonth"></h2>
-        <button id="nextBtn">다음</button>
+        <button id="prevBtn">
+        	<img src="${pageContext.request.contextPath}/image/prevArrow.jpg" alt="이전">
+        </button>
+        <span id="currentMonth"></span>
+        <button id="nextBtn">
+        	<img src="${pageContext.request.contextPath}/image/nextArrow.jpg" alt="이전">
+        </button>
       </div>
      
       <div class="calendar-days">
@@ -299,13 +378,9 @@
       <div class="calendar-dates" id="calendarDates"></div>
     </div>
     <div id="detailView">
-    	<img alt="" src="./image/닫기.png" id="closeBtnImg"><br>
-    	<div id="selectDate">
-    		
-    	</div><br><br>
-    	<div id="transactions">2
-    		
-    	</div><br><br>
+    	<div class="closeBtnDiv"><img alt="" src="./image/닫기.png" id="closeBtnImg"></div>
+    	<div id="selectDate"></div>
+    	<div id="transactions"></div>
     	
     	<div id="form">
     		<form action="createGagyebu.do" method="post">
@@ -324,6 +399,7 @@
     			<input type="button" id="editgagyebu" value="수정">
     		</form>
     	</div>
+    	<!-- 추가버튼 -->
     	<img alt="" src="./image/추가.png" id="createBtn">
    		</div>
     
