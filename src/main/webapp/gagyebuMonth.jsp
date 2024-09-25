@@ -23,7 +23,7 @@
 			background: #F6F6FE;
 			display: flex;
 			flex-direction: column;
-			gap: 2%;
+/* 			gap: 2%; */
 			overflow: scroll;
 			color: #5A5A5A;
 		}
@@ -72,9 +72,14 @@
 			padding: 2%;
 		}
 		.label {
-			font-size: 1.2vw;
+			font-size: 1vw;
 			font-weight: bold;
-			margin-bottom: 1.5vw;
+			margin-bottom: 1.2vw;
+			bottom : 0;
+		}
+		.ratioLabel{
+			font-size: 1vw;
+			font-weight: bold;
 			bottom : 0;
 		}
 		
@@ -98,7 +103,7 @@
 		
 		.chart-container{
 			width:100%;
-			height: 80%;
+			height: 85%;
 			display: flex;
 			justify-content: center;
 		}
@@ -123,7 +128,7 @@
 </head>
 	<section class="mainSection">
 		<div>
-			<div class="breadcrumbs">가계부 결산</div>
+			<div class="breadcrumbs">가계부 - 결산</div>
 			<% 
 				String yearMonth = (String) request.getAttribute("yearMonth");
 			    String[] parts = yearMonth.split("-"); // '-'로 분리
@@ -166,7 +171,7 @@
 			</div>
 			<div class="section2">
 				<div class="item">
-					<div class="label">이번 달 항목별 지출</div>
+					<div class="ratioLabel">이번 달 항목별 지출</div>
 					 <c:if test="${not empty category}">
 					    <script type="text/javascript">
 					        console.log("category : " + '${category}');
@@ -177,9 +182,6 @@
 				    </div>			
 				</div>
 				
-				<div class="item">
-				<div class="label">무언가의 알고리즘</div>
-				</div>
 			
 			</div>	
 		</div>

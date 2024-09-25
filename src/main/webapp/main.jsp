@@ -155,7 +155,7 @@
 					    <p>일정 : ${schedule.title}</p>
 					    <p>상세 : ${schedule.description}</p>
 					    <div id="dDayDisplay"></div> <!-- 디데이를 표시할 div -->
-					<div class="moreBtn"><a href="schedule.do" class="no-style">일정 더보기</a></div>
+					<div class="moreBtn"><a class="no-style">일정 더보기</a></div>
 				</div>
 				
 								<!-- 스토리 사진, 제목, 내용, 더보기 버튼 -->
@@ -164,7 +164,8 @@
 					
 					<div class="stroyDiv">
 						<div class="imageContainer">
-							<img src="${pageContext.request.contextPath}/image/cat.jpg" alt="story-image">
+<%-- 						<img src="${pageContext.request.contextPath}/image/cat.jpg" alt="story-image"> --%>
+							<img src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" alt="story-image">
 						</div>
 						<div class="storyRight">
 							<div class="storyTitle">${story.title}</div>
