@@ -2,9 +2,9 @@ package algo;
 
 //baekjoon 9333
 public class Savings {
-	//public static void main(String[] args) {
-		//System.out.println(Savings.execute(6165009, 500000, 0.05, true));
-	//}
+	public static void main(String[] args) {
+		System.out.println(Savings.execute(6165009, 500000, 0.05, true));
+	}
 	
 	public static int execute(int targetAmount, int depositAmount, double interestRate, boolean isCompound) {
 		double targetMonth = 0;
@@ -15,7 +15,7 @@ public class Savings {
 			targetMonth = calculateMonths(targetAmount, depositAmount, interestRate);
 		}
 		
-		return (int) Math.round(targetMonth);
+		return (int) Math.ceil(targetMonth);
 	}
 	
 	static double calculateFutureValue(double months, double monthlyDeposit, double interestRate) {
