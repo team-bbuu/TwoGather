@@ -32,7 +32,6 @@ public class DispatcherServlet extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requesturl.substring(contextPath.length()+1);
 		Controller controller= HandlerMapping.getInstance().createComponent(command);
-
 		try {
 			ModelAndView mv = controller.handleRequest(request, response);
 			if(mv != null) {

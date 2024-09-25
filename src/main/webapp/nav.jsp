@@ -271,14 +271,14 @@
 
 		   		<div class="subMemu">
 			    	<a class="nav-link no-style" href="gagyebu.do" >월별 가계부</a>
-				    <a class="nav-link no-style" href="gagyebuMonth.do" >결산</a>		   		
+				    <a class="nav-link no-style" href="gagyebuMonth.do" >결산</a>	
 		   		</div>
 		    </li>
 		    
 <!-- 		    <li class="nav-item" >
 		    	<a class="nav-link no-style" href="schedule.do">일정</a>
 		    </li> -->
-   		    <li class="nav-item" >
+			<li class="nav-item" >
 		    	<a class="nav-link no-style" href="story.do">스토리</a>
 		    </li>
   		    <li class="nav-item" >
@@ -290,5 +290,15 @@
 			<a class="no-style" href="logout.do">로그아웃</a>
 		</div>
 		</div>
-		
+		<script type="text/javascript">
+			$(()=>{
+				$(".matching").on("click", function() {
+					if("${user.matching}"!="매칭완료"){
+						event.preventDefault();
+						//alert("${user.matching}");
+						$("#matchingModal").modal("show");
+					}
+				});
+			});
+		</script>
 </html>

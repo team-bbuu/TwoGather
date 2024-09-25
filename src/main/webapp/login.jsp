@@ -170,7 +170,7 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
-			$('#loginbtn').on("click",function(){
+			$('#loginbtn').on("click",function(event){
 				event.preventDefault();
 				let id = $('#id').val();
 				let password = $('#password').val();
@@ -184,7 +184,7 @@
 					success: function (isCorrect) {
 						if(isCorrect != null){
 							if(isCorrect=="true"){
-								location.href="main.do"
+								location.href="main.do";
 							}else{
 								$('#loginResult').html("<font color='crimson'>아이디 또는 패스워드를 확인해주세요</font>")
 							}

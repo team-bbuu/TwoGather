@@ -143,6 +143,25 @@
 				        
 				        </form>
 					</div>
+				</div> 
+				
+				
+				<div class="modal fade" id="matchingModal">
+					<div class="modal-dialog modal-dialog-centered">
+						<form class="modal-content" action="invitePartner.do" method="post" id="inviteFrm">
+							<div class="modalHeader">
+				        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							
+				        	<div class="modalContent">
+				        		안돼 돌아가
+				        	</div>
+				        	<div class="buttonArea">
+					        	<button type="button" class="modal-button closeBtn" data-dismiss="modal">취소</button>
+				        	</div>
+				        
+				        </form>
+					</div>
 				</div>        	
         </div>
     </div>
