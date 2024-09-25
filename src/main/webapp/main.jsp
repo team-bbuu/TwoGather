@@ -336,7 +336,6 @@
 							"isCompound":$("[name=isCompound]").val(),
 						},
 						success: function (result) {
-							alert(result);
 							$("#algoResult").html(result);
 								
 						},

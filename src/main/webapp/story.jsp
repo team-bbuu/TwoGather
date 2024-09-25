@@ -51,8 +51,9 @@
 		});
 		
 		$(".deleteBtn").on("click", function() {
+			$("#detailModal").modal("hide");
 			$("#messageModal").find(".modal-body").html("정말 삭제하시겠습니까?");
-			$("#messageModal").find(".modal-footer").html("<button type='button' class='btn btn-danger' id='delete'>삭제하기</button><button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>");
+			$("#messageModal").find(".modal-footer").html("<button type='button' class='btn btn-danger' id='delete'>삭제하기</button>");
 			$("#delete").attr("value", $(this).parent().prev().find(".storyId").html());
 		});
 		
@@ -227,7 +228,6 @@
       			<!-- Modal footer -->
         		<div class="modal-footer">
         			<button type="button" class="btn btn-danger" id="submit">작성하기</button>
-        			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         		</div>
       		</div>
       	</div>
@@ -255,7 +255,6 @@
         		<div class="modal-footer">
         			<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#formModal">수정하기</button>
 					<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
-        			<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         		</div>
       		</div>
       	</div>
