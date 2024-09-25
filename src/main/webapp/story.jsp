@@ -19,15 +19,84 @@
 	.storyImg{
 		width: 150px;
 		height: 150px;
-		border: 2px solid;
+		margin: auto;
 	}
 
     #dropdown {
-        width: 200px;
-        border: 2px solid blue;
+        width: 600px;
+        background-color: white;
+        margin-left: 50px;
         display: none;
+        position: absolute;
+        z-index: 10;
     }
-
+    
+    .input-group{
+    	width: 600px;
+    	margin-top: 5px;
+    	position: relative;
+    	display: flex;
+    }
+    
+    #searchTitle{
+    	width: 100%;
+    }
+    
+    
+    #searchBtn{
+    	width: 25px;
+    	height: 25px;
+    	top: 5px;
+    	bottom: 5px;
+    	right: 5px;
+    	position: absolute;
+    }
+    
+    #createBtn{
+    	width: 40px;
+    	height: 40px;
+    	margin-top: 10px;
+    	margin-right: 40px;
+    }
+    
+    .latestTitle, #searchBtn, #createBtn, .storyImg{
+    	cursor: pointer;
+    }
+    
+    .cardDelete{
+    	width: 20px;
+    	height: 20px;
+    	position: absolute;
+    	right: 0;
+    	top: 0;
+    	cursor: pointer;
+    }
+    
+    .cardUpdate{
+    	width: 20px;
+    	height: 20px;
+    	position: absolute;
+    	right: 25px;
+    	top: 0;
+    	cursor: pointer;
+    }
+    
+    
+    .card{
+    	width: 20%;
+    }
+    
+    .modalDelete{
+    	width: 20px;
+    	height: 20px;
+    	cursor: pointer;
+    }
+    
+    .modalUpdate{
+    	width: 20px;
+    	height: 20px;
+    	cursor: pointer;
+    }
 </style>
 <script type="text/javascript">
 	$(()=>{
@@ -39,6 +108,7 @@
 			$("#content").html($(this).find(".content").html());
 			$("#storyId").html($(this).find(".storyId").html());
 			$("#uploadDate").html($(this).find(".uploadDate").html());
+			$("#detailModal").modal("show");
 		});
 		
 		$(".card-img-top").on("click", function() {
@@ -77,12 +147,12 @@
 			$("#storyIdForm").val($(this).parent().prev().find(".storyId").html());
 			let parent = $(this).parent();
 			if(parent.attr("class")=="modal-footer"){
-				$("#image-show").html("<img src='" + parent.siblings(".modal-body").find("#img").attr("src") + "'>");
+				$("#image-show").html("<img src='" + parent.siblings(".modal-body").find("#img").attr("src") + "' class='storyImg'>");
 				$("#detailModal").modal("hide");
 			}else{
-				$("#image-show").html("<img src='" + parent.siblings(".storyImg").attr("src") + "' >");
+				$("#image-show").html("<img src='" + parent.siblings(".storyImg").attr("src") + "' class='storyImg'>");
 			}
-			
+			$("#formModal").modal("show");
 		});
 		
 		$("#createBtn").on("click", function() {
@@ -90,10 +160,6 @@
 			$("#image-show").html("");
 			$("#submit").html("작성하기");
 			$(".inputImg").attr("action", "createStory.do");
-		});
-		
-		$("#searchBtn").on("clcik", function() {
-			
 		});
 		
 		$("#messageModal").find(".modal-footer").on('click', '#refresh', refresh);
@@ -178,7 +244,7 @@
 </script>
 </head>
 
-    <div class="modal fade" id="messageModal">
+    <div class="modal fade" id="messageModal" data-backdrop='static' data-keyboard='false'>
     	<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content"> 
         		<!-- Modal Header -->
@@ -197,7 +263,7 @@
       	</div>
     </div>
     
-    <div class="modal fade" id="formModal">
+    <div class="modal fade" id="formModal" data-backdrop='static' data-keyboard='false'>
     	<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content"> 
         		<!-- Modal Header -->
@@ -233,7 +299,7 @@
       	</div>
     </div>
     
-	<div class="modal fade" id="detailModal">
+	<div class="modal fade" id="detailModal" data-backdrop='static' data-keyboard='false'>
     	<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content"> 
         		<!-- Modal Header -->
@@ -252,39 +318,37 @@
         		</div>
         
       			<!-- Modal footer -->
-        		<div class="modal-footer">
-        			<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#formModal">수정하기</button>
-					<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
+        		<div class="modal-footer" style="justify-content: space-evenly;">
+        			<img alt="수정" src="${pageContext.request.contextPath}/image/수정.png" class="updateBtn modalUpdate">
+					<img alt="삭제" src="${pageContext.request.contextPath}/image/삭제.png" class="deleteBtn modalDelete" data-toggle="modal" data-target="#messageModal">
         		</div>
       		</div>
       	</div>
     </div>
     
 	<div id="container">
-		<button type="button" class="btn btn-danger" id="createBtn" data-toggle="modal" data-target="#formModal">작성하기</button>
-		<div class="input-group mt-3">
-			<input type="text" class="form-control" placeholder="Search" name="searchTitle" id="searchTitle" value="" autocomplete="off">
-			<div class="input-group-append">
-				<button class="btn btn-success" type="button" id="searchBtn">검색</button>
+		<div class="d-flex justify-content-between mt-4" style="margin-right: 15px; margin-left: 50px;">
+			<div class="input-group">
+				<input type="text" placeholder="Search" class="rounded-top border border-right-0 border-top-0 border-left-0" name="searchTitle" id="searchTitle" value="" autocomplete="off">
+				<img alt="검색" src="${pageContext.request.contextPath}/image/search.png" id="searchBtn">
 			</div>
+			<img alt="검색" style="margin-top: 0;" src="${pageContext.request.contextPath}/image/addStory.png" id="createBtn" data-toggle="modal" data-target="#formModal">
 		</div>
 		<div id="dropdown"></div>
-		<div class="d-flex flex-wrap mt-3">
-			<c:forEach items="${list}" var="story">
-			<%-- ${list.imgSrc}  /image/a.jpg --%>
-			
-				<div class="card">
-			        <img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
+		<div class="d-flex flex-wrap">
+			<c:forEach items="${list}" var="story">			
+				<div class="card rounded-5 mt-3 ml-5">
+					<img alt="뭘까요?" src="${pageContext.request.contextPath}/uploads/${story.imgSrc}" id="${story.imgSrc}" class="storyImg card-img-top">
 				
-					<div class="card-body" data-toggle="modal" data-target="#detailModal">
+					<div class="card-body">
 						<div id="${story.uploadDate }" class="uploadDate">${story.uploadDate }</div>
 						<div id="${story.title}" class="title">${story.title }</div>
 						<div style="display: none;" class="storyId">${story.id}</div>
 						<div style="display: none;" class="content">${story.content}</div>
 					</div>
-					<div class="card-footer">
-						<button type="button" class="updateBtn btn btn-danger" data-toggle="modal" data-target="#formModal">수정하기</button>
-						<button type="button" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#messageModal">삭제하기</button>
+					<div class="card-footer p-0">
+						<img alt="수정" src="${pageContext.request.contextPath}/image/수정.png" class="updateBtn cardUpdate">
+						<img alt="삭제" src="${pageContext.request.contextPath}/image/삭제.png" class="deleteBtn cardDelete" data-toggle="modal" data-target="#messageModal">
 					</div>
 				</div>
 			</c:forEach>
@@ -297,6 +361,7 @@
 	
 		// 이미지 source 가져오기
 		newImg.src = URL.createObjectURL(file);
+		newImg.className = "storyImg";
 		// newImg.style.width = "100%";
 		// newImg.style.height = "100%";
 		// newImg.style.objectFit = "cover";

@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>TwoGather</title>
     <!-- css 파일 -->
 
 <%-- 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dashboard.css">

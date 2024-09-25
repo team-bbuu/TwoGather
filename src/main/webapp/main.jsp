@@ -179,22 +179,22 @@
 			
 			<div class="section2">
 				<div class="item algorithmSection">
-					<div class="label">이번 달 현황</div>
+					<div class="label">적금계산기</div>
 					<div class="algorithmTitle">
 						목표금액:<br>
-						<input type="number" name="targetAmount" id="targetAmount" min="0" value="0">원
+						<input type="number" name="targetAmount" id="targetAmount" min="0" placeholder="0">원
 					</div>
 					<div class="algorithmTitle">
 						월 납입액<br>
-						<input type="number" name="depositAmount" id="depositAmount" min="0" value="0">원
+						<input type="number" name="depositAmount" id="depositAmount" min="0" placeholder="0">원
 					</div>
 					<div class="algorithmTitle">
 						이자율<br>
-						<input type="number" name="interestRate" step="0.1" id="interestRate" min="0" max="100" value="0.0">%
+						<input type="number" name="interestRate" step="0.1" id="interestRate" min="0" max="100" placeholder="0.0">%
 					</div>
 					<div class="algorithmTitle form-check-inline">
 						<label class="form-check-label" for="compound">
-							<input type="radio" class="form-check-input" id="compound" name="isCompound" value="true">복리
+							<input type="radio" class="form-check-input" id="compound" name="isCompound" value="true" checked="checked">복리
 						</label>
 					</div>
 					<div class="algorithmTitle form-check-inline">
@@ -244,7 +244,7 @@
 		    Map<Integer, int[]> map = null;
 		
 		    if (mapObject instanceof Map) {
-		        map = (Map<Integer, int[]>) mapObject;
+		        map = (Map<Integer, int[]>)mapObject;
 		    } else {
 		        map = new HashMap<>(); // 빈 맵으로 초기화
 		    }
@@ -326,23 +326,36 @@
 		<script>
 			$(()=>{
 				$("#searchAlgo").on("click", function() {
-					$.ajax({
-						type: "post",
-						url: "algo.do",
-						data: {
-							"targetAmount":$("#targetAmount").val(),
-							"depositAmount":$("#depositAmount").val(),
-							"interestRate":$("#interestRate").val(),
-							"isCompound":$("[name=isCompound]").val(),
-						},
-						success: function (result) {
-							$("#algoResult").html(result);
-								
-						},
-						error: function() {
-							loaction.href="error.jsp";
-						},
-					});
+					$("#algoResult").html("금액과 이자율을 입력해주세요");
+					if($("#targetAmount").val()!=""&&$("#depositAmount").val()!=""&&$("#interestRate").val()!=""){
+						if($("#targetAmount").val() > 0 && $("#depositAmount").val() > 0 && $("#targetAmount").val() >= $("#depositAmount").val() && $("#interestRate").val() > 0 && $("#interestRate").val() < 100){
+							$.ajax({
+								type: "post",
+								url: "algo.do",
+								data: {
+									"targetAmount":$("#targetAmount").val(),
+									"depositAmount":$("#depositAmount").val(),
+									"interestRate":$("#interestRate").val(),
+									"isCompound":$("[name=isCompound]").val(),
+								},
+								success: function (result) {
+									if(result>=12){
+										if(result%12==0){
+											$("#algoResult").html($("#targetAmount").val() + "원을 모으기 위해 <b>" + Math.floor(result/12) + "년</b>이 걸립니다.");																				
+										}else{
+											$("#algoResult").html($("#targetAmount").val() + "원을 모으기 위해 <b>" + Math.floor(result/12) + "년 " + (result%12) + "개월</b>이 걸립니다.");
+										}
+									}else{
+										$("#algoResult").html($("#targetAmount").val() + "원을 모으기 위해 <b>" + result + "개월</b>이 걸립니다.");
+									}
+										
+								},
+								error: function() {
+									loaction.href="error.jsp";
+								},
+							});	
+						}
+					}
 				});
 			});
 		    const start = new Date('${schedule.startDate}');
